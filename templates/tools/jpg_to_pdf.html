@@ -1,0 +1,704 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Convert JPG to PDF - Free Online Image to PDF | ToolHub{% endblock %}
+{% block og_title %}Convert JPG to PDF - Free Online Image to PDF | ToolHub{% endblock %}
+{% block twitter_title %}Convert JPG to PDF - Free Online Image to PDF | ToolHub{% endblock %}
+
+{% block seo_description %}
+    <meta name="description" content="Convert JPG images to PDF online for free. Create professional PDFs from photos, adjust layout, and download instantly with ToolHub.">
+{% endblock %}
+
+
+{% block structured_data_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.url_root.rstrip('/') }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PDF Tools",
+          "item": "{{ request.url_root.rstrip('/') }}/pdf-tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Jpg To Pdf"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Jpg To Pdf — ToolHub",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "url": "{{ request.url_root.rstrip('/') }}{{ request.path }}",
+      "description": "{{ self.seo_description()|meta_content }}",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is JPG to PDF free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub lets you convert images into PDF completely free with no hidden fees or limits."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I upload multiple images?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Select multiple JPG, JPEG or PNG images and combine them into one PDF document."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my images secure?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. Uploaded images are processed securely over encrypted connections and automatically deleted after processing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will image quality be preserved?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub creates high-quality PDF documents while preserving the original image clarity and resolution."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which image formats are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "JPG, JPEG and PNG image files are fully supported for conversion to PDF."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<section class="tool-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="separator">›</span>
+        <a href="/pdf-tools">PDF Tools</a><span class="separator">›</span>
+        <span>Jpg To Pdf</span>
+    </nav>
+
+
+    <!-- =========================
+            TOOL HEADER
+    ========================== -->
+
+    <div class="tool-header">
+
+        <div class="tool-icon">
+
+            <i class="fa-solid fa-file-image"></i>
+
+        </div>
+
+        <h1>JPG to PDF Converter</h1>
+
+        <p>
+
+            Convert one or multiple JPG images into a single high-quality PDF.
+            Fast, secure and completely free.
+
+        </p>
+
+    </div>
+
+    <!-- =========================
+            UPLOAD BOX
+    ========================== -->
+
+    <div class="upload-box">
+
+        <form
+            action="/convert-jpg"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="drop-zone" id="dropZone">
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    name="images"
+                    accept=".jpg,.jpeg,.png"
+                    multiple
+                    hidden
+                    required
+                >
+
+                <label
+                    for="fileInput"
+                    class="upload-area"
+                >
+
+                    <div class="upload-icon">
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    </div>
+
+                    <h2>
+
+                        Drag & Drop Images
+
+                    </h2>
+
+                    <p>
+
+                        or click below to browse
+
+                    </p>
+
+                    <button
+                        type="button"
+                        class="choose-btn"
+                        onclick="document.getElementById('fileInput').click()"
+                    >
+
+                        Choose Images
+
+                    </button>
+
+                    <!-- =========================
+                            SUCCESS CARD
+                    ========================== -->
+
+                    <div
+                        id="fileCard"
+                        class="file-card success-card"
+                        style="display:none;"
+                    >
+
+                        <div class="file-left">
+
+                            <div class="success-icon">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h3 id="fileName"></h3>
+
+                                <p id="fileSize"></p>
+
+                                <span class="ready-tag">
+
+                                    Ready for conversion
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="removeFile"
+                            class="remove-btn"
+                        >
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </button>
+
+                    </div>
+
+                    <!-- =========================
+                           CONVERT BUTTON
+                    ========================== -->
+
+                    <button
+                        class="convert-btn"
+                        id="convertBtn"
+                        type="submit"
+                        disabled
+                    >
+
+                        <i class="fa-solid fa-file-pdf"></i>
+
+                        Convert to PDF
+
+                    </button>
+
+                </label>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- =========================
+            LOADER
+    ========================== -->
+
+    <div
+        id="loader"
+        class="loader-overlay"
+        style="display:none;"
+    >
+
+        <div class="loader-box">
+
+            <div class="spinner"></div>
+
+            <h3>
+
+                Creating PDF...
+
+            </h3>
+
+            <p>
+
+                Please wait while ToolHub combines your images.
+
+            </p>
+
+            <div class="progress">
+
+                <div id="progressBar"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+            FEATURES
+    ========================== -->
+
+    <section class="features">
+
+    <div class="feature-card">
+
+        <i class="fa-solid fa-bolt"></i>
+
+        <h3>Lightning Fast</h3>
+
+        <p>
+            Convert multiple JPG images into one PDF within seconds.
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        <h3>100% Secure</h3>
+
+        <p>
+            Your uploaded images are encrypted and automatically deleted after processing.
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <i class="fa-solid fa-gift"></i>
+
+        <h3>Free Forever</h3>
+
+        <p>
+            No subscriptions, no hidden fees, unlimited conversions.
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <i class="fa-solid fa-images"></i>
+
+        <h3>Multiple Images</h3>
+
+        <p>
+            Combine multiple JPG, JPEG and PNG images into one PDF document.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+        HOW IT WORKS
+========================== -->
+
+<section class="steps">
+
+    <h2>How It Works</h2>
+
+    <div class="step-grid">
+
+        <div class="step-card">
+
+            <span>1</span>
+
+            <h3>Select Images</h3>
+
+            <p>
+                Upload one or more JPG, JPEG or PNG images.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <span>2</span>
+
+            <h3>Create PDF</h3>
+
+            <p>
+                ToolHub combines your images into a single PDF document.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <span>3</span>
+
+            <h3>Download</h3>
+
+            <p>
+                Your PDF downloads automatically after conversion.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+        SEO ARTICLE
+========================== -->
+
+<section class="tool-article">
+<div class="article-card">
+
+    <span class="article-badge">Complete Guide</span>
+
+    <h2>What Is JPG to PDF Conversion?</h2>
+
+    <p>
+        JPG to PDF conversion is the process of transforming one or more JPEG image files into a single Portable Document Format (PDF) file. JPEG, commonly abbreviated as JPG, is one of the most widely used image formats in the world. It compresses photographic images while maintaining acceptable visual quality, making it the standard format for digital cameras, smartphones, and web graphics. PDF, on the other hand, is a universal document format developed by Adobe that preserves fonts, images, and layout regardless of the software, hardware, or operating system used to view the file.
+    </p>
+
+    <p>
+        When you convert JPG to PDF, you are essentially embedding your image data inside a PDF container. This transformation is not just about changing a file extension. It fundamentally changes how the image is shared, printed, archived, and accessed. A JPG is simply an image. A PDF is a document that can contain one or more images, text, annotations, hyperlinks, and even interactive form fields. This distinction is what makes the JPG to PDF conversion so valuable across personal, academic, and professional settings.
+    </p>
+
+    <p>
+        ToolHub's JPG to PDF converter takes this concept and makes it effortless. You upload your images, our system processes them in real time, and you receive a polished PDF document ready for download. There is no software to install, no account to create, and no technical knowledge required. Whether you are converting a single photograph or combining fifty scanned pages into one document, the process remains equally simple and fast.
+    </p>
+
+    <h2>Why Should You Convert JPG Images to PDF?</h2>
+
+    <p>
+        The reasons for converting JPG to PDF are numerous and span across nearly every use case where digital images are involved. The most immediate benefit is universal compatibility. While most devices and applications can open JPG files, the PDF format is even more universally supported. Every major operating system, web browser, and document viewer can open PDF files natively. This means that when you send a PDF to someone, you can be confident they will see exactly what you intended, with no formatting issues or missing fonts.
+    </p>
+
+    <p>
+        Another critical reason is file organization. When you have dozens or even hundreds of related images, sharing them as individual JPG files creates a logistical nightmare for the recipient. They must download each file separately, organize them manually, and hope they view them in the correct order. By converting multiple images into one PDF, you create a single, organized document that can be scrolled through like a book or presentation. This is especially important for business proposals, academic assignments, photo albums, and scanned document collections.
+    </p>
+
+    <p>
+        PDF files also offer superior print formatting. When you print a JPG file, you often deal with unexpected margins, scaling issues, or cropped edges. PDF documents, however, are designed to print exactly as they appear on screen. The page dimensions are fixed, the margins are defined, and the layout is locked. This makes PDF the preferred format for contracts, resumes, certificates, and any document where print accuracy matters.
+    </p>
+
+    <p>
+        Security is another compelling factor. PDF files support encryption, password protection, digital signatures, and permission controls. You can prevent unauthorized users from copying, editing, or printing your document. While JPG files offer no built-in security features, a converted PDF can be locked down to meet compliance requirements for sensitive business or legal documents.
+    </p>
+
+    <p>
+        Finally, PDF files tend to be more compact when containing multiple images. Instead of sending twenty separate 2MB JPG files totaling 40MB, you can combine them into a single 15MB PDF. This reduction in total file size makes email attachments easier to send, reduces storage consumption, and speeds up file transfers for everyone involved.
+    </p>
+
+    <h2>How to Convert JPG to PDF Online — Step by Step</h2>
+
+    <p>
+        Converting JPG to PDF using ToolHub requires no downloads, no registration, and no technical expertise. Follow these straightforward steps to transform your images into a professional PDF document in seconds.
+    </p>
+
+    <p>
+        <strong>Step 1: Open the ToolHub JPG to PDF page.</strong> Navigate to the tool page using your web browser on any device. The interface loads instantly on desktop computers, laptops, tablets, and smartphones. There is nothing to install and no browser extensions required.
+    </p>
+
+    <p>
+        <strong>Step 2: Upload your images.</strong> You have two options for uploading. You can click the "Choose Images" button to browse your device's file system and select one or more JPG, JPEG, or PNG files. Alternatively, you can drag and drop your images directly onto the upload area. ToolHub supports multiple file selection, so you can select an entire folder of images at once.
+    </p>
+
+    <p>
+        <strong>Step 3: Preview your files.</strong> Once uploaded, each image appears in a confirmation card showing the file name and size. You can review your selections and remove any files you do not want to include before proceeding. This preview step ensures you only convert the images you actually need.
+    </p>
+
+    <p>
+        <strong>Step 4: Click the Convert button.</strong> Press the "Convert to PDF" button to begin the conversion process. ToolHub's server-side engine processes your images immediately. A progress indicator shows you exactly what is happening, so you are never left guessing about the status of your conversion.
+    </p>
+
+    <p>
+        <strong>Step 5: Download your PDF.</strong> Within seconds, your newly created PDF file is ready. The download begins automatically, and the file is saved to your device's default download folder. You can then open, share, print, or archive the PDF as needed. All uploaded images are automatically deleted from ToolHub's servers after processing, ensuring your privacy is protected at every step.
+    </p>
+
+    <h2>Key Features of ToolHub's JPG to PDF Converter</h2>
+
+    <p>
+        ToolHub's JPG to PDF tool is built with performance, security, and user experience as its core priorities. Here are the standout features that set it apart from other online converters.
+    </p>
+
+    <p>
+        <strong>Batch conversion support.</strong> ToolHub allows you to upload and convert multiple JPG images into a single PDF document simultaneously. Whether you have three images or three hundred, the tool handles them all in one session without requiring you to repeat the process for each file.
+    </p>
+
+    <p>
+        <strong>High-quality output.</strong> The conversion engine preserves the original resolution and clarity of your images. There is no compression degradation or quality loss during the transformation. Your photos and scans appear in the PDF exactly as they appeared in their original JPG format.
+    </p>
+
+    <p>
+        <strong>Instant processing.</strong> ToolHub's cloud-based processing engine converts your images in real time. Most conversions complete within a few seconds, regardless of file size or quantity. You spend less time waiting and more time using your documents.
+    </p>
+
+    <p>
+        <strong>No registration required.</strong> Unlike many competing services, ToolHub does not ask you to create an account, provide an email address, or enter any personal information. You simply visit the page, upload your files, convert, and download. Your anonymity is preserved throughout the entire process.
+    </p>
+
+    <p>
+        <strong>Cross-device compatibility.</strong> The tool is fully responsive and works flawlessly on Windows, macOS, Linux, Android, and iOS. Whether you are at your desk or on the go, you can convert JPG to PDF from any device with a modern web browser.
+    </p>
+
+    <p>
+        <strong>Secure file handling.</strong> All uploaded files are transmitted over encrypted HTTPS connections. Once the conversion is complete, your images are permanently deleted from ToolHub's servers. No files are stored, cached, or shared with third parties. Your data remains entirely under your control.
+    </p>
+
+    <p>
+        <strong>Completely free.</strong> ToolHub's JPG to PDF converter is available at no cost with no hidden fees, no premium tiers, and no usage limits. You can convert as many files as you need, as often as you need, without spending a single penny.
+    </p>
+
+    <h2>Benefits of Converting Images to PDF</h2>
+
+    <p>
+        The benefits of converting your JPG images to PDF format extend far beyond simple convenience. One of the most significant advantages is professional presentation. A PDF document containing your images looks polished, intentional, and authoritative. Whether you are submitting a portfolio, presenting research findings, or sharing product photos with a client, a PDF communicates professionalism in a way that a folder of scattered JPG files simply cannot.
+    </p>
+
+    <p>
+        PDF files are also ideal for long-term archival. The format is designed for document preservation, and many government agencies and institutions accept PDF as the standard for digital archiving. By converting your JPG images to PDF now, you ensure they remain accessible and viewable decades into the future, even as image formats evolve and software changes.
+    </p>
+
+    <p>
+        Accessibility is another major benefit. PDF readers are available on virtually every platform, and many include built-in text-to-screen reading capabilities. When you convert images to PDF, you create documents that can be indexed by search engines, annotated by readers, and navigated with bookmarks and table of contents links. These features are impossible with standalone JPG files.
+    </p>
+
+    <p>
+        The reduced file size when combining multiple images into one PDF also means faster uploads to cloud storage, quicker email delivery, and lower bandwidth consumption. For businesses that handle large volumes of image-based documents daily, these savings add up significantly over time.
+    </p>
+
+    <p>
+        Additionally, PDF files support metadata, including title, author, subject, and keywords. This metadata helps organize and locate documents within large digital libraries. When you convert JPG to PDF, you gain the ability to tag your images with descriptive information that makes them searchable and sortable.
+    </p>
+
+    <h2>Real-World Use Cases for JPG to PDF Conversion</h2>
+
+    <p>
+        The applications for JPG to PDF conversion are virtually limitless. Students regularly convert handwritten notes, textbook pages, and assignment photographs into PDF documents for submission to their instructors. Academic workflows increasingly rely on PDF as the standard format for digital homework, research papers, and thesis chapters.
+    </p>
+
+    <p>
+        Businesses use JPG to PDF conversion for invoicing, contract management, and record keeping. When a contract is signed on paper, photographed, and converted to PDF, it becomes a legally recognized digital document that can be stored, searched, and retrieved instantly. Real estate agents convert property photos into PDF brochures. Marketing teams convert product images into PDF catalogs. Legal professionals convert scanned evidence into PDF case files.
+    </p>
+
+    <p>
+        Healthcare providers convert patient records, X-rays, and medical photographs into PDF files for inclusion in electronic health record systems. The PDF format ensures that these critical documents maintain their visual integrity across different devices and viewing platforms, which is essential for accurate diagnosis and treatment.
+    </p>
+
+    <p>
+        Photographers and artists use JPG to PDF conversion to create digital portfolios, proof sheets, and client presentations. A well-organized PDF portfolio is far more impressive and easier to navigate than a zip archive of loose image files. It also protects the photographer's work by preventing easy right-click saving of individual images.
+    </p>
+
+    <p>
+        Government agencies, non-profits, and educational institutions convert physical documents that have been scanned into JPG format into searchable, archivable PDF files. This digitization process is a cornerstone of modern record management and helps organizations transition from paper-based to digital workflows.
+    </p>
+
+    <p>
+        Personal use cases are equally common. Families convert old photo albums into PDF documents for preservation and sharing. Travelers combine vacation photos into PDF journals. Job seekers convert certificate photographs into PDF attachments for their applications. The versatility of the PDF format makes it suitable for virtually any scenario where images need to be organized, shared, or preserved.
+    </p>
+
+    <h2>Tips for Getting the Best Results from JPG to PDF Conversion</h2>
+
+    <p>
+        To ensure your converted PDF files look professional and function correctly, follow these expert tips when converting JPG to PDF.
+    </p>
+
+    <p>
+        <strong>Start with high-resolution images.</strong> The quality of your output PDF is directly determined by the quality of your input images. Always use the highest resolution JPG files available. If your source images are low resolution or heavily compressed, the resulting PDF will reflect those limitations. Shoot photos at full resolution and avoid excessive compression before converting.
+    </p>
+
+    <p>
+        <strong>Organize files before uploading.</strong> The order in which your images appear in the PDF is determined by the order in which you upload them. Rename your JPG files with numeric prefixes (01, 02, 03) before uploading to ensure they appear in the correct sequence. This is especially important for multi-page documents, presentations, and photo albums.
+    </p>
+
+    <p>
+        <strong>Remove unnecessary images.</strong> Before converting, review your image collection and remove duplicates, blurry shots, or irrelevant files. A focused, well-curated PDF is far more effective than one cluttered with unwanted images. Quality always trumps quantity.
+    </p>
+
+    <p>
+        <strong>Consider image orientation.</strong> Mix of landscape and portrait images in a single PDF can look inconsistent. If possible, use images with the same orientation for a more cohesive document. If you must mix orientations, be aware that PDF viewers will display each image on its own page, which may result in varying white space around differently oriented images.
+    </p>
+
+    <p>
+        <strong>Use consistent image dimensions.</strong> Images with the same aspect ratio and dimensions will produce the most uniform-looking PDF. If your images vary significantly in size, the PDF viewer will scale each one to fit the page, which can result in inconsistent margins. Pre-crop or resize your images to match dimensions before conversion for the most polished result.
+    </p>
+
+    <p>
+        <strong>Check the final PDF before sharing.</strong> Always open and review your converted PDF before sending it to others. Verify that all images are present, in the correct order, and displaying clearly. Check that no images are cropped unexpectedly and that the overall document meets your quality standards. A quick review prevents embarrassing errors in professional communications.
+    </p>
+
+    <p>
+        <strong>Leverage PDF features after conversion.</strong> Once your images are in PDF format, you can enhance them further using PDF editing software. Add page numbers, bookmarks, headers, footers, annotations, or watermarks to make your document even more professional and functional. These enhancements are not possible with standalone JPG files and demonstrate the true power of the PDF format.
+    </p>
+
+</div>
+            <div class="article-card">
+                <h2>Related Tools You Might Like</h2>
+                <p>Explore our other free online tools that complement JPG to PDF:</p>
+                <div class="related-tools-grid">
+                    <a href="/png-to-jpg"><i class="fa-solid fa-link"></i> PNG to JPG</a>
+                    <a href="/image-to-webp"><i class="fa-solid fa-link"></i> Image to WebP</a>
+                    <a href="/pdf-to-jpg"><i class="fa-solid fa-link"></i> PDF to JPG</a>
+                </div>
+            </div>
+</section>
+        <div class="share-bar">
+            <span>Share this tool:</span>
+            <a class="share-btn facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+            <a class="share-btn twitter" href="https://twitter.com/intent/tweet?url={{ request.url }}&text={{ self.title() }}" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a>
+            <a class="share-btn linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+            <a class="share-btn whatsapp" href="https://wa.me/?text={{ self.title() }}%20{{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+
+
+<!-- =========================
+        FAQ
+========================== -->
+
+<section class="steps">
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="step-grid">
+
+        <div class="step-card">
+
+            <h3>Is JPG to PDF free?</h3>
+
+            <p>
+                Yes. ToolHub lets you convert images into PDF completely free.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <h3>Can I upload multiple images?</h3>
+
+            <p>
+                Yes. Select multiple JPG, JPEG or PNG images and combine them into one PDF.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <h3>Are my images secure?</h3>
+
+            <p>
+                Absolutely. Uploaded images are processed securely and automatically deleted.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <h3>Will image quality be preserved?</h3>
+
+            <p>
+                Yes. ToolHub creates high-quality PDF documents while preserving image clarity.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <h3>Which image formats are supported?</h3>
+
+            <p>
+                JPG, JPEG and PNG image files are fully supported.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <h3>Can I use this on mobile?</h3>
+
+            <p>
+                Yes. ToolHub works on desktop, tablet and mobile devices.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+    <section class="seo-related" aria-labelledby="related-tools-title">
+        <h2 id="related-tools-title">Explore More PDF Tools</h2>
+        <p>Continue with related ToolHub tools for your next file task.</p>
+        <div class="seo-related-grid">
+            <a class="seo-related-card" href="/pdf-to-jpg"><strong>PDF to JPG</strong><span>Convert PDF pages to JPG.</span></a>
+            <a class="seo-related-card" href="/pdf-to-word"><strong>PDF to Word</strong><span>Convert PDFs to editable Word files.</span></a>
+            <a class="seo-related-card" href="/compress-pdf"><strong>Compress PDF</strong><span>Reduce PDF file size.</span></a>
+        </div>
+    </section>
+</section>
+
+{% endblock %}

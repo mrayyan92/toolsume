@@ -1,0 +1,827 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Protect PDF with Password - Free Online Tool | ToolHub{% endblock %}
+{% block og_title %}Protect PDF with Password - Free Online Tool | ToolHub{% endblock %}
+{% block twitter_title %}Protect PDF with Password - Free Online Tool | ToolHub{% endblock %}
+
+{% block seo_description %}
+    <meta name="description" content="Protect PDF files with password encryption online for free. Secure your documents, set permissions, and prevent unauthorized access with ToolHub.">
+{% endblock %}
+
+
+{% block structured_data_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.url_root.rstrip('/') }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PDF Tools",
+          "item": "{{ request.url_root.rstrip('/') }}/pdf-tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Protect Pdf"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Protect Pdf — ToolHub",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "url": "{{ request.url_root.rstrip('/') }}{{ request.path }}",
+      "description": "{{ self.seo_description()|meta_content }}",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is Protect PDF free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub allows you to password-protect PDF files completely free with no hidden fees."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How strong is the encryption used by ToolHub?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ToolHub uses AES (Advanced Encryption Standard) encryption, which is the same military-grade encryption used by banks, governments, and cybersecurity professionals worldwide."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I remove the password from a protected PDF later?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. If you know the password, you can use ToolHub's Unlock PDF tool to remove the password protection."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will protecting my PDF change its quality or formatting?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Password protection adds a security layer without altering the content, images, text, or layout of your document."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if I forget the password to my protected PDF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you forget the password, there is no way to recover it. ToolHub does not store passwords or provide recovery services. We recommend using a password manager."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<section class="tool-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="separator">›</span>
+        <a href="/pdf-tools">PDF Tools</a><span class="separator">›</span>
+        <span>Protect Pdf</span>
+    </nav>
+
+
+    <!-- TOOL HEADER -->
+
+    <div class="tool-header">
+
+        <div class="tool-icon">
+
+            <i class="fa-solid fa-lock"></i>
+
+        </div>
+
+        <h1>Protect PDF</h1>
+
+        <p>
+
+            Add a password to your PDF document to keep it secure.
+
+        </p>
+
+    </div>
+
+    <!-- UPLOAD BOX -->
+
+    <div class="upload-box">
+
+        <form
+            action="/protect-pdf-file"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="drop-zone" id="dropZone">
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    name="pdf"
+                    accept=".pdf"
+                    hidden
+                    required
+                >
+
+                <label
+                    for="fileInput"
+                    class="upload-area"
+                >
+
+                    <div class="upload-icon">
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    </div>
+
+                    <h2>
+
+                        Drag & Drop Your PDF
+
+                    </h2>
+
+                    <p>
+
+                        or click below to browse
+
+                    </p>
+
+                    <button
+                        type="button"
+                        class="choose-btn"
+                        onclick="document.getElementById('fileInput').click()"
+                    >
+
+                        Choose PDF
+
+                    </button>
+
+                    <!-- SUCCESS CARD -->
+
+                    <div
+                        id="fileCard"
+                        class="file-card success-card"
+                        style="display:none;"
+                    >
+
+                        <div class="file-left">
+
+                            <div class="success-icon">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h3 id="fileName"></h3>
+
+                                <p id="fileSize"></p>
+
+                                <span class="ready-tag">
+
+                                    Ready for protection
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="removeFile"
+                            class="remove-btn"
+                        >
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </button>
+
+                    </div>
+
+                    <!-- PASSWORD -->
+
+                    <div style="margin-top:20px;">
+
+                        <label>
+
+    <strong class="password-title">
+
+        Password
+
+    </strong>
+
+</label>
+
+<input
+    type="password"
+    name="password"
+    class="password-input"
+    placeholder="Enter PDF Password">
+
+                    </div>
+
+                </label>
+
+                    <!-- BUTTON -->
+
+                    <button
+                        class="convert-btn"
+                        id="convertBtn"
+                        type="submit"
+                        disabled
+                    >
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        Protect PDF
+
+                    </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- LOADER -->
+
+    <div
+        id="loader"
+        class="loader-overlay"
+        style="display:none;"
+    >
+
+        <div class="loader-box">
+
+            <div class="spinner"></div>
+
+            <h3>
+
+                Protecting PDF...
+
+            </h3>
+
+            <p>
+
+                Please wait while ToolHub secures your PDF.
+
+            </p>
+
+            <div class="progress">
+
+                <div id="progressBar"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+        <!-- =========================
+            FEATURES
+    ========================== -->
+
+    <section class="features">
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-lock"></i>
+
+            <h3>Password Protection</h3>
+
+            <p>
+                Secure your PDF with a strong password to prevent unauthorized access.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <h3>100% Secure</h3>
+
+            <p>
+                Your PDF files are encrypted securely and automatically deleted after processing.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            <h3>Fast Processing</h3>
+
+            <p>
+                Add password protection to your PDF in just a few seconds.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-gift"></i>
+
+            <h3>Free Forever</h3>
+
+            <p>
+                Protect unlimited PDF documents with no hidden charges.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            HOW IT WORKS
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>How It Works</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <span>1</span>
+
+                <h3>Upload PDF</h3>
+
+                <p>
+                    Select or drag your PDF into the upload area.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>2</span>
+
+                <h3>Enter Password</h3>
+
+                <p>
+                    Choose a strong password to protect your document.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>3</span>
+
+                <h3>Download</h3>
+
+                <p>
+                    Download your newly password-protected PDF instantly.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            SEO ARTICLE
+    ========================== -->
+
+    <section class="tool-article">
+        <div class="article-card">
+
+            <span class="article-badge">Complete Guide</span>
+
+            <h2>Protect PDF with Password: The Ultimate Guide to Securing Your Documents Online</h2>
+
+            <p>
+                In an era where sensitive information travels across networks every second, the need to <strong>protect PDF with password</strong> protection has never been more critical. Whether you are sharing financial reports, legal contracts, medical records, or personal identification documents, leaving a PDF unprotected exposes it to unauthorized access, data leaks, and potential misuse. ToolHub's Protect PDF tool provides a fast, free, and secure way to <strong>password protect PDF</strong> files directly from your browser, with no software installation required.
+            </p>
+
+            <p>
+                This comprehensive guide covers everything you need to know about PDF security: what PDF protection means, why it matters, how to <strong>lock PDF</strong> files step by step, the key features of modern encryption, the benefits of securing your documents, real-world use cases, practical tips, and answers to the most frequently asked questions.
+            </p>
+
+            <h3>What Is PDF Protection?</h3>
+
+            <p>
+                PDF protection refers to the process of adding a security layer to a Portable Document Format (PDF) file so that it can only be opened, viewed, or modified by someone who knows the correct password. When you <strong>encrypt PDF with password free</strong> tools, the file's content is scrambled using encryption algorithms. Without the password, the document remains locked and unreadable, even if someone gains access to the file.
+            </p>
+
+            <p>
+                There are two primary types of password protection for PDF files. The first is an <strong>owner password</strong> (also called a permissions password), which restricts actions such as printing, copying text, editing, or adding annotations. The second is a <strong>user password</strong>, which prevents anyone from opening or viewing the document without entering the correct credentials. Most users who want to <strong>add password to PDF free</strong> solutions focus on the user password, as it provides the strongest layer of access control.
+            </p>
+
+            <p>
+                PDF encryption typically uses AES (Advanced Encryption Standard) or RC4 encryption methods. AES-256 is considered the gold standard for document security, offering military-grade protection that is virtually impossible to crack through brute-force attacks. When you use ToolHub to <strong>password protect PDF online free</strong>, your documents are encrypted using industry-standard algorithms that meet global security benchmarks.
+            </p>
+
+            <h3>Why Should You Password Protect PDF Files?</h3>
+
+            <p>
+                The reasons to <strong>protect PDF with password</strong> security extend far beyond basic caution. Consider the following scenarios where PDF protection becomes essential:
+            </p>
+
+            <p>
+                <strong>Confidential Business Documents:</strong> Companies regularly share earnings reports, strategic plans, merger proposals, and employee records in PDF format. Without password protection, these files could be intercepted during transmission or accessed by unauthorized employees. A single data breach can cost businesses millions in penalties and reputational damage.
+            </p>
+
+            <p>
+                <strong>Legal and Contractual Documents:</strong> Contracts, NDAs, court filings, and legal briefs contain sensitive information that must remain confidential until the appropriate time. Password protecting these documents ensures that only authorized parties can view the contents, maintaining the integrity of legal proceedings.
+            </p>
+
+            <p>
+                <strong>Personal and Financial Records:</strong> Tax returns, bank statements, insurance policies, and medical records contain personally identifiable information (PII) that identity thieves actively seek. When you <strong>lock PDF</strong> files containing this data, you add a critical barrier against identity theft and financial fraud.
+            </p>
+
+            <p>
+                <strong>Academic and Research Papers:</strong> Researchers often share unpublished findings, thesis drafts, and proprietary methodologies in PDF format. Password protection prevents intellectual property theft and ensures that work is properly attributed before publication.
+            </p>
+
+            <p>
+                <strong>Compliance Requirements:</strong> Many industries are bound by regulations such as GDPR, HIPAA, SOX, and PCI-DSS that mandate the protection of sensitive data. Failing to <strong>encrypt PDF with password free</strong> tools can result in regulatory fines, legal action, and loss of business licenses.
+            </p>
+
+            <h3>How to Password Protect a PDF: Step-by-Step Guide</h3>
+
+            <p>
+                Learning <strong>how to password protect a PDF</strong> with ToolHub is straightforward and takes less than a minute. Follow these simple steps:
+            </p>
+
+            <p>
+                <strong>Step 1: Upload Your PDF.</strong> Navigate to the ToolHub Protect PDF page. You can either click the "Choose PDF" button to browse your device for the file or simply drag and drop your PDF directly into the upload area. The tool accepts any standard PDF file regardless of size or content.
+            </p>
+
+            <p>
+                <strong>Step 2: Set Your Password.</strong> Once your file is uploaded, you will see a password input field. Enter a strong, unique password that combines uppercase and lowercase letters, numbers, and special characters. Avoid using easily guessable passwords like birthdays, names, or common dictionary words. A strong password is the foundation of effective PDF security.
+            </p>
+
+            <p>
+                <strong>Step 3: Protect the File.</strong> Click the "Protect PDF" button to initiate the encryption process. ToolHub's server-side engine will apply AES encryption to your document within seconds. You will see a progress indicator while the protection is being applied.
+            </p>
+
+            <p>
+                <strong>Step 4: Download Your Protected PDF.</strong> Once the process completes, your password-protected PDF is ready for download. Save it to your device and share it securely with your intended recipients. Remember to share the password through a separate, secure channel such as a phone call, encrypted messaging app, or in-person communication.
+            </p>
+
+            <p>
+                That is all it takes to <strong>password protect PDF online free</strong> with ToolHub. No downloads, no installations, no sign-ups, and absolutely no cost.
+            </p>
+
+            <h3>Key Features of ToolHub's Protect PDF Tool</h3>
+
+            <p>
+                ToolHub's Protect PDF tool is built with user experience, speed, and security at its core. Here are the standout features that make it the preferred choice for users worldwide:
+            </p>
+
+            <p>
+                <strong>Browser-Based Operation:</strong> Everything runs directly in your web browser. There is no need to download desktop software, browser extensions, or mobile apps. This means you can protect your PDFs from any device with an internet connection, including Windows, macOS, Linux, ChromeOS, iOS, and Android.
+            </p>
+
+            <p>
+                <strong>AES Encryption:</strong> ToolHub uses Advanced Encryption Standard (AES) to secure your files. This is the same encryption standard trusted by governments, financial institutions, and cybersecurity professionals around the world. When you <strong>encrypt PDF with password free</strong> through ToolHub, you get enterprise-grade security.
+            </p>
+
+            <p>
+                <strong>Automatic File Deletion:</strong> Your privacy matters. All uploaded files are automatically and permanently deleted from ToolHub's servers immediately after processing. No copies are stored, no backups are retained, and no one can access your files after the protection process is complete.
+            </p>
+
+            <p>
+                <strong>Drag-and-Drop Interface:</strong> The intuitive upload zone supports drag-and-drop functionality, making file selection effortless. Simply grab your PDF from your desktop or file explorer and drop it into the designated area.
+            </p>
+
+            <p>
+                <strong>No File Size Limits:</strong> Whether your PDF is a one-page letter or a 500-page report, ToolHub handles it without restrictions. There are no file size caps, no hidden limitations, and no premium tiers required for larger documents.
+            </p>
+
+            <p>
+                <strong>Instant Processing:</strong> The encryption engine is optimized for speed. Most PDF files are protected in just a few seconds, regardless of their size or complexity. You will never wait long to <strong>add password to PDF free</strong> of charge.
+            </p>
+
+            <p>
+                <strong>Preserves Document Quality:</strong> Password protection does not alter the visual quality, formatting, text, images, or layout of your PDF. The encrypted file looks exactly like the original, only with an added security layer.
+            </p>
+
+            <h3>Benefits of Using ToolHub to Lock PDF Files</h3>
+
+            <p>
+                Choosing ToolHub to <strong>lock PDF</strong> documents comes with a range of benefits that set it apart from desktop software and competing online tools:
+            </p>
+
+            <p>
+                <strong>Zero Cost:</strong> ToolHub is completely free. There are no subscription fees, no per-file charges, no watermarks added to your documents, and no hidden costs. You can protect an unlimited number of PDF files without spending a single cent.
+            </p>
+
+            <p>
+                <strong>No Registration Required:</strong> You do not need to create an account, provide an email address, or share any personal information. Simply visit the page, upload your file, set a password, and download the protected document. This protects your anonymity and reduces your digital footprint.
+            </p>
+
+            <p>
+                <strong>Cross-Platform Compatibility:</strong> Because ToolHub is a web application, it works seamlessly across all modern browsers and operating systems. Whether you are using Chrome, Firefox, Safari, Edge, or any other browser, the tool delivers consistent performance.
+            </p>
+
+            <p>
+                <strong>Secure Server Infrastructure:</strong> ToolHub operates on encrypted servers with strict access controls. Your files are processed in a secure environment that meets industry security standards, ensuring that your sensitive documents remain safe throughout the entire process.
+            </p>
+
+            <p>
+                <strong>User-Friendly Design:</strong> The clean, minimal interface guides you through the process without confusion. Even users with limited technical knowledge can <strong>password protect PDF online free</strong> in their very first attempt.
+            </p>
+
+            <h3>Real-World Use Cases for Password Protecting PDFs</h3>
+
+            <p>
+                The ability to <strong>protect PDF with password</strong> security is valuable across numerous professional and personal scenarios:
+            </p>
+
+            <p>
+                <strong>Accountants and Financial Advisors:</strong> Tax professionals handle sensitive financial data year-round. Password protecting client documents before sending them via email or cloud storage prevents unauthorized access to bank details, income information, and investment portfolios.
+            </p>
+
+            <p>
+                <strong>Lawyers and Legal Teams:</strong> Attorneys routinely share case files, depositions, and settlement agreements. When you <strong>lock PDF</strong> files containing attorney-client privileged information, you maintain confidentiality and comply with legal ethics requirements.
+            </p>
+
+            <p>
+                <strong>Healthcare Providers:</strong> Medical professionals share patient records, lab results, and treatment plans in PDF format. HIPAA compliance requires that these documents be protected during electronic transmission, making password protection essential.
+            </p>
+
+            <p>
+                <strong>Freelancers and Contractors:</strong> Independent professionals share invoices, proposals, and project deliverables with clients. Adding a password ensures that sensitive pricing, contract terms, and intellectual property remain confidential until the client reviews them.
+            </p>
+
+            <p>
+                <strong>Educational Institutions:</strong> Schools and universities protect exam papers, answer keys, student records, and research data. When you <strong>password protect PDF online free</strong> tools like ToolHub, you prevent academic dishonesty and protect student privacy.
+            </p>
+
+            <p>
+                <strong>Government Agencies:</strong> Public sector organizations handle classified and sensitive documents daily. Password protection adds an essential layer of security to inter-agency communications and public records that require restricted access.
+            </p>
+
+            <p>
+                <strong>Individual Users:</strong> Anyone can benefit from protecting personal documents such as wills, power of attorney forms, passport copies, and insurance policies. When you <strong>encrypt PDF with password free</strong> tools, you safeguard your most important personal records.
+            </p>
+
+            <h3>Tips for Creating Strong PDF Passwords</h3>
+
+            <p>
+                When you <strong>add password to PDF free</strong> tools, the strength of your password directly determines the level of protection. Follow these best practices to create passwords that are difficult to crack:
+            </p>
+
+            <p>
+                <strong>Use Long Passwords:</strong> Aim for at least 12 to 16 characters. Longer passwords exponentially increase the time required for brute-force attacks, making them far more secure than short ones.
+            </p>
+
+            <p>
+                <strong>Mix Character Types:</strong> Combine uppercase letters, lowercase letters, numbers, and special symbols such as exclamation points, at signs, and hashtags. A password like "Tr@de$2026!xKp" is significantly stronger than "password123."
+            </p>
+
+            <p>
+                <strong>Avoid Personal Information:</strong> Never use birthdays, anniversaries, pet names, or family members' names in your passwords. This information is often publicly available on social media and can be used in targeted attacks.
+            </p>
+
+            <p>
+                <strong>Use Passphrases:</strong> Consider creating a passphrase by combining random words with numbers and symbols. For example, "Blue!Tiger$Runs7Fast" is both memorable and extremely difficult to crack.
+            </p>
+
+            <p>
+                <strong>Never Reuse Passwords:</strong> If you are protecting multiple PDF files, use a unique password for each one. Reusing passwords means that if one is compromised, all your documents become vulnerable.
+            </p>
+
+            <p>
+                <strong>Use a Password Manager:</strong> Consider storing your PDF passwords in a reputable password manager. This allows you to generate and save complex passwords without having to memorize each one.
+            </p>
+
+            <p>
+                <strong>Share Passwords Securely:</strong> Never send the password in the same email or message as the protected PDF. Use a separate communication channel, such as a phone call or encrypted messaging app, to share the password with your intended recipient.
+            </p>
+
+            <h3>Frequently Asked Questions</h3>
+
+            <div class="step-grid">
+
+                <div class="step-card">
+
+                    <h3>Is ToolHub's Protect PDF tool really free?</h3>
+
+                    <p>
+                        Yes. ToolHub allows you to <strong>password protect PDF</strong> files completely free of charge with no hidden fees, no watermarks, and no registration required. You can protect unlimited documents without any restrictions.
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>How strong is the encryption used by ToolHub?</h3>
+
+                    <p>
+                        ToolHub uses AES (Advanced Encryption Standard) encryption, which is the same military-grade encryption used by banks, governments, and cybersecurity professionals worldwide. When you <strong>encrypt PDF with password free</strong> tools, you receive the highest level of document security available.
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>Can I remove the password from a protected PDF later?</h3>
+
+                    <p>
+                        Yes. If you know the password, you can use ToolHub's Unlock PDF tool to remove the password protection. This is useful when you need to share the document without restrictions at a later date.
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>Will protecting my PDF change its quality or formatting?</h3>
+
+                    <p>
+                        No. Password protection adds a security layer without altering the content, images, text, or layout of your document. Your protected PDF will look and function exactly like the original.
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>Are my uploaded files stored on ToolHub's servers?</h3>
+
+                    <p>
+                        No. All uploaded files are processed securely and automatically deleted immediately after the protection is applied. No copies, backups, or cached versions of your files are retained on ToolHub's servers.
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>Can I protect a PDF on my phone or tablet?</h3>
+
+                    <p>
+                        Absolutely. ToolHub is fully responsive and works on all devices, including smartphones and tablets. You can <strong>password protect PDF online free</strong> from any device with a modern web browser and an internet connection.
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>Is there a file size limit for PDF uploads?</h3>
+
+                    <p>
+                        No. ToolHub imposes no file size restrictions. Whether your PDF is a single page or hundreds of pages long, you can protect it without any limitations.
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>What happens if I forget the password to my protected PDF?</h3>
+
+                    <p>
+                        If you forget the password, there is no way to recover it. ToolHub does not store passwords or provide recovery services. We strongly recommend using a password manager and sharing passwords through secure channels to avoid this situation.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+            <div class="article-card">
+                <h2>Related Tools You Might Like</h2>
+                <p>Explore our other free online tools that complement Protect PDF:</p>
+                <div class="related-tools-grid">
+                    <a href="/unlock-pdf"><i class="fa-solid fa-link"></i> Unlock PDF</a>
+                    <a href="/merge-pdf"><i class="fa-solid fa-link"></i> Merge PDF</a>
+                    <a href="/split-pdf"><i class="fa-solid fa-link"></i> Split PDF</a>
+                </div>
+            </div>
+    </section>
+        <div class="share-bar">
+            <span>Share this tool:</span>
+            <a class="share-btn facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+            <a class="share-btn twitter" href="https://twitter.com/intent/tweet?url={{ request.url }}&text={{ self.title() }}" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a>
+            <a class="share-btn linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+            <a class="share-btn whatsapp" href="https://wa.me/?text={{ self.title() }}%20{{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+
+    <!-- =========================
+            FAQ
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <h3>Is Protect PDF free?</h3>
+
+                <p>
+                    Yes. ToolHub allows you to password-protect PDF files completely free.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Can I choose my own password?</h3>
+
+                <p>
+                    Yes. You can set any password you want for your PDF document.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Will my PDF quality change?</h3>
+
+                <p>
+                    No. Your document quality remains exactly the same after encryption.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Are my files secure?</h3>
+
+                <p>
+                    Absolutely. Your uploaded files are processed securely and automatically removed.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Do I need to install software?</h3>
+
+                <p>
+                    No. Everything works directly in your web browser.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Does it work on mobile devices?</h3>
+
+                <p>
+                    Yes. ToolHub works on desktop, tablet and mobile phones.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="seo-related" aria-labelledby="related-tools-title">
+        <h2 id="related-tools-title">Explore More PDF Tools</h2>
+        <p>Continue with related ToolHub tools for your next file task.</p>
+        <div class="seo-related-grid">
+            <a class="seo-related-card" href="/unlock-pdf"><strong>Unlock PDF</strong><span>Remove PDF password protection when authorized.</span></a>
+            <a class="seo-related-card" href="/watermark-pdf"><strong>Watermark PDF</strong><span>Add document watermarks.</span></a>
+            <a class="seo-related-card" href="/compress-pdf"><strong>Compress PDF</strong><span>Reduce PDF file size.</span></a>
+        </div>
+    </section>
+</section>
+
+<script src="{{ url_for('static', filename='js/tools.js') }}"></script>
+
+{% endblock %}

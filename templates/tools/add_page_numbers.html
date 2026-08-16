@@ -1,0 +1,838 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Add Page Numbers to PDF - Free Online Tool | ToolHub{% endblock %}
+{% block og_title %}Add Page Numbers to PDF - Free Online Tool | ToolHub{% endblock %}
+{% block twitter_title %}Add Page Numbers to PDF - Free Online Tool | ToolHub{% endblock %}
+
+{% block seo_description %}
+    <meta name="description" content="Add page numbers to PDF documents online for free. Number every page, customize position, and download labeled PDFs instantly with ToolHub.">
+{% endblock %}
+
+
+{% block structured_data_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.url_root.rstrip('/') }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PDF Tools",
+          "item": "{{ request.url_root.rstrip('/') }}/pdf-tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Add Page Numbers"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Add Page Numbers — ToolHub",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "url": "{{ request.url_root.rstrip('/') }}{{ request.path }}",
+      "description": "{{ self.seo_description()|meta_content }}",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I add page numbers to a PDF for free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can add page numbers to a PDF for free using ToolHub. Simply open the tool in your browser, upload your PDF, select your preferred position and starting number, and click Add Page Numbers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I add page numbers to a PDF online without downloading software?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub is a fully web-based tool that runs in your browser. There is no software to download or install."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What positions are available for page numbering?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ToolHub offers three position options: Bottom Center, Bottom Right, and Top Left. These positions cover the most common formatting requirements."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I start page numbering from a number other than one?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The Starting Page Number field allows you to set any number as the starting point, useful for continuation documents or skipping front matter."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my uploaded PDF files secure?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub uses encrypted file transfer and secure processing servers. All uploaded files are automatically deleted after processing."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<section class="tool-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="separator">›</span>
+        <a href="/pdf-tools">PDF Tools</a><span class="separator">›</span>
+        <span>Add Page Numbers</span>
+    </nav>
+
+
+    <!-- TOOL HEADER -->
+
+    <div class="tool-header">
+
+        <div class="tool-icon">
+
+            <i class="fa-solid fa-list-ol"></i>
+
+        </div>
+
+        <h1>Add Page Numbers to PDF</h1>
+
+        <p>
+
+            Automatically add page numbers to every page of your PDF document.
+
+        </p>
+
+    </div>
+
+    <!-- UPLOAD -->
+
+    <div class="upload-box">
+
+        <form
+            action="/add-page-numbers-file"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="drop-zone" id="dropZone">
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    name="pdf"
+                    accept=".pdf"
+                    hidden
+                    required
+                >
+
+                <label
+                    for="fileInput"
+                    class="upload-area"
+                >
+
+                    <div class="upload-icon">
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    </div>
+
+                    <h2>
+
+                        Drag & Drop Your PDF
+
+                    </h2>
+
+                    <p>
+
+                        or click below to browse
+
+                    </p>
+
+                    <button
+                        type="button"
+                        class="choose-btn"
+                        onclick="document.getElementById('fileInput').click()"
+                    >
+
+                        Choose PDF
+
+                    </button>
+
+                    <!-- SUCCESS CARD -->
+
+                    <div
+                        id="fileCard"
+                        class="file-card success-card"
+                        style="display:none;"
+                    >
+
+                        <div class="file-left">
+
+                            <div class="success-icon">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h3 id="fileName"></h3>
+
+                                <p id="fileSize"></p>
+
+                                <span class="ready-tag">
+
+                                    Ready to add page numbers
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="removeFile"
+                            class="remove-btn"
+                        >
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </button>
+
+                    </div>
+
+                    <!-- POSITION -->
+
+                    <div style="margin-top:20px;">
+
+                       <label>
+
+    <strong class="tool-label">
+
+        Starting Page Number
+
+    </strong>
+
+</label>
+
+<input
+    type="number"
+    name="start_page"
+    class="tool-input"
+    value="1"
+    min="1"
+    placeholder="1"
+    required>
+
+                            <label>
+
+    <strong class="tool-label">
+
+        Position
+
+    </strong>
+
+</label>
+
+<select
+    name="position"
+    class="tool-select">
+
+    <option value="bottom-center">Bottom Center</option>
+    <option value="bottom-right">Bottom Right</option>
+    <option value="top-right">Top Right</option>
+
+</select>
+                    </div>
+
+                </label>
+
+                    <!-- BUTTON -->
+
+                    <button
+                        class="convert-btn"
+                        id="convertBtn"
+                        type="submit"
+                        disabled
+                    >
+
+                        <i class="fa-solid fa-list-ol"></i>
+
+                        Add Page Numbers
+
+                    </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- LOADER -->
+
+    <div
+        id="loader"
+        class="loader-overlay"
+        style="display:none;"
+    >
+
+        <div class="loader-box">
+
+            <div class="spinner"></div>
+
+            <h3>
+
+                Adding Page Numbers...
+
+            </h3>
+
+            <p>
+
+                Please wait while ToolHub updates your PDF.
+
+            </p>
+
+            <div class="progress">
+
+                <div id="progressBar"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <!-- =========================
+            FEATURES
+    ========================== -->
+
+    <section class="features">
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-list-ol"></i>
+
+            <h3>Automatic Page Numbering</h3>
+
+            <p>
+                Add page numbers to every page of your PDF automatically.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-location-dot"></i>
+
+            <h3>Choose Position</h3>
+
+            <p>
+                Place page numbers at the bottom center, bottom right, or top right.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <h3>100% Secure</h3>
+
+            <p>
+                Your uploaded PDFs are processed securely and automatically deleted after conversion.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            <h3>Fast Processing</h3>
+
+            <p>
+                Add page numbers to your PDF within seconds while preserving the original quality.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            HOW IT WORKS
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>How It Works</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <span>1</span>
+
+                <h3>Upload PDF</h3>
+
+                <p>
+                    Choose or drag your PDF document into the upload area.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>2</span>
+
+                <h3>Select Position</h3>
+
+                <p>
+                    Choose where you want the page numbers to appear.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>3</span>
+
+                <h3>Download</h3>
+
+                <p>
+                    Download your numbered PDF instantly.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            SEO ARTICLE
+    ========================== -->
+
+    <section class="tool-article">
+        <div class="article-card">
+
+            <span class="article-badge">Complete Guide</span>
+
+            <h2>Add Page Numbers to PDF: The Complete Guide to Page Numbering PDF Documents</h2>
+
+            <p>
+                Whether you are preparing a legal brief, assembling a school report, or finalizing a business proposal, page numbering is one of the most important finishing touches you can apply to a PDF document. Without page numbers, readers lose their place, references become impossible to verify, and professional presentations fall apart. Learning how to add page numbers to a PDF is a skill that saves time, reduces errors, and instantly elevates the quality of any document you share.
+            </p>
+
+            <p>
+                ToolHub makes it possible to add page numbers to PDF online free, right from your browser with no software installation required. In this comprehensive guide, we will walk you through everything you need to know about page numbering PDF files, from the basics of what page numbering is, to the step-by-step process of using ToolHub to number your pages, along with advanced tips, real-world use cases, and answers to the most frequently asked questions.
+            </p>
+
+            <h3>What Is Page Numbering?</h3>
+
+            <p>
+                Page numbering is the process of assigning a sequential number to each page in a document. These numbers appear in a consistent location on every page, typically along the bottom center, bottom right, or top of the page. Page numbering serves as a roadmap for readers, allowing them to quickly navigate to specific sections, reference particular pages, and understand the overall structure and length of a document.
+            </p>
+
+            <p>
+                In the context of digital documents, page numbering becomes even more critical. When a PDF is viewed on screen, scrolled through, or printed, the presence of clear page numbers ensures that every reader can follow along without confusion. Professional industries including law, medicine, academia, finance, and government require numbered pages as a standard practice. Without them, documents appear incomplete and unprofessional.
+            </p>
+
+            <p>
+                There are several common page numbering formats. The simplest is sequential numbering starting from one and continuing through the last page. More advanced numbering schemes include Roman numerals for front matter, chapter-based numbering, and numbering that excludes title pages or table of contents sections. ToolHub supports sequential numbering with a customizable starting page number, which means you can begin numbering from any value you choose, whether that is page one or a different starting point.
+            </p>
+
+            <h3>Why Add Page Numbers to PDF Documents?</h3>
+
+            <p>
+                There are many compelling reasons to number your PDF pages. Here are the most important ones:
+            </p>
+
+            <p>
+                <strong>Professionalism.</strong> Numbered pages signal that a document has been carefully prepared and reviewed. In business settings, submitting a PDF without page numbers can be perceived as careless or incomplete. Whether you are sending a proposal to a client or sharing a report with your team, adding page numbers instantly improves the perceived quality of your work.
+            </p>
+
+            <p>
+                <strong>Easy Navigation.</strong> Large PDF documents with dozens or hundreds of pages are extremely difficult to navigate without page numbers. Readers need a reference point to move through the document, jump to specific sections, or return to a previously read section. Page numbering provides that essential navigational anchor.
+            </p>
+
+            <p>
+                <strong>Accurate Referencing.</strong> When someone needs to reference a specific piece of information in a document, they need to cite a page number. Legal documents, academic papers, and research reports all depend on page-level citations. Without numbered pages, citing sources or referencing findings becomes unreliable and frustrating.
+            </p>
+
+            <p>
+                <strong>Printing and Binding.</strong> If a PDF is going to be printed and bound, page numbers are essential for maintaining the correct order of pages. Print shops frequently require documents to have visible page numbers to ensure accurate assembly. A missing page number can lead to misprinted or incorrectly ordered documents, resulting in wasted time and money.
+            </p>
+
+            <p>
+                <strong>Compliance.</strong> Many industries and organizations have strict document formatting requirements. Courts, government agencies, and educational institutions often mandate that submitted documents include page numbering. Failing to comply with these requirements can result in rejected submissions or delayed processing.
+            </p>
+
+            <p>
+                <strong>Reader Experience.</strong> From a reader perspective, numbered pages create a more pleasant and organized reading experience. Whether the PDF is read on a desktop computer, a tablet, or a smartphone, page numbers help readers keep track of where they are in the document.
+            </p>
+
+            <h3>How to Add Page Numbers to PDF with ToolHub</h3>
+
+            <p>
+                Adding page numbers to a PDF with ToolHub is straightforward and takes just a few clicks. You do not need to download any software, create an account, or have any technical expertise. Here is the complete step-by-step process to add page numbers to a PDF using the ToolHub Add Page Numbers tool.
+            </p>
+
+            <p>
+                <strong>Step 1: Open the Add Page Numbers Tool.</strong> Navigate to the ToolHub Add Page Numbers page in your web browser. The tool is accessible from any device with an internet connection, whether you are using Windows, Mac, Linux, iOS, or Android. The interface is clean and intuitive, with a large upload area that accepts your PDF file.
+            </p>
+
+            <p>
+                <strong>Step 2: Upload Your PDF.</strong> You can upload your PDF in two ways. First, you can click the Choose PDF button to open a file browser and select the document from your computer. Second, you can drag and drop the PDF directly onto the upload area. Both methods are equally fast and reliable. The tool accepts all standard PDF files, regardless of size, format complexity, or the number of pages.
+            </p>
+
+            <p>
+                <strong>Step 3: Configure Your Settings.</strong> Once your PDF is uploaded, you will see two configuration options. First, the Starting Page Number field lets you choose which number the sequence begins with. By default this is set to one, but you can enter any number you need, which is useful when you are numbering a continuation of a previously numbered document. Second, the Position dropdown menu lets you choose where the page numbers will appear on the page. ToolHub offers three positions: Bottom Center, Bottom Right, and Top Left. Select the position that best fits your document layout and formatting requirements.
+            </p>
+
+            <p>
+                <strong>Step 4: Add Page Numbers.</strong> Click the Add Page Numbers button to begin processing. ToolHub will automatically add page numbers to every page of your PDF using your selected position and starting number. The processing is fast and preserves the original quality of your document. A progress bar will display the current status of the operation.
+            </p>
+
+            <p>
+                <strong>Step 5: Download Your Numbered PDF.</strong> Once processing is complete, you can immediately download the numbered PDF to your device. The file retains the same name as your original with the page numbers seamlessly integrated. You can then share, print, or store the document as needed.
+            </p>
+
+            <h3>Key Features of the ToolHub Add Page Numbers Tool</h3>
+
+            <p>
+                ToolHub is designed to provide a premium page numbering experience without the complexity or cost of desktop software. Here are the key features that set it apart:
+            </p>
+
+            <p>
+                <strong>Completely Free.</strong> There are no hidden fees, subscription requirements, or usage limits. You can add page numbers to as many PDF documents as you need without paying anything. This makes ToolHub an ideal solution for students, freelancers, small businesses, and anyone who needs occasional PDF page numbering.
+            </p>
+
+            <p>
+                <strong>No Installation Required.</strong> ToolHub runs entirely in your web browser. There is nothing to download, install, or update. This means you can use the tool from any computer, tablet, or smartphone without worrying about compatibility or system requirements.
+            </p>
+
+            <p>
+                <strong>Multiple Position Options.</strong> ToolHub gives you control over where page numbers appear on each page. Choose from Bottom Center for a classic look, Bottom Right for a modern placement, or Top Left for documents where bottom space is limited. Each option is designed to complement professional document layouts.
+            </p>
+
+            <p>
+                <strong>Custom Starting Number.</strong> Unlike many free tools that always start numbering from one, ToolHub allows you to set any starting page number. This is especially useful when you are working with documents that have separate front matter sections, or when you need to continue numbering from a previous document.
+            </p>
+
+            <p>
+                <strong>Preserves Original Quality.</strong> Your PDF documents are processed without any loss in resolution, formatting, or content quality. Text, images, hyperlinks, and all other elements remain exactly as they appear in the original file.
+            </p>
+
+            <p>
+                <strong>Secure Processing.</strong> Your uploaded files are encrypted during transfer, processed on secure servers, and automatically deleted after processing. ToolHub never accesses, shares, or stores your documents beyond what is needed to complete the page numbering operation.
+            </p>
+
+            <p>
+                <strong>Fast Processing Speed.</strong> Whether your PDF has ten pages or five hundred pages, ToolHub processes documents quickly. The tool is optimized for speed without sacrificing accuracy or quality.
+            </p>
+
+            <p>
+                <strong>Cross-Platform Compatibility.</strong> ToolHub works on all modern web browsers, including Chrome, Firefox, Safari, Edge, and Opera. It runs equally well on Windows, macOS, Linux, iOS, and Android devices.
+            </p>
+
+            <h3>Benefits of Using ToolHub to Number PDF Pages</h3>
+
+            <p>
+                Using ToolHub to add page numbers to PDF documents offers several important benefits compared to alternative methods such as desktop software, manual editing, or paid online services.
+            </p>
+
+            <p>
+                <strong>Zero Cost.</strong> Professional PDF editing software like Adobe Acrobat requires an expensive subscription. ToolHub delivers the same essential page numbering functionality at no cost, making it accessible to everyone regardless of budget.
+            </p>
+
+            <p>
+                <strong>No Learning Curve.</strong> Desktop PDF software can be overwhelming with its hundreds of features and complex menus. ToolHub is purpose-built for one task: adding page numbers to PDF. This focused design means you can complete the process in seconds without reading manuals or watching tutorials.
+            </p>
+
+            <p>
+                <strong>No File Size Limits.</strong> Some free online tools restrict the size of files you can process. ToolHub handles PDFs of all sizes, ensuring that you can number even large documents without encountering barriers.
+            </p>
+
+            <p>
+                <strong>Immediate Availability.</strong> Since ToolHub is a web-based tool, it is always available whenever you need it. There is no need to install software on a new computer or worry about version compatibility. Simply open your browser and start working.
+            </p>
+
+            <p>
+                <strong>Privacy Focused.</strong> Your documents are processed securely and never stored permanently. This is particularly important for sensitive documents containing confidential information, personal data, or proprietary business content.
+            </p>
+
+            <h3>Real-World Use Cases</h3>
+
+            <p>
+                The ability to add page numbers to PDF documents is valuable across a wide range of professional and personal scenarios. Here are some of the most common use cases:
+            </p>
+
+            <p>
+                <strong>Academic Papers and Theses.</strong> Students and researchers frequently need to add page numbers to their papers, dissertations, and thesis documents. Most universities and academic journals require numbered pages as part of their formatting guidelines. ToolHub makes it easy to meet these requirements without expensive software.
+            </p>
+
+            <p>
+                <strong>Legal Documents.</strong> Court filings, contracts, briefs, and legal memoranda must have clear page numbers for proper referencing and organization. Lawyers and paralegals can use ToolHub to quickly number their PDF documents before submission.
+            </p>
+
+            <p>
+                <strong>Business Reports.</strong> Monthly reports, annual reports, financial statements, and project proposals all benefit from page numbering. Numbered pages help stakeholders navigate large documents and reference specific data points during meetings and reviews.
+            </p>
+
+            <p>
+                <strong>Government and Municipal Documents.</strong> Government agencies often publish reports, policy documents, and public records in PDF format. Adding page numbers ensures that these documents are properly organized and easy to reference by citizens, officials, and researchers.
+            </p>
+
+            <p>
+                <strong>E-Books and Manuals.</strong> Authors and publishers who distribute their work as PDFs need page numbers to provide a proper reading experience. Technical manuals, user guides, and instructional documents also require page numbering for easy navigation between sections.
+            </p>
+
+            <p>
+                <strong>Print-Ready Documents.</strong> Any PDF that is going to be printed benefits from page numbering. It ensures that the printed pages are in the correct order and provides a professional finished product. Print shops and binderies rely on page numbers for quality assurance.
+            </p>
+
+            <p>
+                <strong>Presentations and Slideshows.</strong> PDF presentations shared with audiences benefit from page numbering, especially when discussing specific slides during Q&A sessions or follow-up meetings.
+            </p>
+
+            <h3>Tips for Effective PDF Page Numbering</h3>
+
+            <p>
+                To get the best results when adding page numbers to your PDF documents, keep these practical tips in mind:
+            </p>
+
+            <p>
+                <strong>Choose the Right Position.</strong> Consider the layout of your document before selecting a position. If your document has headers or footers with existing text, choose a position that avoids overlapping. Bottom Center is the most universally accepted format for professional documents.
+            </p>
+
+            <p>
+                <strong>Set the Correct Starting Number.</strong> If your document includes a title page, table of contents, or other front matter that should not be numbered starting from one, adjust the starting page number accordingly. This ensures the main content begins at the appropriate number.
+            </p>
+
+            <p>
+                <strong>Preview Before Printing.</strong> After adding page numbers, always review the document to ensure the numbers appear correctly on every page and do not overlap with existing content or margins. Scroll through the entire PDF to verify consistency.
+            </p>
+
+            <p>
+                <strong>Consider Document Length.</strong> For very long documents, page numbers are especially important. Readers of lengthy reports, manuals, or research papers rely heavily on page numbers for navigation and referencing.
+            </p>
+
+            <p>
+                <strong>Keep Formatting Consistent.</strong> Ensure that your page numbering style is consistent throughout the document. Mixing different numbering formats or positions within a single document creates confusion and appears unprofessional.
+            </p>
+
+            <p>
+                <strong>Number Pages Before Final Review.</strong> Add page numbers as one of the final steps in your document preparation workflow. This ensures that all content is finalized and that the page numbers accurately reflect the final document structure.
+            </p>
+
+            <p>
+                <strong>Save a Copy of the Original.</strong> Before adding page numbers, keep a copy of the unnumbered PDF. This allows you to make changes to the content and re-number the document if needed without starting from scratch.
+            </p>
+
+            <h3>Frequently Asked Questions About Adding Page Numbers to PDF</h3>
+
+            <p>
+                <strong>How do I add page numbers to a PDF for free?</strong>
+            </p>
+
+            <p>
+                You can add page numbers to a PDF for free using the ToolHub Add Page Numbers tool. Simply open the tool in your browser, upload your PDF, select your preferred position and starting number, and click Add Page Numbers. The process takes seconds and costs nothing.
+            </p>
+
+            <p>
+                <strong>Can I add page numbers to a PDF online without downloading software?</strong>
+            </p>
+
+            <p>
+                Yes. ToolHub is a fully web-based tool that runs in your browser. There is no software to download or install. You can access it from any device with an internet connection.
+            </p>
+
+            <p>
+                <strong>What positions are available for page numbering?</strong>
+            </p>
+
+            <p>
+                ToolHub offers three position options: Bottom Center, Bottom Right, and Top Left. These positions cover the most common formatting requirements for professional documents.
+            </p>
+
+            <p>
+                <strong>Can I start page numbering from a number other than one?</strong>
+            </p>
+
+            <p>
+                Yes. The Starting Page Number field allows you to set any number as the starting point. This is useful when you are numbering a continuation of a document or need to skip front matter pages.
+            </p>
+
+            <p>
+                <strong>Will adding page numbers change the quality of my PDF?</strong>
+            </p>
+
+            <p>
+                No. ToolHub processes your PDF without altering its quality. All text, images, hyperlinks, and formatting remain exactly as they appear in the original document.
+            </p>
+
+            <p>
+                <strong>Are my uploaded PDF files secure?</strong>
+            </p>
+
+            <p>
+                Yes. ToolHub uses encrypted file transfer and secure processing servers. All uploaded files are automatically deleted after processing, and your documents are never shared or stored permanently.
+            </p>
+
+            <p>
+                <strong>Can I add page numbers to a password-protected PDF?</strong>
+            </p>
+
+            <p>
+                If your PDF is password-protected, you will need to remove the password protection before uploading it to ToolHub. Once the document is unprotected, you can add page numbers normally.
+            </p>
+
+            <p>
+                <strong>Does ToolHub work on mobile devices?</strong>
+            </p>
+
+            <p>
+                Yes. ToolHub is fully responsive and works on smartphones and tablets. You can add page numbers to your PDFs from any mobile device with a modern web browser.
+            </p>
+
+        </div>
+            <div class="article-card">
+                <h2>Related Tools You Might Like</h2>
+                <p>Explore our other free online tools that complement Add Page Numbers:</p>
+                <div class="related-tools-grid">
+                    <a href="/watermark-pdf"><i class="fa-solid fa-link"></i> Watermark PDF</a>
+                    <a href="/merge-pdf"><i class="fa-solid fa-link"></i> Merge PDF</a>
+                    <a href="/compress-pdf"><i class="fa-solid fa-link"></i> Compress PDF</a>
+                </div>
+            </div>
+    </section>
+        <div class="share-bar">
+            <span>Share this tool:</span>
+            <a class="share-btn facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+            <a class="share-btn twitter" href="https://twitter.com/intent/tweet?url={{ request.url }}&text={{ self.title() }}" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a>
+            <a class="share-btn linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+            <a class="share-btn whatsapp" href="https://wa.me/?text={{ self.title() }}%20{{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+
+    <!-- =========================
+            FAQ
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <h3>Is Add Page Numbers free?</h3>
+
+                <p>
+                    Yes. ToolHub lets you add page numbers to PDF documents completely free.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Can I choose where page numbers appear?</h3>
+
+                <p>
+                    Yes. You can place page numbers at the bottom center, bottom right, or top right.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Will my PDF quality change?</h3>
+
+                <p>
+                    No. ToolHub preserves the original PDF quality while adding page numbers.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Are my files secure?</h3>
+
+                <p>
+                    Yes. Your uploaded files are securely processed and automatically deleted after completion.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Can I add page numbers to large PDFs?</h3>
+
+                <p>
+                    Yes. ToolHub supports both small and large PDF documents.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Does it work on mobile?</h3>
+
+                <p>
+                    Yes. ToolHub works perfectly on desktop, tablet, and mobile devices.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="seo-related" aria-labelledby="related-tools-title">
+        <h2 id="related-tools-title">Explore More PDF Tools</h2>
+        <p>Continue with related ToolHub tools for your next file task.</p>
+        <div class="seo-related-grid">
+            <a class="seo-related-card" href="/extract-pdf"><strong>Extract PDF Pages</strong><span>Save selected PDF pages.</span></a>
+            <a class="seo-related-card" href="/watermark-pdf"><strong>Watermark PDF</strong><span>Add watermarks.</span></a>
+            <a class="seo-related-card" href="/pdf-to-word"><strong>PDF to Word</strong><span>Convert PDFs to Word.</span></a>
+        </div>
+    </section>
+</section>
+
+<script src="{{ url_for('static', filename='js/tools.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Utility Tools Online — Free Online Utilities | ToolHub{% endblock %}
+
+{% block seo_description %}
+<meta name="description" content="Free online utility tools from ToolHub for QR codes, passwords, UUIDs, Lorem Ipsum and word counting.">
+{% endblock %}
+
+{% block content %}
+<div class="tool-grid">
+
+    <!-- QR Generator -->
+    <a href="/qr-generator" class="tool-card">
+        <div class="icon blue">
+            <i class="fa-solid fa-qrcode"></i>
+        </div>
+        <h3>QR Code Generator</h3>
+        <p>Create QR codes for URLs, text, email, phone numbers and more.</p>
+        <div class="tool-btn">Open Tool</div>
+    </a>
+
+    <!-- QR Scanner -->
+    <a href="/qr-scanner" class="tool-card">
+        <div class="icon purple">
+            <i class="fa-solid fa-camera"></i>
+        </div>
+        <h3>QR Code Scanner</h3>
+        <p>Upload an image and instantly scan any QR code.</p>
+        <div class="tool-btn">Open Tool</div>
+    </a>
+
+    <!-- Password Generator -->
+    <a href="/password-generator" class="tool-card">
+        <div class="icon green">
+            <i class="fa-solid fa-key"></i>
+        </div>
+        <h3>Password Generator</h3>
+        <p>Generate secure passwords with numbers, symbols and letters.</p>
+        <div class="tool-btn">Open Tool</div>
+    </a>
+
+    <!-- Password Strength Checker -->
+    <a href="/password-strength-checker" class="tool-card">
+        <div class="icon red">
+            <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h3>Password Strength Checker</h3>
+        <p>Check your password security with live analysis.</p>
+        <div class="tool-btn">Open Tool</div>
+    </a>
+
+    <!-- UUID Generator -->
+    <a href="/uuid-generator" class="tool-card">
+        <div class="icon orange">
+            <i class="fa-solid fa-fingerprint"></i>
+        </div>
+        <h3>UUID Generator</h3>
+        <p>Create Version 4 UUIDs instantly for software and databases.</p>
+        <div class="tool-btn">Open Tool</div>
+    </a>
+
+    <!-- Lorem Ipsum -->
+    <a href="/lorem-ipsum-generator" class="tool-card">
+        <div class="icon blue">
+            <i class="fa-solid fa-font"></i>
+        </div>
+        <h3>Lorem Ipsum Generator</h3>
+        <p>Generate placeholder text in words, sentences or paragraphs.</p>
+        <div class="tool-btn">Open Tool</div>
+    </a>
+
+    <!-- Word Counter -->
+    <a href="/word-counter" class="tool-card">
+        <div class="icon green">
+            <i class="fa-solid fa-file-word"></i>
+        </div>
+        <h3>Word Counter</h3>
+        <p>Count words, characters, sentences, paragraphs and reading time.</p>
+        <div class="tool-btn">Open Tool</div>
+    </a>
+
+</div>
+{% endblock %}

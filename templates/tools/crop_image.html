@@ -1,0 +1,885 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Crop Image Online - Free Image Cropping Tool | ToolHub{% endblock %}
+{% block og_title %}Crop Image Online - Free Image Cropping Tool | ToolHub{% endblock %}
+{% block twitter_title %}Crop Image Online - Free Image Cropping Tool | ToolHub{% endblock %}
+
+{% block seo_description %}
+    <meta name="description" content="Crop images online for free. Remove unwanted areas, adjust dimensions, and create perfect compositions instantly with ToolHub.">
+{% endblock %}
+
+
+{% block structured_data_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.url_root.rstrip('/') }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Image Tools",
+          "item": "{{ request.url_root.rstrip('/') }}/image-tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Crop Image"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Crop Image — ToolHub",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "url": "{{ request.url_root.rstrip('/') }}{{ request.path }}",
+      "description": "{{ self.seo_description()|meta_content }}",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between cropping and resizing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cropping removes portions of an image to change its composition or aspect ratio without altering the scale of the remaining content. Resizing changes the overall dimensions of the entire image, scaling all pixels up or down."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I crop an image to a 1:1 ratio using ToolHub?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. To crop an image to a 1:1 ratio, simply enter the same value for both the crop width and crop height fields. For example, setting both to 500 produces a perfect 500x500 pixel square."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I crop an image to a specific size?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Enter the exact pixel values for the width and height you need in the corresponding fields. The X and Y fields let you control where the crop region starts, so you can position it precisely."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it possible to crop a PNG image with transparency?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub supports PNG images, including those with transparent backgrounds. The cropping process preserves the transparency channel."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does cropping an image reduce its file size?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, in most cases. Since cropping removes pixel data from the discarded regions, the resulting image contains fewer total pixels, which typically translates to a smaller file size."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<section class="tool-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="separator">›</span>
+        <a href="/image-tools">Image Tools</a><span class="separator">›</span>
+        <span>Crop Image</span>
+    </nav>
+
+
+    <!-- TOOL HEADER -->
+
+    <div class="tool-header">
+
+        <div class="tool-icon">
+
+            <i class="fa-solid fa-crop-simple"></i>
+
+        </div>
+
+        <h1>Crop Image</h1>
+
+        <p>
+
+            Crop JPG, PNG and WebP images quickly without losing quality.
+
+        </p>
+
+    </div>
+
+    <!-- UPLOAD -->
+
+    <div class="upload-box">
+
+        <form
+            action="/crop-image-file"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="drop-zone" id="dropZone">
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    name="image"
+                    accept=".jpg,.jpeg,.png,.webp"
+                    hidden
+                    required
+                >
+
+                <label
+                    for="fileInput"
+                    class="upload-area"
+                >
+
+                    <div class="upload-icon">
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    </div>
+
+                    <h2>
+
+                        Drag & Drop Your Image
+
+                    </h2>
+
+                    <p>
+
+                        or click below to browse
+
+                    </p>
+
+                    <button
+                        type="button"
+                        class="choose-btn"
+                        onclick="document.getElementById('fileInput').click()"
+                    >
+
+                        Choose Image
+
+                    </button>
+
+                    <!-- SUCCESS CARD -->
+
+                    <div
+                        id="fileCard"
+                        class="file-card success-card"
+                        style="display:none;"
+                    >
+
+                        <div class="file-left">
+
+                            <div class="success-icon">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h3 id="fileName"></h3>
+
+                                <p id="fileSize"></p>
+
+                                <span class="ready-tag">
+
+                                    Ready to crop
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="removeFile"
+                            class="remove-btn"
+                        >
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </button>
+
+                    </div>
+
+                    <!-- CROP VALUES -->
+
+                    <div style="margin-top:25px;">
+
+                        <label>
+
+                            <strong>X Position</strong>
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="x"
+                            min="0"
+                            value="0"
+                            required
+                            style="
+                                width:100%;
+                                padding:12px;
+                                margin-top:10px;
+                                border-radius:8px;
+                                border:1px solid #ccc;
+                            "
+                        >
+
+                    </div>
+
+                    <div style="margin-top:20px;">
+
+                        <label>
+
+                            <strong>Y Position</strong>
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="y"
+                            min="0"
+                            value="0"
+                            required
+                            style="
+                                width:100%;
+                                padding:12px;
+                                margin-top:10px;
+                                border-radius:8px;
+                                border:1px solid #ccc;
+                            "
+                        >
+
+                    </div>
+
+                    <div style="margin-top:20px;">
+
+                        <label>
+
+                            <strong>Crop Width</strong>
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="width"
+                            min="1"
+                            required
+                            placeholder="Example: 500"
+                            style="
+                                width:100%;
+                                padding:12px;
+                                margin-top:10px;
+                                border-radius:8px;
+                                border:1px solid #ccc;
+                            "
+                        >
+
+                    </div>
+
+                    <div style="margin-top:20px;">
+
+                        <label>
+
+                            <strong>Crop Height</strong>
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="height"
+                            min="1"
+                            required
+                            placeholder="Example: 400"
+                            style="
+                                width:100%;
+                                padding:12px;
+                                margin-top:10px;
+                                border-radius:8px;
+                                border:1px solid #ccc;
+                            "
+                        >
+
+                    </div>
+
+                    <!-- BUTTON -->
+
+                    <button
+                        class="convert-btn"
+                        id="convertBtn"
+                        type="submit"
+                        disabled
+                    >
+
+                        <i class="fa-solid fa-crop-simple"></i>
+
+                        Crop Image
+
+                    </button>
+
+                </label>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- LOADER -->
+
+    <div
+        id="loader"
+        class="loader-overlay"
+        style="display:none;"
+    >
+
+        <div class="loader-box">
+
+            <div class="spinner"></div>
+
+            <h3>
+
+                Cropping Image...
+
+            </h3>
+
+            <p>
+
+                Please wait while ToolHub crops your image.
+
+            </p>
+
+            <div class="progress">
+
+                <div id="progressBar"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <!-- =========================
+            FEATURES
+    ========================== -->
+
+    <section class="features">
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-crop-simple"></i>
+
+            <h3>Crop Images Easily</h3>
+
+            <p>
+                Crop JPG, PNG and WebP images to remove unwanted areas in just a few clicks.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-image"></i>
+
+            <h3>High Quality Output</h3>
+
+            <p>
+                Crop your images without reducing their original quality or sharpness.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            <h3>Fast Processing</h3>
+
+            <p>
+                ToolHub crops your images within seconds using optimized image processing.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <h3>100% Secure</h3>
+
+            <p>
+                Your uploaded images are processed securely and automatically removed after completion.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            HOW IT WORKS
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>How It Works</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <span>1</span>
+
+                <h3>Upload Image</h3>
+
+                <p>
+                    Choose or drag your JPG, PNG or WebP image into the upload area.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>2</span>
+
+                <h3>Enter Crop Values</h3>
+
+                <p>
+                    Specify the X and Y starting positions along with the crop width and height.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>3</span>
+
+                <h3>Download</h3>
+
+                <p>
+                    Download your newly cropped image instantly.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            SEO ARTICLE
+    ========================== -->
+
+    <section class="tool-article">
+
+        <div class="article-card">
+
+            <span class="article-badge">Complete Guide</span>
+
+            <h2>What Is Image Cropping?</h2>
+
+            <p>
+                Image cropping is the process of removing unwanted or irrelevant portions of a photograph or graphic to improve its composition, focus, or dimensions. When you crop an image, you are essentially selecting a specific rectangular region and discarding everything outside that boundary. The result is a new, tighter frame that highlights the most important elements of the original picture. Whether you are a professional photographer trying to perfect a portrait, a social media manager preparing content for a specific platform, or simply someone who wants to cut image edges off a family photo, image cropping is one of the most fundamental and widely used editing operations in digital imaging.
+            </p>
+
+            <p>
+                At its core, cropping does not alter the pixels inside the selected region. It only trims the outer areas. This means the resolution and quality of the cropped portion remain identical to the source. That is precisely why millions of people rely on an image cropper every single day — it is a non-destructive way to refocus a visual without compromising on clarity. Online tools like the ToolHub Crop Image tool make this process accessible to everyone, regardless of technical skill, by providing a straightforward browser-based interface where you upload a photo, specify the crop dimensions, and download the result in seconds.
+            </p>
+
+            <h2>Why Should You Crop Your Images?</h2>
+
+            <p>
+                There are many reasons why cropping is an essential step in any image editing workflow. Understanding these reasons helps you see why a reliable crop photo tool is a must-have for anyone working with digital visuals.
+            </p>
+
+            <p>
+                <strong>Improving Composition.</strong> A well-cropped image draws the viewer's eye exactly where you want it. By removing distracting background elements, you can transform a cluttered scene into a clean, focused composition. This is especially important in product photography, where the item needs to be front and center, and in portrait photography, where the subject's face should dominate the frame.
+            </p>
+
+            <p>
+                <strong>Meeting Platform Requirements.</strong> Every social media platform, marketplace, and website has specific image dimension requirements. Instagram, for instance, favors square (1:1) or 4:5 vertical crops for feed posts. LinkedIn profile photos need a 1:1 ratio at a minimum resolution of 400×400 pixels. E-commerce platforms like Amazon require product images on a pure white background with specific aspect ratios. Cropping your images to these exact specifications ensures they look professional and display correctly without awkward cropping or letterboxing applied by the platform itself.
+            </p>
+
+            <p>
+                <strong>Removing Unwanted Objects.</strong> Sometimes a perfect shot is ruined by an unexpected photobomber, a trash can in the corner, or an awkwardly placed sign. Cropping lets you eliminate these distractions without needing advanced editing skills or expensive software. Simply set your crop boundaries to exclude the offending element and you have a clean image ready for use.
+            </p>
+
+            <p>
+                <strong>Changing Aspect Ratio.</strong> The original aspect ratio of a photograph does not always suit the intended use. A wide landscape photo may need to be converted to a vertical format for a mobile banner. A rectangular screenshot may need to become a square thumbnail for a blog post. Cropping to a specific size — like 1:1, 4:3, 16:9, or any custom ratio — gives you complete control over the final shape of your image.
+            </p>
+
+            <p>
+                <strong>Reducing File Size.</strong> Larger images contain more pixel data, which translates to larger file sizes. If you only need a small portion of a high-resolution photo, cropping out the excess can significantly reduce the file size. This is particularly useful for web publishing, where faster load times improve user experience and SEO rankings.
+            </p>
+
+            <p>
+                <strong>Preparing for Print.</strong> Print projects require images at specific dimensions and aspect ratios. A photo that looks great on screen may need to be cropped to fit a standard print size like 4×6, 5×7, or 8×10 inches. Cropping ensures your printed product looks exactly as intended without unexpected margins or cut-off edges.
+            </p>
+
+            <h2>How to Crop an Image Step by Step</h2>
+
+            <p>
+                Learning how to crop an image online free with custom size settings is straightforward when you use a tool designed for simplicity. Here is a detailed walkthrough of the process using the ToolHub Crop Image tool.
+            </p>
+
+            <p>
+                <strong>Step 1: Upload Your Image.</strong> Navigate to the Crop Image tool page on ToolHub. You will see a drag-and-drop area where you can either drag your image file directly from your computer or click the "Choose Image" button to browse your file system. The tool supports JPG, JPEG, PNG, and WebP formats, so you have flexibility in the types of images you can process. Once your image is uploaded, you will see a confirmation card showing the file name, size, and a "Ready to crop" status indicator.
+            </p>
+
+            <p>
+                <strong>Step 2: Determine Your Crop Coordinates.</strong> This is where precision matters. You need to enter four values: X position, Y position, crop width, and crop height. The X and Y values represent the top-left corner of your crop area, measured in pixels from the top-left corner of the original image. For example, if you set X to 100 and Y to 50, your crop region will start 100 pixels from the left edge and 50 pixels from the top edge. The width and height values define how large the cropped area will be. If you want to crop an image to a specific size — say 800×600 pixels — you would enter 800 for width and 600 for height.
+            </p>
+
+            <p>
+                <strong>Step 3: Click Crop Image.</strong> Once you have entered all four values, the "Crop Image" button becomes active. Click it to start the cropping process. The tool will process your image on the server, removing everything outside your specified region and generating a new image file containing only the cropped area.
+            </p>
+
+            <p>
+                <strong>Step 4: Download Your Cropped Image.</strong> After processing completes — which typically takes just a few seconds — you will be presented with a download link. Click it to save your newly cropped image to your device. The downloaded file retains the original quality of the source image within the cropped region, so there is no loss of sharpness or detail.
+            </p>
+
+            <h2>Key Features of the ToolHub Crop Image Tool</h2>
+
+            <p>
+                The ToolHub Crop Image tool is designed to deliver a seamless cropping experience with several standout features that set it apart from other online image croppers.
+            </p>
+
+            <p>
+                <strong>Precision Pixel Control.</strong> Unlike drag-and-drop croppers that only give you approximate positioning, ToolHub lets you enter exact pixel values for X position, Y position, width, and height. This level of precision is critical when you need to crop an image to a specific size for print, web, or platform-specific requirements. There is no guessing or eyeballing — you get exactly the region you specified.
+            </p>
+
+            <p>
+                <strong>Multiple Format Support.</strong> The tool accepts JPG, JPEG, PNG, and WebP images, covering the most common formats used on the web and in digital photography. You do not need to convert your image to a specific format before cropping; just upload it in its native format and the tool handles the rest.
+            </p>
+
+            <p>
+                <strong>No Quality Loss.</strong> Cropping with ToolHub preserves the original quality of your image. The pixels within the crop region are not recompressed, resampled, or altered in any way. What you see in the original at those coordinates is exactly what you get in the cropped output.
+            </p>
+
+            <p>
+                <strong>Browser-Based Convenience.</strong> There is nothing to download or install. The entire cropping process happens in your web browser and on ToolHub's servers. You can access the tool from any device with a modern web browser — desktop, laptop, tablet, or smartphone — making it one of the most convenient ways to crop photo files on the go.
+            </p>
+
+            <p>
+                <strong>Secure Processing.</strong> Privacy is a top priority. Your uploaded images are processed securely and automatically deleted from ToolHub's servers after processing is complete. No one else can access your files, and they are not stored longer than necessary.
+            </p>
+
+            <p>
+                <strong>Free to Use.</strong> There are no hidden fees, no subscription required, and no watermarks added to your cropped images. ToolHub Crop Image is completely free, making it accessible to students, hobbyists, professionals, and anyone else who needs a quick, reliable cropping solution.
+            </p>
+
+            <p>
+                <strong>Fast Processing Speed.</strong> Optimized server-side image processing means your crops are completed in seconds. You do not have to wait minutes for a large image to be processed; the tool is built for speed without sacrificing quality.
+            </p>
+
+            <p>
+                <strong>Drag-and-Drop Upload.</strong> The upload interface supports both traditional file browsing and modern drag-and-drop functionality. Simply drag your image file from your desktop or file explorer into the upload area and the tool will recognize it instantly.
+            </p>
+
+            <h2>Benefits of Using an Online Image Cropper</h2>
+
+            <p>
+                Using an online image cropper like ToolHub offers several advantages over desktop software and other alternatives.
+            </p>
+
+            <p>
+                <strong>No Software Installation Required.</strong> Desktop photo editors like Adobe Photoshop, GIMP, or Affinity Photo are powerful but require installation, updates, and significant system resources. An online crop image tool eliminates all of that overhead. You simply open your browser, navigate to the tool, and start cropping immediately. This is especially beneficial when you are working on a shared or public computer where installing software is not an option.
+            </p>
+
+            <p>
+                <strong>Cross-Platform Compatibility.</strong> Desktop software is typically designed for a specific operating system. An online tool works identically on Windows, macOS, Linux, ChromeOS, and mobile platforms. Whether you are sitting at a Windows workstation in an office or using an iPad at a coffee shop, the experience is consistent and reliable.
+            </p>
+
+            <p>
+                <strong>Minimal Learning Curve.</strong> Professional photo editing software has steep learning curves, with complex menus, layers, masks, and adjustment tools that can overwhelm beginners. An online image cropper distills the process into a few simple inputs: upload, set dimensions, and download. Anyone can learn to crop an image in under a minute, regardless of their technical background.
+            </p>
+
+            <p>
+                <strong>Instant Access.</strong> When you need to crop a photo quickly — perhaps to meet a deadline or respond to a request — an online tool provides instant access. There is no installation wait time, no license activation, and no software boot-up delay. You go from need to result in seconds.
+            </p>
+
+            <p>
+                <strong>Reduced System Resource Usage.</strong> Desktop photo editors consume significant RAM, CPU, and disk space. Online tools shift the processing load to the server, meaning your local device uses minimal resources. This is particularly advantageous for users with older or lower-spec hardware.
+            </p>
+
+            <p>
+                <strong>Consistent Updates.</strong> Online tools are updated on the server side, so you always have access to the latest version without needing to manually download and install updates. Bug fixes, performance improvements, and new features are deployed centrally and become available to all users immediately.
+            </p>
+
+            <h2>Common Use Cases for Image Cropping</h2>
+
+            <p>
+                Image cropping is not just a general-purpose editing task — it plays a critical role in many specific workflows and industries. Here are some of the most common scenarios where an image cropper is indispensable.
+            </p>
+
+            <p>
+                <strong>Social Media Content Creation.</strong> Social media managers and content creators crop images daily to fit the specific dimensions required by each platform. A Facebook cover photo needs a different aspect ratio than an Instagram story or a Twitter header image. Cropping ensures your content looks polished and professional across all channels.
+            </p>
+
+            <p>
+                <strong>E-Commerce Product Photography.</strong> Online retailers must present product images that meet strict platform guidelines. Amazon, eBay, Shopify, and Etsy all have specific requirements for product image dimensions and aspect ratios. Cropping product photos to the correct size — often 1:1 square — ensures a consistent, professional storefront.
+            </p>
+
+            <p>
+                <strong>Profile Pictures and Avatars.</strong> Profile photos on social media, forums, email accounts, and professional networks need to be cropped to a square or circular format. An online crop image tool lets you quickly create a perfectly centered profile picture from any source image.
+            </p>
+
+            <p>
+                <strong>Web Design and Development.</strong> Web designers regularly need to crop images to fit specific layout containers, hero sections, blog post thumbnails, and card components. Having a reliable cropping tool ensures that every image element on a website looks intentional and well-composed.
+            </p>
+
+            <p>
+                <strong>Print Production.</strong> Printing photographs, posters, flyers, or business cards requires images at exact dimensions. Cropping to the target print size eliminates wasted space and ensures the final product looks exactly as the designer intended.
+            </p>
+
+            <p>
+                <strong>Document and Screenshot Editing.</strong> When preparing images for presentations, reports, or documentation, you often need to crop screenshots to show only the relevant portion of a screen. Cropping removes taskbars, menus, and other UI elements that distract from the content you want to highlight.
+            </p>
+
+            <p>
+                <strong>Archival and Cataloging.</strong> Libraries, museums, and archives use cropping to standardize the presentation of digitized images. By cropping all images to a consistent size and aspect ratio, they create a uniform visual catalog that is easier to browse and compare.
+            </p>
+
+            <h2>Tips for Getting the Best Crop Results</h2>
+
+            <p>
+                Achieving the perfect crop requires a combination of planning and technique. Here are practical tips to help you get the best results every time you use an image cropper.
+            </p>
+
+            <p>
+                <strong>Know Your Target Dimensions First.</strong> Before you start cropping, determine the exact pixel dimensions or aspect ratio you need. Check the requirements of the platform or project you are creating for. Having these numbers on hand prevents multiple crop attempts and ensures you get it right the first time.
+            </p>
+
+            <p>
+                <strong>Use the Rule of Thirds.</strong> The rule of thirds is a composition guideline that divides the image into a 3×3 grid. Placing your subject at the intersection points of this grid creates a more balanced and visually appealing composition. When cropping, try to position your main subject along these lines or intersections rather than dead center.
+            </p>
+
+            <p>
+                <strong>Leave Breathing Room.</strong> Avoid cropping too tightly around your subject. Leaving a small margin of space around the edges prevents the image from feeling cramped and gives the viewer's eye room to travel. This is particularly important for profile pictures and thumbnails where the image will be displayed at small sizes.
+            </p>
+
+            <p>
+                <strong>Maintain Aspect Ratio When Needed.</strong> In some cases, you may want to preserve the original aspect ratio while reducing the overall size. ToolHub's precise pixel input makes this straightforward — simply calculate the new dimensions using the original ratio. For a 1:1 crop, ensure your width and height values are identical.
+            </p>
+
+            <p>
+                <strong>Consider the Final Viewing Context.</strong> Think about where the cropped image will be displayed. A crop that looks great on a large desktop monitor may lose important details when shrunk down for a mobile screen. Similarly, a crop optimized for screen viewing may not translate well to print. Always preview and test your crops in the intended viewing context.
+            </p>
+
+            <p>
+                <strong>Avoid Over-Cropping.</strong> Removing too much of the original image can degrade quality, especially if you later decide to enlarge the crop. Since cropping discards pixel data, it is generally better to crop conservatively and make additional adjustments later if needed rather than aggressively removing areas that might prove useful.
+            </p>
+
+            <p>
+                <strong>Check for Watermarks and Copyright Symbols.</strong> Before publishing a cropped image, make sure you have not accidentally included a watermark or copyright notice that should be removed, or conversely, make sure you have not cropped out a required attribution or watermark if one should be present.
+            </p>
+
+            <h2>Frequently Asked Questions</h2>
+
+            <p>
+                <strong>What is the difference between cropping and resizing?</strong>
+            </p>
+
+            <p>
+                Cropping removes portions of an image to change its composition or aspect ratio without altering the scale of the remaining content. Resizing changes the overall dimensions of the entire image, scaling all pixels up or down. You might crop to remove unwanted areas and then resize to meet specific dimension requirements. ToolHub handles cropping with pixel-level precision, ensuring your output matches your specifications exactly.
+            </p>
+
+            <p>
+                <strong>Can I crop an image to a 1:1 ratio using ToolHub?</strong>
+            </p>
+
+            <p>
+                Absolutely. To crop an image to a 1:1 ratio, simply enter the same value for both the crop width and crop height fields. For example, setting both width and height to 500 will produce a perfect 500×500 pixel square image. This is ideal for Instagram posts, profile pictures, and product thumbnails that require a square format.
+            </p>
+
+            <p>
+                <strong>How do I crop an image to a specific size?</strong>
+            </p>
+
+            <p>
+                Enter the exact pixel values for the width and height you need in the corresponding fields. If you need an 800×600 image, enter 800 for width and 600 for height. The X and Y fields let you control where the crop region starts, so you can position it precisely over the part of the image you want to keep. This makes it simple to crop an image to a specific size without any guesswork.
+            </p>
+
+            <p>
+                <strong>Is it possible to crop a PNG image with transparency?</strong>
+            </p>
+
+            <p>
+                Yes. ToolHub supports PNG images, including those with transparent backgrounds. The cropping process preserves the transparency channel, so your cropped output will retain the same transparency properties as the original image. This is useful for creating cropped icons, logos, and other graphical assets that rely on transparency.
+            </p>
+
+            <p>
+                <strong>What is the maximum file size I can upload?</strong>
+            </p>
+
+            <p>
+                ToolHub supports both standard and high-resolution images. For the best experience, keep your file size reasonable — typically under 25 MB. Very large files may take slightly longer to process, but the tool is optimized to handle modern camera resolutions and high-quality image files efficiently.
+            </p>
+
+            <p>
+                <strong>Does cropping an image reduce its file size?</strong>
+            </p>
+
+            <p>
+                Yes, in most cases. Since cropping removes pixel data from the discarded regions, the resulting image contains fewer total pixels than the original. This typically translates to a smaller file size, which is beneficial for web publishing, email attachments, and any scenario where smaller files are preferred. The exact reduction depends on how much of the original image is removed.
+            </p>
+
+            <p>
+                <strong>Can I crop multiple images at once?</strong>
+            </p>
+
+            <p>
+                Currently, the ToolHub Crop Image tool processes one image at a time. However, because the tool is so fast — completing most crops in seconds — processing multiple images in sequence is quick and straightforward. Simply repeat the upload, set dimensions, and download workflow for each image you need to crop.
+            </p>
+
+            <p>
+                <strong>Do I need an account to use the tool?</strong>
+            </p>
+
+            <p>
+                No account, registration, or login is required. The ToolHub Crop Image tool is completely open and accessible to anyone. Simply visit the page, upload your image, enter your crop values, and download the result. It is designed to be as friction-free as possible so you can get your work done without unnecessary barriers.
+            </p>
+
+        </div>
+
+            <div class="article-card">
+                <h2>Related Tools You Might Like</h2>
+                <p>Explore our other free online tools that complement Crop Image:</p>
+                <div class="related-tools-grid">
+                    <a href="/resize-image"><i class="fa-solid fa-link"></i> Resize Image</a>
+                    <a href="/rotate-image"><i class="fa-solid fa-link"></i> Rotate Image</a>
+                    <a href="/flip-image"><i class="fa-solid fa-link"></i> Flip Image</a>
+                </div>
+            </div>
+    </section>
+        <div class="share-bar">
+            <span>Share this tool:</span>
+            <a class="share-btn facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+            <a class="share-btn twitter" href="https://twitter.com/intent/tweet?url={{ request.url }}&text={{ self.title() }}" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a>
+            <a class="share-btn linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+            <a class="share-btn whatsapp" href="https://wa.me/?text={{ self.title() }}%20{{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+
+
+    <!-- =========================
+            FAQ
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <h3>Is Crop Image free?</h3>
+
+                <p>
+                    Yes. ToolHub lets you crop images completely free with no hidden fees.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Which image formats are supported?</h3>
+
+                <p>
+                    JPG, JPEG, PNG and WebP images are fully supported.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Will cropping reduce image quality?</h3>
+
+                <p>
+                    No. Cropping only removes unwanted portions while preserving the quality of the remaining image.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Can I crop large images?</h3>
+
+                <p>
+                    Yes. ToolHub supports both small and high-resolution images.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Are my images secure?</h3>
+
+                <p>
+                    Yes. All uploaded images are securely processed and automatically deleted after processing.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Does it work on mobile devices?</h3>
+
+                <p>
+                    Yes. ToolHub is fully compatible with desktop, tablet and mobile devices.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="seo-related" aria-labelledby="related-tools-title">
+        <h2 id="related-tools-title">Explore More Image Tools</h2>
+        <p>Continue with related ToolHub tools for your next file task.</p>
+        <div class="seo-related-grid">
+            <a class="seo-related-card" href="/resize-image"><strong>Resize Image</strong><span>Change image dimensions.</span></a>
+            <a class="seo-related-card" href="/rotate-image"><strong>Rotate Image</strong><span>Rotate images online.</span></a>
+            <a class="seo-related-card" href="/compressor"><strong>Image Compressor</strong><span>Reduce image file size.</span></a>
+        </div>
+    </section>
+</section>
+
+<script src="{{ url_for('static', filename='js/tools.js') }}"></script>
+
+{% endblock %}

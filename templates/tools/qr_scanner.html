@@ -1,0 +1,745 @@
+﻿{% extends "base.html" %}
+
+{% block title %}QR Code Scanner - Free Online QR Code Reader | ToolHub{% endblock %}
+{% block og_title %}QR Code Scanner - Free Online QR Code Reader | ToolHub{% endblock %}
+{% block twitter_title %}QR Code Scanner - Free Online QR Code Reader | ToolHub{% endblock %}
+
+{% block seo_description %}
+    <meta name="description" content="Scan QR codes online for free. Upload an image to decode URLs, text, and contacts instantly with ToolHub's free QR code scanner tool.">
+{% endblock %}
+
+
+{% block structured_data_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.url_root.rstrip('/') }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Utility Tools",
+          "item": "{{ request.url_root.rstrip('/') }}/utility-tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Qr Scanner"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Qr Scanner — ToolHub",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "url": "{{ request.url_root.rstrip('/') }}{{ request.path }}",
+      "description": "{{ self.seo_description()|meta_content }}",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is QR Code Scanner free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub allows unlimited QR code scanning completely free with no hidden fees."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which image formats are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ToolHub supports PNG, JPG, JPEG and WebP image formats for QR code scanning."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I scan a QR code from a screenshot?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub lets you scan QR codes from screenshots. Simply save the screenshot, upload it, and scan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What types of data can a QR code store?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "QR codes can store website URLs, plain text, phone numbers, email addresses, Wi-Fi credentials, contact information, and more."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it safe to scan QR codes with an online tool?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ToolHub processes your uploaded images in a secure environment and does not store them after scanning. However, always be cautious about the content a QR code reveals."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<section class="tool-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="separator">›</span>
+        <a href="/utility-tools">Utility Tools</a><span class="separator">›</span>
+        <span>Qr Scanner</span>
+    </nav>
+
+
+    <div class="tool-header">
+
+        <div class="tool-icon">
+
+            <i class="fa-solid fa-qrcode"></i>
+
+        </div>
+
+        <h1>QR Code Scanner</h1>
+
+        <p>
+
+            Upload a QR code image and instantly view its contents.
+
+        </p>
+
+    </div>
+
+    <div class="upload-box">
+
+        <form
+            action="/scan-qr-file"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="drop-zone" id="dropZone">
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    name="image"
+                    accept=".png,.jpg,.jpeg,.webp"
+                    hidden
+                    required
+                >
+
+                <label
+                    for="fileInput"
+                    class="upload-area"
+                >
+
+                    <div class="upload-icon">
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    </div>
+
+                    <h2>
+
+                        Upload QR Code Image
+
+                    </h2>
+
+                    <p>
+
+                        PNG, JPG, JPEG and WebP are supported.
+
+                    </p>
+
+                    <button
+                        type="button"
+                        class="choose-btn"
+                        onclick="document.getElementById('fileInput').click()"
+                    >
+
+                        Choose QR Image
+
+                    </button>
+
+                    <div
+                        id="fileCard"
+                        class="file-card success-card"
+                        style="display:none;"
+                    >
+
+                        <div class="file-left">
+
+                            <div class="success-icon">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h3 id="fileName"></h3>
+
+                                <p id="fileSize"></p>
+
+                                <span class="ready-tag">
+
+                                    Ready to scan
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="removeFile"
+                            class="remove-btn"
+                        >
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </button>
+
+                    </div>
+
+                    <button
+                        class="convert-btn"
+                        id="convertBtn"
+                        type="submit"
+                        disabled
+                    >
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        Scan QR Code
+
+                    </button>
+
+                </label>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- Loader -->
+
+    <div
+        id="loader"
+        class="loader-overlay"
+        style="display:none;"
+    >
+
+        <div class="loader-box">
+
+            <div class="spinner"></div>
+
+            <h3>
+
+                Scanning QR Code...
+
+            </h3>
+
+            <p>
+
+                Please wait while ToolHub scans your image.
+
+            </p>
+
+            <div class="progress">
+
+                <div id="progressBar"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+        <!-- =========================
+            FEATURES
+    ========================== -->
+
+    <section class="features">
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-qrcode"></i>
+
+            <h3>Instant QR Scanning</h3>
+
+            <p>
+                Upload a QR code image and instantly reveal its hidden content.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-image"></i>
+
+            <h3>Supports Multiple Formats</h3>
+
+            <p>
+                Scan QR codes from PNG, JPG, JPEG and WebP images with ease.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            <h3>Fast Processing</h3>
+
+            <p>
+                ToolHub quickly detects and decodes QR codes within seconds.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <h3>Private & Secure</h3>
+
+            <p>
+                Your uploaded QR code images are processed securely and are never stored.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            HOW IT WORKS
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>How It Works</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <span>1</span>
+
+                <h3>Upload QR Image</h3>
+
+                <p>
+                    Select or drag your QR code image into the upload area.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>2</span>
+
+                <h3>Scan</h3>
+
+                <p>
+                    Click the Scan QR Code button and let ToolHub decode it.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>3</span>
+
+                <h3>View Result</h3>
+
+                <p>
+                    Instantly see the decoded text, URL, email, phone number or other data.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            SEO ARTICLE
+    ========================== -->
+
+    <section class="tool-article">
+        <div class="article-card">
+
+            <span class="article-badge">QR Code Scanner</span>
+
+            <h2>What Is a QR Code Scanner?</h2>
+
+            <p>
+                A QR code scanner is a digital tool designed to read and decode Quick Response codes — those small square barcodes you see everywhere from restaurant menus to product packaging. At its core, a QR code scanner takes an image containing a QR code, analyzes the black-and-white pattern of squares, and converts that pattern into readable data. That data can be a website URL, a plain text message, a phone number, an email address, Wi-Fi login credentials, or virtually any other type of encoded information.
+            </p>
+
+            <p>
+                The term "QR code reader" is often used interchangeably with QR code scanner. Both refer to software that interprets the visual structure of a QR code and extracts the embedded content. ToolHub's QR code scanner online goes a step further by letting you scan QR code from image online without downloading any app, installing browser extensions, or fumbling with your phone's camera. Simply upload your QR code image and receive the decoded result in seconds.
+            </p>
+
+            <p>
+                QR codes were originally invented in 1994 by the Japanese automotive company Denso Wave. They were designed to track vehicle parts during the manufacturing process. Since then, QR codes have exploded into mainstream use. Today they are used in marketing, payments, event ticketing, logistics, education, and personal information sharing. Because QR codes can store up to 7,089 numeric characters or 4,296 alphanumeric characters, they are remarkably versatile. But none of that data is useful unless you have a reliable QR code scanner to unlock it — and that is exactly what ToolHub provides.
+            </p>
+
+            <h2>Why Use a QR Code Scanner Online?</h2>
+
+            <p>
+                You might wonder why you would use a QR code scanner online instead of relying on your smartphone's built-in camera app. The answer is simple: flexibility. A phone camera can only scan QR codes that are physically in front of it. What happens when someone emails you a QR code? What if you see a QR code in a screenshot, a PDF, or a printed flyer that you want to scan from your desktop? That is where an online QR code reader becomes indispensable.
+            </p>
+
+            <p>
+                With ToolHub, you can scan QR code from image online in three straightforward steps. There is no need to download software, create an account, or pay any fees. Whether you are on Windows, macOS, Linux, ChromeOS, Android, or iOS, the tool works directly in your browser. This universal compatibility means you can decode QR codes on any device with an internet connection.
+            </p>
+
+            <p>
+                Beyond convenience, an online QR code scanner gives you better control over privacy. ToolHub processes your uploaded images locally and securely — your files are never stored on external servers, never shared with third parties, and never used for any purpose other than decoding the QR code you uploaded. When the scan is complete, the image is automatically removed. That level of privacy is hard to guarantee with third-party apps that may collect data in the background.
+            </p>
+
+            <p>
+                Speed is another major advantage. The entire scanning process takes less than a few seconds. Upload, scan, read the result. That is it. For professionals who need to decode multiple QR codes throughout the day — marketers analyzing campaign materials, developers testing QR-generated URLs, or warehouse staff verifying shipping labels — a fast and reliable online tool saves significant time.
+            </p>
+
+            <h2>How to Scan a QR Code with ToolHub</h2>
+
+            <p>
+                Learning how to scan a QR code with ToolHub takes almost no effort. Here is a detailed step-by-step walkthrough so you know exactly what to expect:
+            </p>
+
+            <p>
+                <strong>Step 1 — Prepare Your QR Code Image.</strong> First, you need an image that contains a QR code. This can be a photo you took with your phone, a screenshot from your computer, a downloaded image from an email, or a scan from a printed document. Make sure the QR code is clearly visible and not too blurry. Supported formats include PNG, JPG, JPEG, and WebP. If your image is in a different format, convert it to one of these using a free image converter before proceeding.
+            </p>
+
+            <p>
+                <strong>Step 2 — Open the ToolHub QR Scanner Page.</strong> Navigate to the ToolHub QR Code Scanner tool page in your web browser. No registration is required. The page loads quickly and is optimized for both desktop and mobile screens, so you can use it on any device without difficulty.
+            </p>
+
+            <p>
+                <strong>Step 3 — Upload Your QR Code Image.</strong> You have two options for uploading. You can click the "Choose QR Image" button and browse your file system to select the image, or you can drag and drop the image directly into the upload area. Both methods work identically. Once you select an image, you will see a confirmation card showing the file name, file size, and a green checkmark indicating that the file is ready to scan.
+            </p>
+
+            <p>
+                <strong>Step 4 — Click the Scan QR Code Button.</strong> With your image uploaded and confirmed, click the blue "Scan QR Code" button. The tool will begin processing immediately. You will see a loading overlay with a spinner and progress bar so you know the scan is underway. This typically completes in just a few seconds, depending on the complexity of the QR code and your internet speed.
+            </p>
+
+            <p>
+                <strong>Step 5 — Read the Decoded Result.</strong> Once the scan finishes, the decoded content is displayed on screen. If the QR code contains a URL, you will see a clickable link. If it contains text, that text is shown in full. Phone numbers, email addresses, Wi-Fi credentials, and other data types are all presented in a clear, easy-to-read format. From there you can copy the result, visit the link, or use the information however you need.
+            </p>
+
+            <p>
+                That is all there is to it. Five simple steps, no technical knowledge required. This is exactly why ToolHub is one of the best ways to scan QR code on the internet — it is fast, free, and works for everyone.
+            </p>
+
+            <h2>Key Features of ToolHub QR Code Scanner</h2>
+
+            <p>
+                ToolHub's QR code scanner is built with features that make it stand out from other online tools:
+            </p>
+
+            <p>
+                <strong>Instant QR Scanning.</strong> The moment you upload an image and click scan, ToolHub begins decoding. There is no unnecessary waiting, no loading screens full of ads, and no steps that waste your time. The entire process is streamlined to deliver results as quickly as possible.
+            </p>
+
+            <p>
+                <strong>Multiple Format Support.</strong> ToolHub handles PNG, JPG, JPEG, and WebP images. These four formats cover the vast majority of image files you will encounter in everyday use. Whether you saved a QR code as a screenshot or downloaded it from a website, there is a very good chance ToolHub can read it.
+            </p>
+
+            <p>
+                <strong>Fast Processing.</strong> The backend scanning engine is optimized for speed. Most QR codes are decoded in under three seconds. For users who need to scan multiple codes in succession, this rapid processing adds up to significant time savings over the course of a day.
+            </p>
+
+            <p>
+                <strong>Private and Secure.</strong> Your privacy matters. Every image you upload to ToolHub is processed in a secure environment. Files are not stored, logged, or shared. After the scan completes, the image is automatically purged from the system. You can scan sensitive QR codes — like those containing login credentials or personal information — with confidence.
+            </p>
+
+            <p>
+                <strong>No Installation Required.</strong> ToolHub runs entirely in your web browser. There is nothing to download, no app to install, and no browser extension to configure. This means you avoid the security risks that sometimes come with installing unknown software on your device.
+            </p>
+
+            <p>
+                <strong>Works on All Devices.</strong> Whether you are using a desktop computer, a laptop, a tablet, or a smartphone, ToolHub adapts to your screen size and delivers the same smooth experience. The responsive design ensures that buttons, text, and upload areas are always easy to interact with, regardless of your device.
+            </p>
+
+            <p>
+                <strong>Completely Free.</strong> There are no hidden charges, no premium tiers, and no usage limits. You can scan as many QR codes as you want, as often as you want, without paying anything. ToolHub believes that basic utility tools should be accessible to everyone.
+            </p>
+
+            <h2>Benefits of Using an Online QR Code Reader</h2>
+
+            <p>
+                Using an online QR code reader like ToolHub offers several distinct advantages over alternative methods:
+            </p>
+
+            <p>
+                <strong>Convenience.</strong> You do not need to carry a dedicated device or install a specific app. As long as you have a browser and an internet connection, you can scan QR codes from anywhere. This is especially useful when you receive a QR code in an email, chat message, or document and want to decode it without switching to your phone.
+            </p>
+
+            <p>
+                <strong>Accuracy.</strong> ToolHub uses advanced image processing algorithms to detect and decode QR codes with high accuracy. Even if the QR code is slightly tilted, has minor damage, or is embedded in a busy background, the scanner can usually extract the data correctly. This level of accuracy reduces the frustration of failed scans.
+            </p>
+
+            <p>
+                <strong>No Data Collection.</strong> Unlike some mobile apps that request access to your camera, contacts, storage, and other permissions, ToolHub only needs access to the single image you choose to upload. It does not snoop on your files, track your behavior, or collect personal data. This minimal footprint is a breath of fresh air in an era of invasive data practices.
+            </p>
+
+            <p>
+                <strong>Works with Screenshots.</strong> One of the most common frustrations with phone-based QR scanners is that they cannot read QR codes from screenshots. ToolHub solves this problem completely. If you have a screenshot of a QR code — whether from a website, a social media post, or a messaging app — you can upload it directly and scan it without any workaround.
+            </p>
+
+            <p>
+                <strong>Supports Damaged Codes.</strong> QR codes on printed materials sometimes get smudged, creased, or partially obscured. ToolHub's scanning engine includes error correction capabilities that help it read QR codes even when parts of the image are imperfect. This makes it a practical choice for real-world scenarios where QR codes are not always in pristine condition.
+            </p>
+
+            <h2>Real-World Use Cases for QR Code Scanning</h2>
+
+            <p>
+                QR codes appear in more places than most people realize. Here are some of the most common scenarios where a QR code scanner online proves valuable:
+            </p>
+
+            <p>
+                <strong>Marketing and Advertising.</strong> Marketers embed QR codes in flyers, posters, billboards, email campaigns, and social media posts to drive traffic to websites, landing pages, and promotional offers. A QR code reader allows you to quickly verify that these codes point to the correct destination before they go live.
+            </p>
+
+            <p>
+                <strong>Restaurant Menus.</strong> Many restaurants have replaced physical menus with QR codes that link to digital menus. If you receive a menu as a photo or PDF, you can scan the QR code directly from your computer instead of trying to point your phone at the screen.
+            </p>
+
+            <p>
+                <strong>Event Tickets.</strong> Concerts, conferences, and sporting events often use QR codes on tickets for entry verification. If you need to verify a ticket's QR code from a digital file or email attachment, an online scanner lets you do so without hassle.
+            </p>
+
+            <p>
+                <strong>Product Packaging.</strong> Manufacturers place QR codes on product packaging to provide customers with detailed information, usage instructions, warranty registration forms, or augmented reality experiences. Scanning these codes from product photos saved on your computer is effortless with ToolHub.
+            </p>
+
+            <p>
+                <strong>Wi-Fi Sharing.</strong> A QR code can encode a Wi-Fi network name and password, making it easy for guests to connect without typing credentials. If someone sends you a Wi-Fi QR code over chat or email, you can decode it on your desktop and then enter the password on your device.
+            </p>
+
+            <p>
+                <strong>Contact Information.</strong> QR codes can store vCard data — name, phone number, email, address, and more. Scanning a contact QR code lets you quickly extract and save someone's details without manual data entry.
+            </p>
+
+            <p>
+                <strong>Education.</strong> Teachers and students use QR codes to share links to resources, assignments, and interactive content. Scanning QR codes from digital worksheets or presentation slides is a common classroom activity that ToolHub supports perfectly.
+            </p>
+
+            <p>
+                <strong>Software Development and QA Testing.</strong> Developers frequently generate QR codes during testing and need to verify the encoded data. An online QR code reader provides a quick way to validate test outputs without disrupting your workflow.
+            </p>
+
+            <h2>Tips for Getting the Best Scan Results</h2>
+
+            <p>
+                To ensure that ToolHub decodes your QR codes accurately every time, keep these tips in mind:
+            </p>
+
+            <p>
+                <strong>Use High-Resolution Images.</strong> The clearer your image, the easier it is for the scanner to detect and read the QR code. Avoid heavily compressed images where the QR code squares appear pixelated or blurry. If possible, use the original high-resolution version of the image rather than a thumbnail.
+            </p>
+
+            <p>
+                <strong>Keep the QR Code Fully Visible.</strong> Make sure the entire QR code is within the boundaries of the image. If any part of the code is cut off — for example, if you took a photo that only captured part of the QR code — the scanner may not be able to decode it. Crop the image if needed so the full code is visible with a small margin around it.
+            </p>
+
+            <p>
+                <strong>Avoid Excessive Glare.</strong> If you are photographing a QR code from a glossy surface, watch out for glare that washes out parts of the code. Repositioning your camera or adjusting the angle slightly can reduce reflections and improve scan accuracy.
+            </p>
+
+            <p>
+                <strong>Minimize Background Noise.</strong> QR codes that are placed against very busy or colorful backgrounds can sometimes be harder to detect. If you are having trouble, try cropping the image so the QR code is more isolated from surrounding elements.
+            </p>
+
+            <p>
+                <strong>Check the Format.</strong> ToolHub supports PNG, JPG, JPEG, and WebP images. If your file is in a different format like BMP, TIFF, or SVG, convert it to a supported format before uploading. Most image editors and free online converters can handle this conversion in seconds.
+            </p>
+
+            <p>
+                <strong>Rotate if Necessary.</strong> QR codes can be read at various angles, but extremely rotated images may cause issues. If your QR code is rotated significantly, consider rotating the image to an upright orientation before scanning for the most reliable results.
+            </p>
+
+            <p>
+                <strong>Scan in Good Lighting.</strong> If you are photographing a physical QR code rather than working with a digital file, make sure the lighting is even and sufficient. Poor lighting can create shadows or dark spots that obscure parts of the code and lead to failed scans.
+            </p>
+
+            <h2>Frequently Asked Questions About QR Code Scanning</h2>
+
+            <h3>What is a QR code scanner and how does it work?</h3>
+            <p>
+                A QR code scanner is a tool that reads the black-and-white square pattern of a QR code from an image and converts it into readable data. It works by analyzing the arrangement of dark and light modules in the code, locating the three corner positioning markers, and then decoding the data according to the QR code standard. ToolHub handles all of this automatically — you just upload an image and get the result.
+            </p>
+
+            <h3>Can I scan a QR code from a screenshot?</h3>
+            <p>
+                Yes. One of the biggest advantages of using an online QR code reader like ToolHub is the ability to scan QR code from image online, including screenshots. Simply save the screenshot, upload it to ToolHub, and scan it. This is something that most phone camera apps struggle with.
+            </p>
+
+            <h3>Is ToolHub's QR code scanner really free?</h3>
+            <p>
+                Absolutely. ToolHub's QR code scanner online is 100% free with no hidden charges. You can scan unlimited QR codes without creating an account or providing any payment information. The tool is designed to be a free utility for everyone.
+            </p>
+
+            <h3>What types of data can a QR code store?</h3>
+            <p>
+                QR codes can store a wide variety of data types including website URLs, plain text messages, phone numbers, email addresses, SMS messages, Wi-Fi network credentials, contact information (vCard), calendar events, and more. ToolHub displays the decoded data in a clear format so you can see exactly what the QR code contains.
+            </p>
+
+            <h3>Why is my QR code not scanning?</h3>
+            <p>
+                There are several reasons a QR code might fail to scan. The image may be too blurry or low resolution. The QR code might be partially cut off or obscured. Heavy glare or poor lighting could be affecting the image quality. The file format might not be supported. Try using a clearer image, ensuring the full QR code is visible, and saving the file as PNG or JPG before uploading again.
+            </p>
+
+            <h3>Is it safe to scan QR codes with an online tool?</h3>
+            <p>
+                ToolHub processes your uploaded images in a secure environment and does not store them after scanning. However, always be cautious about the content a QR code reveals. If a QR code directs you to an unfamiliar or suspicious website, do not enter personal information or download files from that site. Treat QR codes with the same caution you would apply to any unknown link.
+            </p>
+
+            <h3>How is a QR code different from a barcode?</h3>
+            <p>
+                Traditional barcodes store data in a series of parallel lines and can typically hold only a small amount of information, such as a product number. QR codes, on the other hand, use a two-dimensional grid of squares and can store significantly more data — up to several thousand characters. QR codes also include built-in error correction, meaning they can be partially damaged or obscured and still be readable.
+            </p>
+
+            <h3>Can I use ToolHub to scan QR codes on my phone?</h3>
+            <p>
+                Yes. ToolHub is fully responsive and works on all mobile devices. Simply open the QR code scanner page in your mobile browser, upload a QR code image from your photo library, and scan it. No app installation is needed.
+            </p>
+
+        </div>
+            <div class="article-card">
+                <h2>Related Tools You Might Like</h2>
+                <p>Explore our other free online tools that complement QR Scanner:</p>
+                <div class="related-tools-grid">
+                    <a href="/qr-generator"><i class="fa-solid fa-link"></i> QR Generator</a>
+                    <a href="/image-to-text"><i class="fa-solid fa-link"></i> Image to Text</a>
+                </div>
+            </div>
+    </section>
+        <div class="share-bar">
+            <span>Share this tool:</span>
+            <a class="share-btn facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+            <a class="share-btn twitter" href="https://twitter.com/intent/tweet?url={{ request.url }}&text={{ self.title() }}" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a>
+            <a class="share-btn linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+            <a class="share-btn whatsapp" href="https://wa.me/?text={{ self.title() }}%20{{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+
+
+    <!-- =========================
+            FAQ
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <h3>Is QR Code Scanner free?</h3>
+
+                <p>
+                    Yes. ToolHub allows unlimited QR code scanning completely free.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Which image formats are supported?</h3>
+
+                <p>
+                    PNG, JPG, JPEG and WebP images are supported.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Can it scan website QR codes?</h3>
+
+                <p>
+                    Yes. ToolHub can decode URLs, text, emails, phone numbers, Wi-Fi credentials and other QR content.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Are my images stored?</h3>
+
+                <p>
+                    No. Uploaded images are processed securely and automatically removed after scanning.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Can I use it on mobile?</h3>
+
+                <p>
+                    Yes. ToolHub works perfectly on desktop, tablet and mobile devices.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>What if my QR code cannot be read?</h3>
+
+                <p>
+                    Make sure the image is clear, not blurry, and the QR code is fully visible.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="seo-related" aria-labelledby="related-tools-title">
+        <h2 id="related-tools-title">Explore More Utility Tools</h2>
+        <p>Continue with related ToolHub tools for your next file task.</p>
+        <div class="seo-related-grid">
+            <a class="seo-related-card" href="/qr-generator"><strong>QR Generator</strong><span>Create QR codes.</span></a>
+            <a class="seo-related-card" href="/password-generator"><strong>Password Generator</strong><span>Generate strong passwords.</span></a>
+            <a class="seo-related-card" href="/word-counter"><strong>Word Counter</strong><span>Count words and characters.</span></a>
+        </div>
+    </section>
+</section>
+
+<script src="{{ url_for('static', filename='js/tools.js') }}"></script>
+
+{% endblock %}

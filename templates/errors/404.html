@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Page Not Found (404) | ToolHub{% endblock %}
+
+{% block seo_description %}<meta name="description" content="The page you were looking for could not be found. Browse ToolHub's free PDF, image and utility tools instead.">{% endblock %}
+
+{% block content %}
+<section class="error-page" style="max-width:640px;margin:80px auto;padding:0 20px;text-align:center;">
+  <h1 style="font-size:64px;margin:0;line-height:1;">404</h1>
+  <h2 style="margin:12px 0 16px;font-size:24px;">Page not found</h2>
+  <p style="color:#555;margin-bottom:28px;">
+    The page you were looking for doesn't exist or has moved.
+  </p>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+    <a href="/" class="btn" style="padding:12px 24px;background:#2563eb;color:#fff;border-radius:8px;text-decoration:none;">Go to homepage</a>
+    <a href="/pdf-tools" class="btn" style="padding:12px 24px;border:1px solid #d1d5db;border-radius:8px;text-decoration:none;color:#111;">PDF tools</a>
+    <a href="/image-tools" class="btn" style="padding:12px 24px;border:1px solid #d1d5db;border-radius:8px;text-decoration:none;color:#111;">Image tools</a>
+  </div>
+</section>
+{% endblock %}

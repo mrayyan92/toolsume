@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+
+{% block title %}Terms of Service — ToolHub{% endblock %}
+
+{% block seo_description %}
+<meta name="description" content="Review ToolHub's terms of service governing the use of our free online PDF, image, and utility tools. Read our usage guidelines and policies.">
+{% endblock %}
+
+{% block content %}
+<style>
+.legal-page{
+    min-height:70vh;
+    padding:75px 0 95px;
+    color:#fff;
+    background:
+        radial-gradient(circle at 12% 8%,rgba(37,99,235,.14),transparent 30%),
+        radial-gradient(circle at 88% 18%,rgba(14,165,233,.08),transparent 28%),
+        linear-gradient(180deg,#06101e 0%,#071426 55%,#06101d 100%);
+}
+.legal-wrap{width:min(980px,calc(100% - 32px));margin:auto}
+.legal-breadcrumb{
+    display:flex;align-items:center;gap:9px;
+    margin-bottom:28px;color:#64748b;font-size:13px;
+}
+.legal-breadcrumb a{color:#60a5fa;text-decoration:none}
+.legal-breadcrumb i{font-size:9px;color:#475569}
+.legal-hero{text-align:center;margin-bottom:38px}
+.legal-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 14px;border-radius:999px;
+    color:#93c5fd;background:rgba(37,99,235,.12);
+    border:1px solid rgba(96,165,250,.20);
+    font-size:11px;font-weight:800;letter-spacing:.08em;
+}
+.legal-hero h1{
+    margin:18px 0 10px;
+    font-size:clamp(38px,5vw,58px);
+    line-height:1.08;
+    letter-spacing:-.03em;
+}
+.legal-hero h1 span{color:#3b82f6}
+.legal-hero p{
+    max-width:720px;margin:auto;
+    color:#94a3b8;line-height:1.8;font-size:15px;
+}
+.legal-card{
+    padding:36px;
+    border-radius:24px;
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.09);
+    box-shadow:0 22px 60px rgba(0,0,0,.20);
+}
+.legal-note{
+    margin-bottom:28px;
+    padding:15px 17px;
+    border-radius:13px;
+    color:#bfdbfe;
+    background:rgba(37,99,235,.08);
+    border:1px solid rgba(96,165,250,.16);
+    font-size:13px;
+    line-height:1.7;
+}
+.legal-card h2{
+    margin:31px 0 9px;
+    color:#f8fafc;
+    font-size:21px;
+}
+.legal-card h2:first-of-type{margin-top:0}
+.legal-card p,.legal-card li{
+    color:#a7b4c7;
+    line-height:1.8;
+    font-size:14px;
+}
+.legal-card ul{padding-left:22px}
+.legal-card li{margin:6px 0}
+.legal-card a{color:#60a5fa}
+.legal-footer{
+    margin-top:25px;
+    padding-top:20px;
+    border-top:1px solid rgba(148,163,184,.10);
+    color:#64748b;
+    font-size:12px;
+}
+@media(max-width:600px){
+    .legal-page{padding:50px 0 70px}
+    .legal-wrap{width:calc(100% - 22px)}
+    .legal-card{padding:22px;border-radius:19px}
+    .legal-hero h1{font-size:39px}
+}
+</style>
+
+<section class="legal-page">
+<div class="legal-wrap">
+
+    <div class="legal-breadcrumb">
+        <a href="/">Home</a>
+        <i class="fa-solid fa-chevron-right"></i>
+        <span>Terms of Service</span>
+    </div>
+
+    <div class="legal-hero">
+        <span class="legal-badge">
+            <i class="fa-solid fa-file-contract"></i>
+            TERMS OF SERVICE
+        </span>
+
+        <h1>Terms of <span>Service</span></h1>
+
+        <p>
+            These terms explain the basic rules and conditions for using
+            ToolHub and its online tools.
+        </p>
+    </div>
+
+    <div class="legal-card">
+
+        <div class="legal-note">
+            By using ToolHub, you agree to use the website responsibly and
+            in accordance with these Terms of Service. If you do not agree
+            with these terms, please do not use the service.
+        </div>
+
+        <h2>1. About ToolHub</h2>
+        <p>
+            ToolHub provides browser-based tools for common file and
+            productivity tasks. The available tools and features may change,
+            be updated, expanded, suspended, or removed from time to time.
+        </p>
+
+        <h2>2. Use of the Service</h2>
+        <p>
+            You may use ToolHub for lawful purposes and in a way that does
+            not interfere with the operation, security, or availability of
+            the website.
+        </p>
+
+        <p>You agree not to:</p>
+        <ul>
+            <li>use ToolHub for unlawful or fraudulent activities;</li>
+            <li>attempt to gain unauthorized access to the website or its systems;</li>
+            <li>interfere with or disrupt the service;</li>
+            <li>upload files containing malicious code intended to harm systems;</li>
+            <li>use automated methods to abuse, overload, or scrape the service
+                in a manner that harms its operation; or</li>
+            <li>use ToolHub in violation of applicable laws or regulations.</li>
+        </ul>
+
+        <h2>3. Uploaded Files</h2>
+        <p>
+            Some tools require you to upload files for processing. You are
+            responsible for ensuring that you have the necessary rights and
+            permissions to upload and process those files.
+        </p>
+        <p>
+            Do not upload files that you are not authorized to process.
+            File processing, temporary storage, and deletion practices may
+            vary between individual tools.
+        </p>
+
+        <h2>4. Your Responsibility</h2>
+        <p>
+            You are responsible for reviewing files and results produced by
+            ToolHub before using them for important, professional, financial,
+            legal, academic, or other consequential purposes.
+        </p>
+
+        <h2>5. Accuracy and Availability</h2>
+        <p>
+            We aim to make ToolHub useful and reliable, but we do not
+            guarantee that every tool will always be available, error-free,
+            uninterrupted, or suitable for every particular purpose.
+        </p>
+        <p>
+            Tool results can depend on the quality, format, size, and content
+            of the input file and on the technology used by the particular
+            tool.
+        </p>
+
+        <h2>6. Intellectual Property</h2>
+        <p>
+            The ToolHub website, branding, original interface elements,
+            written content, and other original materials may be protected by
+            applicable intellectual property laws.
+        </p>
+        <p>
+            You retain your rights in files and content that you own and
+            upload to the service, subject to the rights and permissions
+            necessary for ToolHub to process your request.
+        </p>
+
+        <h2>7. Third-Party Services</h2>
+        <p>
+            Some ToolHub features may rely on third-party services or
+            technologies. Those services may have their own terms and
+            policies. ToolHub is not responsible for changes to external
+            services outside its control.
+        </p>
+
+        <h2>8. Privacy</h2>
+        <p>
+            Your use of ToolHub is also subject to our
+            <a href="/privacy">Privacy Policy</a>, which explains how
+            information may be handled on the website.
+        </p>
+
+        <h2>9. Service Changes</h2>
+        <p>
+            We may modify, improve, suspend, or discontinue individual tools,
+            features, or parts of the website at any time. We may also update
+            these Terms when the service or applicable requirements change.
+        </p>
+
+        <h2>10. Disclaimer of Warranties</h2>
+        <p>
+            ToolHub is provided on an as-available basis. To the extent
+            permitted by applicable law, we do not make guarantees that the
+            service or its results will meet every user's requirements or
+            that the website will always operate without interruption or
+            errors.
+        </p>
+
+        <h2>11. Limitation of Liability</h2>
+        <p>
+            To the extent permitted by applicable law, ToolHub and its
+            operators will not be responsible for losses arising from your
+            use of, or inability to use, the website or its tools. This
+            includes situations where a user relies on an output without
+            independently reviewing it.
+        </p>
+
+        <h2>12. Suspension or Restriction</h2>
+        <p>
+            Access may be restricted or suspended when reasonably necessary
+            to protect ToolHub, its users, its infrastructure, or the
+            security and availability of the service.
+        </p>
+
+        <h2>13. Changes to These Terms</h2>
+        <p>
+            These Terms of Service may be updated from time to time. The
+            updated version will be published on this page. Your continued
+            use of ToolHub after an update means you accept the updated
+            terms to the extent permitted by applicable law.
+        </p>
+
+        <h2>14. Contact</h2>
+        <p>
+            If you have questions about these Terms of Service, please use
+            the <a href="/contact">Contact page</a>.
+        </p>
+
+        <div class="legal-footer">
+            These Terms of Service are general website terms and are not
+            legal advice. They should be reviewed and adapted to the actual
+            business structure, jurisdiction, services, and applicable laws
+            of ToolHub before the site is operated commercially.
+        </div>
+
+    </div>
+</div>
+</section>
+{% endblock %}

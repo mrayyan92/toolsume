@@ -1,0 +1,852 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Rotate Image Online - Free Image Rotation Tool | ToolHub{% endblock %}
+{% block og_title %}Rotate Image Online - Free Image Rotation Tool | ToolHub{% endblock %}
+{% block twitter_title %}Rotate Image Online - Free Image Rotation Tool | ToolHub{% endblock %}
+
+{% block seo_description %}
+    <meta name="description" content="Rotate images online for free. Turn JPG, PNG, WebP photos by 90, 180, or 270 degrees and download instantly with ToolHub.">
+{% endblock %}
+
+
+{% block structured_data_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.url_root.rstrip('/') }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Image Tools",
+          "item": "{{ request.url_root.rstrip('/') }}/image-tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Rotate Image"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Rotate Image — ToolHub",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "url": "{{ request.url_root.rstrip('/') }}{{ request.path }}",
+      "description": "{{ self.seo_description()|meta_content }}",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is Rotate Image free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub allows you to rotate images completely free of charge with no hidden fees."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which image formats are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ToolHub supports JPG, JPEG, PNG and WebP images for rotation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will rotating reduce image quality?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. ToolHub uses high-quality interpolation algorithms that preserve the sharpness and detail of your image."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I rotate by a custom angle?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Select Custom Angle from the rotation dropdown and enter any degree value."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my uploaded images safe and private?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. ToolHub processes all images over encrypted connections and automatically deletes them from the server once processing is complete."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<section class="tool-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="separator">›</span>
+        <a href="/image-tools">Image Tools</a><span class="separator">›</span>
+        <span>Rotate Image</span>
+    </nav>
+
+
+    <!-- TOOL HEADER -->
+
+    <div class="tool-header">
+
+        <div class="tool-icon">
+
+            <i class="fa-solid fa-rotate-right"></i>
+
+        </div>
+
+        <h1>Rotate Image</h1>
+
+        <p>
+
+            Rotate JPG, PNG and WebP images online while maintaining high quality.
+
+        </p>
+
+    </div>
+
+    <!-- UPLOAD -->
+
+    <div class="upload-box">
+
+        <form
+            action="/rotate-image-file"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="drop-zone" id="dropZone">
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    name="image"
+                    accept=".jpg,.jpeg,.png,.webp"
+                    hidden
+                    required
+                >
+
+                <label
+                    for="fileInput"
+                    class="upload-area"
+                >
+
+                    <div class="upload-icon">
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    </div>
+
+                    <h2>
+
+                        Drag & Drop Your Image
+
+                    </h2>
+
+                    <p>
+
+                        or click below to browse
+
+                    </p>
+
+                    <button
+                        type="button"
+                        class="choose-btn"
+                        onclick="document.getElementById('fileInput').click()"
+                    >
+
+                        Choose Image
+
+                    </button>
+
+                    <!-- SUCCESS CARD -->
+
+                    <div
+                        id="fileCard"
+                        class="file-card success-card"
+                        style="display:none;"
+                    >
+
+                        <div class="file-left">
+
+                            <div class="success-icon">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h3 id="fileName"></h3>
+
+                                <p id="fileSize"></p>
+
+                                <span class="ready-tag">
+
+                                    Ready to rotate
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="removeFile"
+                            class="remove-btn"
+                        >
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </button>
+
+                    </div>
+
+                    <!-- ROTATION -->
+
+                    <div style="margin-top:25px;">
+
+                        <label>
+
+                            <strong>Rotation</strong>
+
+                        </label>
+
+                        <select
+                            name="rotation"
+                            style="
+                                width:100%;
+                                padding:12px;
+                                margin-top:10px;
+                                border-radius:8px;
+                                border:1px solid #ccc;
+                            "
+                        >
+
+                            <option value="90">
+
+                                Rotate Right (90°)
+
+                            </option>
+
+                            <option value="-90">
+
+                                Rotate Left (90°)
+
+                            </option>
+
+                            <option value="180">
+
+                                Rotate 180°
+
+                            </option>
+
+                            <option value="custom">
+
+                                Custom Angle
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div style="margin-top:20px;">
+
+                        <label>
+
+                            <strong>Custom Angle (Optional)</strong>
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="custom_angle"
+                            value="0"
+                            placeholder="Example: 45"
+                            style="
+                                width:100%;
+                                padding:12px;
+                                margin-top:10px;
+                                border-radius:8px;
+                                border:1px solid #ccc;
+                            "
+                        >
+
+                    </div>
+
+                    <!-- BUTTON -->
+
+                    <button
+                        class="convert-btn"
+                        id="convertBtn"
+                        type="submit"
+                        disabled
+                    >
+
+                        <i class="fa-solid fa-rotate-right"></i>
+
+                        Rotate Image
+
+                    </button>
+
+                </label>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- LOADER -->
+
+    <div
+        id="loader"
+        class="loader-overlay"
+        style="display:none;"
+    >
+
+        <div class="loader-box">
+
+            <div class="spinner"></div>
+
+            <h3>
+
+                Rotating Image...
+
+            </h3>
+
+            <p>
+
+                Please wait while ToolHub rotates your image.
+
+            </p>
+
+            <div class="progress">
+
+                <div id="progressBar"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <!-- =========================
+            FEATURES
+    ========================== -->
+
+    <section class="features">
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-rotate-right"></i>
+
+            <h3>Rotate Any Image</h3>
+
+            <p>
+                Rotate JPG, PNG and WebP images in seconds while maintaining excellent quality.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-arrows-rotate"></i>
+
+            <h3>Multiple Rotation Options</h3>
+
+            <p>
+                Rotate images by 90°, 180°, or any custom angle to suit your needs.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            <h3>Fast Processing</h3>
+
+            <p>
+                ToolHub processes your images quickly using optimized image processing.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <h3>100% Secure</h3>
+
+            <p>
+                Your uploaded images are securely processed and automatically deleted after completion.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            HOW IT WORKS
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>How It Works</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <span>1</span>
+
+                <h3>Upload Image</h3>
+
+                <p>
+                    Choose or drag your JPG, PNG or WebP image into the upload area.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>2</span>
+
+                <h3>Select Rotation</h3>
+
+                <p>
+                    Choose 90°, 180°, or enter a custom angle for rotation.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>3</span>
+
+                <h3>Download</h3>
+
+                <p>
+                    Download your rotated image instantly with its quality preserved.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            SEO ARTICLE
+    ========================== -->
+
+    <section class="tool-article">
+        <div class="article-card">
+            <span class="article-badge">Guide</span>
+
+            <h2>What Is Image Rotation?</h2>
+
+            <p>
+                Image rotation is the process of turning an image around a fixed point, typically its center, to change its orientation on a digital canvas. When you rotate an image, each pixel is repositioned based on the degree of rotation applied, resulting in a new visual layout that preserves the original content while altering the perspective. Whether you need to rotate photo files that were captured sideways, fix documents that appear upside down, or adjust graphics for a specific design requirement, image rotation is one of the most fundamental operations in digital image editing.
+            </p>
+
+            <p>
+                At its core, rotating an image involves a mathematical transformation. A 90-degree clockwise rotation shifts every pixel so that what was the left edge becomes the top edge, the top becomes the right, and so on. A 180-degree rotation flips the image completely, turning it upside down. Custom angle rotations, such as 45 degrees or 30 degrees, use interpolation algorithms to estimate pixel values at new positions, which is why the quality of the rotation tool matters significantly. Low-quality rotation can introduce artifacts, blurring, or jagged edges, while high-quality rotation preserves sharpness and detail throughout the transformation.
+            </p>
+
+            <p>
+                ToolHub's Rotate Image tool makes it easy to rotate image files of all kinds without requiring specialized software. Whether you are a casual user who snapped a photo on a tilted phone or a professional designer adjusting a banner graphic, the tool delivers precise, lossless rotation with just a few clicks. You can rotate image 90 degrees in a single action, turn images upside down, or apply any custom angle to achieve the exact orientation you need.
+            </p>
+
+            <h2>Why Would You Need to Rotate Images?</h2>
+
+            <p>
+                There are many reasons why someone might need to rotate images in their daily workflow. Understanding these scenarios helps you appreciate just how essential a reliable rotation tool can be, especially when you need to turn images quickly and preserve their original quality.
+            </p>
+
+            <h3>Camera and Phone Orientation Issues</h3>
+
+            <p>
+                One of the most common reasons to rotate photo files is incorrect camera orientation. When you take a picture with your smartphone, the device's accelerometer records the orientation, but this metadata is not always read correctly by every application. As a result, photos may appear sideways or upside down when you open them on your computer or upload them to a website. Rather than manually editing each file in a complex editor, you can simply rotate image online free using ToolHub and fix the orientation in seconds.
+            </p>
+
+            <h3>Document and Scan Correction</h3>
+
+            <p>
+                Scanned documents and PDFs often need rotation. If the paper was placed at an angle on the scanner bed, or if the scan was initiated from the wrong side, the resulting image will be tilted. Rotating these documents by the correct angle ensures they are readable and professionally presented. For subtle misalignments, a custom angle rotation of just a few degrees can straighten a document perfectly.
+            </p>
+
+            <h3>Social Media and Content Creation</h3>
+
+            <p>
+                Different social media platforms have specific orientation requirements. Instagram stories demand vertical images, while Twitter and Facebook headers favor horizontal layouts. Content creators frequently need to turn images to match these requirements, cropping less and communicating more effectively. A quick rotation can transform a landscape photo into a portrait-ready graphic without losing any critical content.
+            </p>
+
+            <h3>Graphic Design and Print Work</h3>
+
+            <p>
+                Professional designers often work with assets that arrive in unexpected orientations. A stock illustration might be landscape when you need it portrait, or a logo might need a slight tilt to achieve a dynamic visual effect. Rotating these elements is a daily task in design workflows, and having a fast, accurate tool prevents bottlenecks.
+            </p>
+
+            <h3>Web and E-Commerce Product Listings</h3>
+
+            <p>
+                Online sellers know that product images must be oriented correctly for a professional appearance. A product photo that appears rotated or tilted can reduce buyer confidence and hurt conversion rates. By rotating images before listing them, sellers ensure that every product is displayed at its best angle.
+            </p>
+
+            <h2>How to Rotate an Image with ToolHub</h2>
+
+            <p>
+                ToolHub makes it simple to rotate image and save as jpg or other formats. The process requires no downloads, no installation, and no technical expertise. Follow these straightforward steps to rotate your images in seconds:
+            </p>
+
+            <h3>Step 1: Upload Your Image</h3>
+
+            <p>
+                Navigate to the ToolHub Rotate Image page and locate the upload area. You can either drag and drop your image directly into the designated zone or click the "Choose Image" button to browse your device's file system. ToolHub supports JPG, JPEG, PNG, and WebP formats, so you can upload virtually any common image file. Once uploaded, you will see a confirmation card displaying your file name and size, along with a "Ready to rotate" indicator that confirms the image is loaded and ready for processing.
+            </p>
+
+            <h3>Step 2: Choose Your Rotation Angle</h3>
+
+            <p>
+                After your image is uploaded, select the desired rotation from the dropdown menu. You have several preset options: Rotate Right (90°) turns your image clockwise, Rotate Left (90°) turns it counter-clockwise, and Rotate 180° flips it completely upside down. If none of these presets match your needs, select the "Custom Angle" option and enter any degree value in the input field. This flexibility means you can rotate image 90 degrees with a single click or fine-tune the angle to match precise requirements, such as correcting a slightly tilted photograph or aligning a design element.
+            </p>
+
+            <h3>Step 3: Click Rotate Image</h3>
+
+            <p>
+                Once you have selected your rotation angle, click the "Rotate Image" button to begin processing. ToolHub's optimized backend handles the rotation quickly, and you will see a progress indicator while the operation completes. The processing time depends on your image size, but most images are rotated within seconds.
+            </p>
+
+            <h3>Step 4: Download Your Rotated Image</h3>
+
+            <p>
+                When the rotation is complete, ToolHub presents a download link for your newly rotated image. You can save the file directly to your device, and it will retain the original format and quality. If you uploaded a JPG, you will receive a rotated JPG; if you uploaded a PNG, you will receive a rotated PNG. The tool preserves your image's metadata and ensures that the rotated file is ready for immediate use, whether you plan to share it online, print it, or include it in a project.
+            </p>
+
+            <h2>Key Features of ToolHub's Rotate Image Tool</h2>
+
+            <p>
+                ToolHub's Rotate Image tool is designed with both simplicity and power in mind. Here are the features that make it the best choice when you need to turn images quickly and accurately:
+            </p>
+
+            <p>
+                <strong>Multiple Rotation Presets:</strong> Choose from 90-degree clockwise, 90-degree counter-clockwise, and 180-degree rotations. These presets cover the vast majority of rotation needs and can be applied with a single click.
+            </p>
+
+            <p>
+                <strong>Custom Angle Rotation:</strong> When presets are not enough, enter any degree value to rotate your image by a precise angle. Whether you need a 5-degree correction or a dramatic 135-degree turn, ToolHub handles it with precision.
+            </p>
+
+            <p>
+                <strong>Wide Format Support:</strong> Upload and rotate JPG, JPEG, PNG, and WebP images without conversion headaches. ToolHub reads each format natively and outputs the rotated file in the same format.
+            </p>
+
+            <p>
+                <strong>High-Quality Processing:</strong> ToolHub uses advanced interpolation algorithms to ensure that rotated images retain their sharpness, color accuracy, and detail. You will not see the blurring or pixelation that plagues lower-quality rotation tools.
+            </p>
+
+            <p>
+                <strong>Fast Processing Speed:</strong> Optimized server-side processing means that even large images are rotated in seconds. There is no need to wait minutes for a simple operation.
+            </p>
+
+            <p>
+                <strong>No Installation Required:</strong> ToolHub runs entirely in your browser. There is nothing to download, install, or configure. Simply visit the page, upload, rotate, and download.
+            </p>
+
+            <p>
+                <strong>100% Secure:</strong> Your uploaded images are processed over encrypted connections and are automatically deleted from ToolHub's servers after processing completes. Your files never remain stored, ensuring complete privacy.
+            </p>
+
+            <p>
+                <strong>Mobile-Friendly Design:</strong> The tool works seamlessly on desktops, tablets, and smartphones. You can rotate image online free from any device with a modern web browser.
+            </p>
+
+            <h2>Benefits of Using ToolHub to Rotate Images</h2>
+
+            <p>
+                Choosing ToolHub for your image rotation needs offers several clear advantages over alternative methods:
+            </p>
+
+            <p>
+                <strong>No Software Installation:</strong> Traditional image editors like Photoshop or GIMP require installation, licensing, and learning curves. ToolHub eliminates all of that. You can rotate image files the moment you visit the page, with zero setup time.
+            </p>
+
+            <p>
+                <strong>Zero Cost:</strong> ToolHub is completely free to use. There are no hidden fees, no subscription requirements, and no premium tiers for basic rotation. Every user gets full access to all rotation options at no charge.
+            </p>
+
+            <p>
+                <strong>Universal Accessibility:</strong> Because ToolHub is web-based, it works on any operating system. Windows, macOS, Linux, ChromeOS, iOS, and Android users all have equal access. You do not need to worry about whether your system supports a particular application.
+            </p>
+
+            <p>
+                <strong>Preserved Image Quality:</strong> Many free online tools compress or degrade images during processing. ToolHub prioritizes quality preservation, ensuring that your rotated image looks exactly as good as the original, just oriented differently.
+            </p>
+
+            <p>
+                <strong>No File Size Restrictions:</strong> Unlike some tools that impose strict file size limits, ToolHub handles large, high-resolution images without issue. Whether you are rotating a small thumbnail or a high-resolution photograph, the tool processes it reliably.
+            </p>
+
+            <p>
+                <strong>Privacy Protection:</strong> Your images are your property. ToolHub does not retain, share, or analyze your uploaded files. Once the rotation is complete and you download your file, the server automatically purges the data.
+            </p>
+
+            <h2>Use Cases for Image Rotation</h2>
+
+            <p>
+                The ability to rotate image files is useful across a wide range of professional and personal contexts:
+            </p>
+
+            <p>
+                <strong>Photography:</strong> Photographers use rotation to correct orientation issues caused by camera sensors, especially when shooting in portrait mode. Quick rotation before delivery ensures that clients receive properly oriented images.
+            </p>
+
+            <p>
+                <strong>E-Commerce:</strong> Online retailers rotate product photos to ensure consistent, professional presentation across listings. A correctly oriented product image builds trust and improves the shopping experience.
+            </p>
+
+            <p>
+                <strong>Education:</strong> Teachers and students rotate scanned worksheets, textbooks, and research materials to make them readable. A tilted scan becomes instantly usable after a simple rotation.
+            </p>
+
+            <p>
+                <strong>Marketing and Advertising:</strong> Marketing teams rotate banner images, social media graphics, and ad creatives to fit specific platform dimensions and visual strategies.
+            </p>
+
+            <p>
+                <strong>Real Estate:</strong> Property photos often need rotation to ensure that rooms, exteriors, and architectural details are displayed with the correct orientation, helping potential buyers visualize spaces accurately.
+            </p>
+
+            <p>
+                <strong>Healthcare:</strong> Medical imaging professionals rotate X-rays, MRIs, and other diagnostic images to align with standard viewing orientations, aiding in accurate diagnosis and review.
+            </p>
+
+            <p>
+                <strong>Archival and Digitization:</strong> Libraries and archives rotate scanned historical documents to ensure they are presented in their proper orientation for researchers and the public.
+            </p>
+
+            <h2>Tips for Getting the Best Results When Rotating Images</h2>
+
+            <p>
+                To make the most of ToolHub's Rotate Image tool, keep these practical tips in mind:
+            </p>
+
+            <p>
+                <strong>Check Image Orientation Before Uploading:</strong> Before you rotate photo files, open them in your default image viewer to confirm the current orientation. This prevents unnecessary rotations and helps you select the correct angle on the first attempt.
+            </p>
+
+            <p>
+                <strong>Use Presets When Possible:</strong> Preset angles (90° and 180°) are lossless for most formats because they simply reposition pixels without interpolation. Use custom angles only when you need a specific degree of rotation.
+            </p>
+
+            <p>
+                <strong>Consider Cropping After Rotation:</strong> When you rotate an image by a custom angle, the corners may be cropped or filled with blank space depending on the tool's behavior. If you need to preserve the full image area, consider rotating by 90-degree increments instead.
+            </p>
+
+            <p>
+                <strong>Download Immediately:</strong> Since ToolHub automatically deletes files after processing, make sure to download your rotated image right away. Do not close the page before saving the result.
+            </p>
+
+            <p>
+                <strong>Batch Your Work:</strong> If you need to rotate multiple images, process them one at a time and download each before uploading the next. This ensures you always have access to your rotated files.
+            </p>
+
+            <p>
+                <strong>Use the Right Format:</strong> If you plan to rotate image and save as jpg for web use, upload a JPG file. For images with transparency, upload a PNG. ToolHub preserves your original format, so matching the format to the use case ensures optimal results.
+            </p>
+
+            <h2>Frequently Asked Questions About Rotating Images</h2>
+
+            <p>
+                <strong>How do I rotate an image 90 degrees?</strong><br>
+                Upload your image to ToolHub, select "Rotate Right (90°)" or "Rotate Left (90°)" from the dropdown, and click "Rotate Image." Your image will be rotated 90 degrees and you can download the result instantly.
+            </p>
+
+            <p>
+                <strong>Can I rotate an image online free without signing up?</strong><br>
+                Yes. ToolHub requires no registration, no account, and no subscription. You can rotate image online free the moment you visit the page, with no restrictions on usage.
+            </p>
+
+            <p>
+                <strong>Will rotating my image reduce its quality?</strong><br>
+                No. ToolHub uses high-quality interpolation algorithms that preserve the sharpness and detail of your image. A 90-degree rotation is essentially lossless, and custom angle rotations maintain excellent visual fidelity.
+            </p>
+
+            <p>
+                <strong>What file formats can I rotate?</strong><br>
+                ToolHub supports JPG, JPEG, PNG, and WebP formats. These cover the vast majority of image files you will encounter in everyday use.
+            </p>
+
+            <p>
+                <strong>Is it possible to rotate an image by a custom angle?</strong><br>
+                Yes. Select "Custom Angle" from the rotation dropdown and enter any degree value. ToolHub will rotate your image by the exact angle you specify.
+            </p>
+
+            <p>
+                <strong>Are my uploaded images safe and private?</strong><br>
+                Absolutely. ToolHub processes all images over encrypted connections and automatically deletes them from the server once processing is complete. Your files are never stored, shared, or accessed beyond the rotation operation.
+            </p>
+
+            <p>
+                <strong>Does ToolHub work on mobile devices?</strong><br>
+                Yes. ToolHub is fully responsive and works on smartphones, tablets, and desktops. You can rotate images from any device with a modern web browser.
+            </p>
+
+            <p>
+                <strong>Can I rotate multiple images at once?</strong><br>
+                Currently, ToolHub processes one image at a time. Simply rotate and download each image individually for batch processing.
+            </p>
+
+            <p>
+                <strong>Do I need to install any software to use ToolHub?</strong><br>
+                No. ToolHub is entirely web-based. There is nothing to download or install. Open your browser, visit the Rotate Image page, and start rotating.
+            </p>
+
+            <p>
+                <strong>What happens to my image after I rotate it?</strong><br>
+                Once you download your rotated image, ToolHub automatically deletes the file from its servers. Your image is not retained or stored in any form.
+            </p>
+
+        </div>
+            <div class="article-card">
+                <h2>Related Tools You Might Like</h2>
+                <p>Explore our other free online tools that complement Rotate Image:</p>
+                <div class="related-tools-grid">
+                    <a href="/rotate-pdf"><i class="fa-solid fa-link"></i> Rotate PDF</a>
+                    <a href="/flip-image"><i class="fa-solid fa-link"></i> Flip Image</a>
+                    <a href="/crop-image"><i class="fa-solid fa-link"></i> Crop Image</a>
+                </div>
+            </div>
+    </section>
+        <div class="share-bar">
+            <span>Share this tool:</span>
+            <a class="share-btn facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+            <a class="share-btn twitter" href="https://twitter.com/intent/tweet?url={{ request.url }}&text={{ self.title() }}" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a>
+            <a class="share-btn linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+            <a class="share-btn whatsapp" href="https://wa.me/?text={{ self.title() }}%20{{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+
+    <!-- =========================
+            FAQ
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <h3>Is Rotate Image free?</h3>
+
+                <p>
+                    Yes. ToolHub allows you to rotate images completely free of charge.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Which formats are supported?</h3>
+
+                <p>
+                    JPG, JPEG, PNG and WebP images are fully supported.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Will rotating reduce image quality?</h3>
+
+                <p>
+                    No. ToolHub preserves image quality while rotating your images.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Can I rotate by a custom angle?</h3>
+
+                <p>
+                    Yes. You can rotate your image by any custom angle in addition to the preset options.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Are my images secure?</h3>
+
+                <p>
+                    Yes. All uploaded images are securely processed and automatically deleted after processing.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Does it work on mobile?</h3>
+
+                <p>
+                    Yes. ToolHub works perfectly on desktop, tablet and mobile devices.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="seo-related" aria-labelledby="related-tools-title">
+        <h2 id="related-tools-title">Explore More Image Tools</h2>
+        <p>Continue with related ToolHub tools for your next file task.</p>
+        <div class="seo-related-grid">
+            <a class="seo-related-card" href="/flip-image"><strong>Flip Image</strong><span>Flip images horizontally or vertically.</span></a>
+            <a class="seo-related-card" href="/crop-image"><strong>Crop Image</strong><span>Crop unwanted areas.</span></a>
+            <a class="seo-related-card" href="/compressor"><strong>Image Compressor</strong><span>Reduce image size.</span></a>
+        </div>
+    </section>
+</section>
+
+<script src="{{ url_for('static', filename='js/tools.js') }}"></script>
+
+{% endblock %}

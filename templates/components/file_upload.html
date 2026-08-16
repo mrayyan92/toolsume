@@ -1,0 +1,109 @@
+<div class="upload-wrapper">
+
+    <div class="drop-zone" id="dropZone">
+
+        <input
+            type="file"
+            id="fileInput"
+            name="{{ input_name }}"
+            accept="{{ accept }}"
+            {% if multiple %}multiple{% endif %}
+            hidden
+            required>
+
+        <label for="fileInput" class="upload-content">
+
+            <!-- Upload Icon -->
+
+            <div class="upload-icon">
+
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+
+            </div>
+
+            <!-- Heading -->
+
+            <h2 class="upload-title">
+
+                {{ heading }}
+
+            </h2>
+
+            <!-- Subtitle -->
+
+            <p class="upload-subtitle">
+
+                Drag & Drop your file here
+
+            </p>
+
+            <span class="upload-or">
+
+                or click below to browse
+
+            </span>
+
+            <!-- Browse Button -->
+
+            <div class="browse-btn">
+
+                <i class="fa-solid fa-folder-open"></i>
+
+                {{ button_text }}
+
+            </div>
+
+            <!-- Supported Formats -->
+
+            <p class="supported-types">
+
+                Supported formats:
+                {{ formats }}
+
+            </p>
+
+        </label>
+
+    </div>
+
+    <!-- File Preview -->
+
+    <div class="file-card" id="fileCard" style="display:none;">
+
+        <div class="file-left">
+
+            <div class="file-icon">
+
+                <i class="fa-solid fa-file"></i>
+
+            </div>
+
+            <div>
+
+                <h4 id="fileName">
+
+                    filename.pdf
+
+                </h4>
+
+                <p id="fileSize">
+
+                    0 MB
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <button
+            type="button"
+            id="removeFile">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+    </div>
+
+</div>

@@ -1,0 +1,770 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Delete PDF Pages Online - Free PDF Page Remover | ToolHub{% endblock %}
+{% block og_title %}Delete PDF Pages Online - Free PDF Page Remover | ToolHub{% endblock %}
+{% block twitter_title %}Delete PDF Pages Online - Free PDF Page Remover | ToolHub{% endblock %}
+
+{% block seo_description %}
+    <meta name="description" content="Delete unwanted PDF pages online for free. Remove specific pages, clean up documents, and download modified PDFs instantly with ToolHub.">
+{% endblock %}
+
+
+{% block structured_data_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.url_root.rstrip('/') }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PDF Tools",
+          "item": "{{ request.url_root.rstrip('/') }}/pdf-tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Delete Pdf Pages"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Delete Pdf Pages — ToolHub",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "url": "{{ request.url_root.rstrip('/') }}{{ request.path }}",
+      "description": "{{ self.seo_description()|meta_content }}",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I delete pages from a PDF online for free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Upload your PDF to ToolHub, enter the page numbers or ranges you want to remove, and click Delete Pages. The tool processes your request instantly and provides a download link."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I remove multiple pages from a PDF at once?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. You can enter multiple page numbers separated by commas, multiple ranges separated by hyphens, or a combination of both in a single operation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will deleting pages affect the quality of the remaining pages?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The remaining pages retain their original resolution, fonts, images, and formatting. ToolHub does not compress or alter the pages that are not deleted."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my uploaded PDF secure on ToolHub?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub uses encrypted file transfer and secure processing environments. All uploaded files are automatically deleted from the servers immediately after processing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I delete pages from a password-protected PDF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You will need to know the password to unlock the document before uploading it. Enter the password when prompted and the tool will process the unlocked file normally."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<section class="tool-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="separator">›</span>
+        <a href="/pdf-tools">PDF Tools</a><span class="separator">›</span>
+        <span>Delete Pdf Pages</span>
+    </nav>
+
+
+    <!-- TOOL HEADER -->
+
+    <div class="tool-header">
+
+        <div class="tool-icon">
+
+            <i class="fa-solid fa-trash-can"></i>
+
+        </div>
+
+        <h1>Delete PDF Pages</h1>
+
+        <p>
+
+            Remove unwanted pages from your PDF while keeping the remaining pages intact.
+
+        </p>
+
+    </div>
+
+    <!-- UPLOAD -->
+
+    <div class="upload-box">
+
+        <form
+            action="/delete-pdf-pages-file"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="drop-zone" id="dropZone">
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    name="pdf"
+                    accept=".pdf"
+                    hidden
+                    required
+                >
+
+                <label
+                    for="fileInput"
+                    class="upload-area"
+                >
+
+                    <div class="upload-icon">
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    </div>
+
+                    <h2>
+
+                        Drag & Drop Your PDF
+
+                    </h2>
+
+                    <p>
+
+                        or click below to browse
+
+                    </p>
+
+                    <button
+                        type="button"
+                        class="choose-btn"
+                        onclick="document.getElementById('fileInput').click()"
+                    >
+
+                        Choose PDF
+
+                    </button>
+
+                    <!-- SUCCESS CARD -->
+
+                    <div
+                        id="fileCard"
+                        class="file-card success-card"
+                        style="display:none;"
+                    >
+
+                        <div class="file-left">
+
+                            <div class="success-icon">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h3 id="fileName"></h3>
+
+                                <p id="fileSize"></p>
+
+                                <span class="ready-tag">
+
+                                    Ready to remove pages
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="removeFile"
+                            class="remove-btn"
+                        >
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </button>
+
+                    </div>
+
+                    <!-- PAGE INPUT -->
+
+                    <div style="margin-top:20px;">
+
+                        <label>
+
+    <strong class="tool-label">
+
+        Pages to Delete
+
+    </strong>
+
+</label>
+
+<input
+    type="text"
+    name="pages"
+    class="tool-input"
+    placeholder="Example: 1-3"
+    required>
+
+                    </div>
+
+                    <!-- BUTTON -->
+
+                    <button
+                        class="convert-btn"
+                        id="convertBtn"
+                        type="submit"
+                        disabled
+                    >
+
+                        <i class="fa-solid fa-trash-can"></i>
+
+                        Delete Pages
+
+                    </button>
+
+                </label>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- LOADER -->
+
+    <div
+        id="loader"
+        class="loader-overlay"
+        style="display:none;"
+    >
+
+        <div class="loader-box">
+
+            <div class="spinner"></div>
+
+            <h3>
+
+                Removing Pages...
+
+            </h3>
+
+            <p>
+
+                Please wait while ToolHub creates your new PDF.
+
+            </p>
+
+            <div class="progress">
+
+                <div id="progressBar"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <!-- =========================
+            FEATURES
+    ========================== -->
+
+    <section class="features">
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-trash-can"></i>
+
+            <h3>Delete PDF Pages</h3>
+
+            <p>
+                Remove unwanted pages from your PDF while preserving the remaining pages.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <h3>100% Secure</h3>
+
+            <p>
+                Your uploaded PDFs are securely processed and automatically deleted after conversion.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            <h3>Fast Processing</h3>
+
+            <p>
+                Delete selected pages from your PDF within seconds without affecting quality.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-gift"></i>
+
+            <h3>Free Forever</h3>
+
+            <p>
+                Remove PDF pages unlimited times with no subscriptions or hidden fees.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            HOW IT WORKS
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>How It Works</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <span>1</span>
+
+                <h3>Upload PDF</h3>
+
+                <p>
+                    Choose or drag your PDF into the upload area.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>2</span>
+
+                <h3>Select Pages</h3>
+
+                <p>
+                    Enter the page numbers or page ranges you want to remove (for example: 2,5 or 3-6).
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>3</span>
+
+                <h3>Download</h3>
+
+                <p>
+                    Download your new PDF with the selected pages removed.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            SEO ARTICLE
+    ========================== -->
+
+    <section class="tool-article">
+
+        <div class="article-card">
+
+            <span class="article-badge">Complete Guide</span>
+
+            <h2>What Is Delete PDF Pages?</h2>
+
+            <p>
+                Delete PDF Pages is a free online tool that lets you remove unwanted pages from any PDF document in seconds. Whether you need to erase a blank page, strip out irrelevant sections, or delete specific pages from a PDF online without installing heavy software, this tool handles the entire process in your browser. The tool works by accepting your uploaded PDF, removing the pages you specify, and delivering a clean, reorganized document that keeps the original formatting and quality of every remaining page.
+            </p>
+
+            <p>
+                In everyday office work, academic research, or personal file management, PDF documents often end up longer than necessary. Duplicate pages sneak in during scanning. Blank separator pages get added between sections. Entire chapters become irrelevant when you only need a handful of pages. Instead of sending the file to a desktop editor and fumbling with menus, you can now remove pages from PDF free directly from any device with an internet connection. The process is straightforward, secure, and requires zero technical expertise.
+            </p>
+
+            <h2>Why Delete Pages from a PDF?</h2>
+
+            <p>
+                There are dozens of reasons to erase PDF pages from a document. Here are the most common scenarios where deleting pages from a PDF saves time, reduces file size, and improves clarity.
+            </p>
+
+            <p>
+                <strong>Reduce file size for sharing.</strong> Large PDF files with dozens or hundreds of pages are difficult to email, upload to cloud drives, or send through messaging apps. By removing pages that are not needed, you shrink the file size dramatically. A 50-page report can become a focused 10-page summary in moments.
+            </p>
+
+            <p>
+                <strong>Remove blank or scanned pages.</strong> When documents are digitized through scanners, blank separator pages often appear between chapters or sections. These blank pages waste storage and look unprofessional when you present or share the PDF. Deleting them instantly creates a cleaner document.
+            </p>
+
+            <p>
+                <strong>Eliminate duplicate content.</strong> Copy-pasting sections from multiple sources sometimes leads to duplicated pages inside a single PDF. Rather than manually editing each page in a word processor, you can use the Delete PDF Pages tool to remove every duplicate in one action.
+            </p>
+
+            <p>
+                <strong>Extract only the relevant sections.</strong> If you received a 200-page manual but only need chapter four, deleting every other chapter gives you a lightweight, easy-to-read document. This is especially useful for students, researchers, and professionals who work with large reference materials.
+            </p>
+
+            <p>
+                <strong>Protect sensitive information.</strong> Sometimes a PDF contains pages with personal data, financial records, or confidential information that should not be shared. Deleting those specific pages before distributing the document is a quick way to redact content without specialized editing tools.
+            </p>
+
+            <p>
+                <strong>Prepare presentations and handouts.</strong> When preparing slides or printed handouts, extra pages dilute the message. Trimming a PDF down to only the essential pages ensures your audience receives exactly what they need and nothing more.
+            </p>
+
+            <h2>How to Delete Pages from PDF Using ToolHub</h2>
+
+            <p>
+                The process of deleting pages from a PDF with ToolHub follows three simple steps. No downloads, no sign-ups, and no complicated settings.
+            </p>
+
+            <p>
+                <strong>Step 1: Upload your PDF file.</strong> Open the Delete PDF Pages tool in your browser. You will see a drag-and-drop zone where you can either drag your PDF file directly onto the page or click the Choose PDF button to browse your computer and select the document. The tool accepts all standard PDF files regardless of size or complexity.
+            </p>
+
+            <p>
+                <strong>Step 2: Enter the pages you want to delete.</strong> After the file uploads, a text field labeled Pages to Delete appears. This is where you specify which pages to remove. You have full flexibility in how you enter the page numbers. Type individual numbers separated by commas for specific pages, such as 1,3,7. Use hyphens to indicate a continuous range, such as 2-5 to delete pages two through five. Combine both formats for complex deletions, like 1,3,7-12,20. This flexible input system makes it easy to remove multiple pages from PDF at once without repeating the process for each page.
+            </p>
+
+            <p>
+                <strong>Step 3: Download your new PDF.</strong> Click the Delete Pages button and wait a few seconds while ToolHub processes your request. The tool removes the selected pages and generates a new PDF file containing only the pages you kept. Click the download link to save the updated document to your device. The remaining pages maintain their original order, formatting, and quality.
+            </p>
+
+            <h2>Key Features of the Delete PDF Pages Tool</h2>
+
+            <p>
+                ToolHub built this tool with simplicity, speed, and security as the top priorities. Here is what makes it stand out.
+            </p>
+
+            <p>
+                <strong>Completely free to use.</strong> There are no subscriptions, no hidden charges, and no usage limits. You can remove pages from PDF free as many times as you need, every day, without paying anything.
+            </p>
+
+            <p>
+                <strong>No software installation required.</strong> Everything runs in your web browser. You do not need to download, install, or update any application on your computer. This saves disk space and eliminates compatibility concerns across Windows, macOS, Linux, Chrome OS, and mobile platforms.
+            </p>
+
+            <p>
+                <strong>Flexible page selection.</strong> The tool supports individual pages, continuous ranges, and combinations of both. Whether you need to delete one page or erase PDF pages across dozens of positions in the document, the input field handles it all.
+            </p>
+
+            <p>
+                <strong>Preserves original quality.</strong> The remaining pages keep their exact resolution, fonts, images, and layout. There is no compression, no quality loss, and no visual changes to the pages that are not deleted.
+            </p>
+
+            <p>
+                <strong>Fast processing speed.</strong> ToolHub uses optimized server-side processing to remove pages in seconds, even for large documents. You do not wait minutes for a simple page deletion.
+            </p>
+
+            <p>
+                <strong>Secure file handling.</strong> Your uploaded PDFs are encrypted during transfer and processing. After the deletion is complete, all files are automatically purged from ToolHub servers. Your documents are never stored, shared, or accessed by anyone else.
+            </p>
+
+            <p>
+                <strong>Works on all devices.</strong> Whether you are on a desktop computer, a laptop, a tablet, or a smartphone, the tool responds perfectly to your screen size and input method.
+            </p>
+
+            <h2>Benefits of Using ToolHub to Remove PDF Pages</h2>
+
+            <p>
+                Choosing ToolHub over other methods of page deletion offers several practical advantages that matter in real-world workflows.
+            </p>
+
+            <p>
+                <strong>No learning curve.</strong> Unlike desktop PDF editors that require you to navigate complex menus, ToolHub presents a clean, intuitive interface. You upload, type page numbers, and click one button. The entire workflow takes less than a minute.
+            </p>
+
+            <p>
+                <strong>Accessibility from anywhere.</strong> Since the tool runs in a browser, you can access it from any location with an internet connection. This is particularly useful when you are working from a shared computer, a library workstation, or a mobile device where installing desktop software is impractical.
+            </p>
+
+            <p>
+                <strong>Consistent results across platforms.</strong> Desktop applications sometimes behave differently on Windows versus macOS. ToolHub produces identical results regardless of your operating system, ensuring a predictable experience every time.
+            </p>
+
+            <p>
+                <strong>Minimal resource usage.</strong> Deleting pages from a PDF on a desktop editor can consume significant CPU and RAM, especially for large files. ToolHub offloads the processing to its servers, so your device stays responsive throughout the operation.
+            </p>
+
+            <p>
+                <strong>Privacy-first design.</strong> Many free online tools track user activity, store uploaded files, or serve targeted ads. ToolHub commits to a strict privacy-first approach where your documents are processed securely and deleted immediately after use.
+            </p>
+
+            <h2>Use Cases for Deleting PDF Pages</h2>
+
+            <p>
+                The Delete PDF Pages tool serves a wide range of professionals and personal users. Here are some of the most common use cases.
+            </p>
+
+            <p>
+                <strong>Students and educators.</strong> Students frequently receive lengthy textbooks, lecture notes, and research papers as PDF files. Deleting irrelevant chapters or pages creates focused study materials that are easier to review before exams. Educators can trim presentation PDFs to show only the relevant slides or sections during lectures.
+            </p>
+
+            <p>
+                <strong>Business professionals.</strong> Reports, proposals, and contracts often contain pages that are not needed for a particular recipient or meeting. Removing those pages before sharing creates a cleaner, more professional document that respects the reader's time.
+            </p>
+
+            <p>
+                <strong>Legal teams.</strong> Legal documents can be hundreds of pages long. Attorneys and paralegals often need to extract specific sections for filing, review, or client communication. Deleting unnecessary pages streamlines case preparation and reduces printing costs.
+            </p>
+
+            <p>
+                <strong>Healthcare providers.</strong> Medical records, insurance forms, and patient documentation frequently arrive as multi-page PDFs. Staff can quickly remove pages that are not relevant to a particular case or patient file.
+            </p>
+
+            <p>
+                <strong>Personal document management.</strong> Tax returns, utility bills, warranties, and other personal documents often accumulate into large PDF collections. Deleting outdated or irrelevant pages keeps personal archives organized and manageable.
+            </p>
+
+            <p>
+                <strong>Content creators and designers.</strong> Designers working with PDF portfolios, mood boards, or client presentations can delete pages that did not make the final cut, ensuring that only polished content reaches the client.
+            </p>
+
+            <h2>Tips for Deleting Pages from a PDF Effectively</h2>
+
+            <p>
+                Follow these tips to get the best results when you delete pages from a PDF using ToolHub.
+            </p>
+
+            <p>
+                <strong>Preview your document first.</strong> Before entering page numbers, open the PDF in a viewer and note the exact page numbers you want to remove. This prevents accidental deletion of important pages and saves you from re-uploading the file.
+            </p>
+
+            <p>
+                <strong>Double-check your page ranges.</strong> A common mistake is entering a range like 3-7 when you meant 3-5. Verify the numbers before clicking Delete Pages to avoid unintended removals.
+            </p>
+
+            <p>
+                <strong>Use commas for non-sequential pages.</strong> If you need to remove pages 2, 8, 15, and 20, enter them as 2,8,15,20 rather than trying to create multiple ranges. The comma format is cleaner and less error-prone.
+            </p>
+
+            <p>
+                <strong>Keep a backup of the original file.</strong> Although ToolHub processes your document securely, it is always a good practice to keep the original PDF saved on your device. That way, you can re-upload and reprocess it if you make a mistake.
+            </p>
+
+            <p>
+                <strong>Process large files in batches.</strong> If your PDF has hundreds of pages and you need to delete many of them, consider breaking the task into smaller batches. This ensures reliable processing and gives you more control over the final output.
+            </p>
+
+            <p>
+                <strong>Check the download before sharing.</strong> After downloading the new PDF, open it and scroll through the pages to confirm that the correct pages were removed and that no content was lost or rearranged.
+            </p>
+
+            <h2>Frequently Asked Questions</h2>
+
+            <h3>How do I delete pages from a PDF online for free?</h3>
+
+            <p>
+                Upload your PDF to the ToolHub Delete PDF Pages tool, enter the page numbers or ranges you want to remove, and click Delete Pages. The tool processes your request instantly and provides a download link for the updated PDF. The entire process is free with no sign-up required.
+            </p>
+
+            <h3>Can I remove multiple pages from a PDF at once?</h3>
+
+            <p>
+                Yes. You can enter multiple page numbers separated by commas, multiple ranges separated by hyphens, or a combination of both. For example, entering 1,3,7-12,20 removes pages 1, 3, 7 through 12, and 20 all in a single operation.
+            </p>
+
+            <h3>Will deleting pages affect the quality of the remaining pages?</h3>
+
+            <p>
+                No. The remaining pages retain their original resolution, fonts, images, and formatting. ToolHub does not compress or alter the pages that are not deleted.
+            </p>
+
+            <h3>Is my uploaded PDF secure on ToolHub?</h3>
+
+            <p>
+                Yes. ToolHub uses encrypted file transfer and secure processing environments. All uploaded files are automatically deleted from the servers immediately after processing. Your documents are never stored long-term or shared with third parties.
+            </p>
+
+            <h3>What is the maximum file size I can upload?</h3>
+
+            <p>
+                ToolHub supports standard PDF files of all sizes. Whether your document is a few kilobytes or several hundred megabytes, the tool processes it efficiently.
+            </p>
+
+            <h3>Does this tool work on mobile devices?</h3>
+
+            <p>
+                Yes. The Delete PDF Pages tool is fully responsive and works on smartphones, tablets, and desktop computers through any modern web browser including Chrome, Safari, Firefox, and Edge.
+            </p>
+
+            <h3>Can I delete pages from a password-protected PDF?</h3>
+
+            <p>
+                You will need to know the password to unlock the document before uploading it. If the PDF is encrypted with an open password, enter it when prompted, and the tool will process the unlocked file normally.
+            </p>
+
+            <h3>What happens if I enter an invalid page number?</h3>
+
+            <p>
+                If you enter a page number that does not exist in the document, the tool will either ignore it or display an error message. Always verify the total page count of your PDF before submitting the deletion request.
+            </p>
+
+        </div>
+
+            <div class="article-card">
+                <h2>Related Tools You Might Like</h2>
+                <p>Explore our other free online tools that complement Delete PDF Pages:</p>
+                <div class="related-tools-grid">
+                    <a href="/split-pdf"><i class="fa-solid fa-link"></i> Split PDF</a>
+                    <a href="/extract-pdf"><i class="fa-solid fa-link"></i> Extract PDF</a>
+                    <a href="/merge-pdf"><i class="fa-solid fa-link"></i> Merge PDF</a>
+                </div>
+            </div>
+    </section>
+        <div class="share-bar">
+            <span>Share this tool:</span>
+            <a class="share-btn facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+            <a class="share-btn twitter" href="https://twitter.com/intent/tweet?url={{ request.url }}&text={{ self.title() }}" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a>
+            <a class="share-btn linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+            <a class="share-btn whatsapp" href="https://wa.me/?text={{ self.title() }}%20{{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+
+
+    <!-- =========================
+            FAQ
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <h3>Is Delete PDF Pages free?</h3>
+
+                <p>
+                    Yes. ToolHub lets you remove pages from PDF documents completely free.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Can I delete multiple pages?</h3>
+
+                <p>
+                    Yes. Enter individual page numbers or ranges such as 2,5 or 3-6.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Will the PDF quality change?</h3>
+
+                <p>
+                    No. The remaining pages keep their original quality and formatting.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Are my files secure?</h3>
+
+                <p>
+                    Yes. Your uploaded PDFs are securely processed and automatically deleted after completion.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Can I delete pages from large PDFs?</h3>
+
+                <p>
+                    Yes. ToolHub supports both small and large PDF documents.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Does it work on mobile?</h3>
+
+                <p>
+                    Yes. ToolHub works perfectly on desktop, tablet and mobile devices.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="seo-related" aria-labelledby="related-tools-title">
+        <h2 id="related-tools-title">Explore More PDF Tools</h2>
+        <p>Continue with related ToolHub tools for your next file task.</p>
+        <div class="seo-related-grid">
+            <a class="seo-related-card" href="/extract-pdf"><strong>Extract PDF Pages</strong><span>Save selected pages.</span></a>
+            <a class="seo-related-card" href="/split-pdf"><strong>Split PDF</strong><span>Separate PDF pages.</span></a>
+            <a class="seo-related-card" href="/merge-pdf"><strong>Merge PDF</strong><span>Combine PDFs.</span></a>
+        </div>
+    </section>
+</section>
+
+<script src="{{ url_for('static', filename='js/tools.js') }}"></script>
+
+{% endblock %}

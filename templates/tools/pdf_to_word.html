@@ -1,0 +1,657 @@
+{% extends "base.html" %}
+
+{% block title %}PDF to Word Converter - Free Online Tool | ToolHub{% endblock %}
+{% block og_title %}PDF to Word Converter - Free Online Tool | ToolHub{% endblock %}
+{% block twitter_title %}PDF to Word Converter - Free Online Tool | ToolHub{% endblock %}
+
+{% block seo_description %}
+    <meta name="description" content="Convert PDF to Word documents online for free. Preserve formatting, edit text easily, and download your converted file instantly with ToolHub.">
+{% endblock %}
+
+
+{% block structured_data_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.url_root.rstrip('/') }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PDF Tools",
+          "item": "{{ request.url_root.rstrip('/') }}/pdf-tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Pdf To Word"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Pdf To Word — ToolHub",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "url": "{{ request.url_root.rstrip('/') }}{{ request.path }}",
+      "description": "{{ self.seo_description()|meta_content }}",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is this tool free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, ToolHub's PDF to Word converter is completely free to use. There are no hidden charges, no subscription tiers, and no file-size limits for standard conversions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my files secure?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. All files are encrypted during upload and automatically deleted from ToolHub's servers immediately after conversion. Your documents are never stored, shared, or accessed by third parties."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to install software?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Everything works directly in your web browser. There is nothing to download, no plugins to install, and no browser extensions required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I convert scanned PDFs to Word?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub includes built-in OCR technology that can convert scanned PDFs into fully editable Word documents. The OCR engine supports multiple languages."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the conversion preserve formatting?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ToolHub's conversion engine is optimized to preserve as much of the original formatting as possible, including headings, paragraphs, tables, images, bullet points, and font styles."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<section class="tool-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="separator">›</span>
+        <a href="/pdf-tools">PDF Tools</a><span class="separator">›</span>
+        <span>Pdf To Word</span>
+    </nav>
+
+
+    <!-- =========================
+            TOOL HEADER
+    ========================== -->
+
+    <div class="tool-header">
+
+        <div class="tool-icon">
+            <i class="fa-solid fa-file-pdf"></i>
+        </div>
+
+        <h1>PDF to Word Converter</h1>
+
+        <p>
+            Convert PDF documents into editable Microsoft Word files in seconds.
+            Fast, secure and completely free.
+        </p>
+
+    </div>
+
+    <!-- =========================
+            UPLOAD BOX
+    ========================== -->
+
+    <div class="upload-box">
+
+        <form
+            action="/convert-pdf"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="drop-zone" id="dropZone">
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    name="pdf"
+                    accept=".pdf"
+                    hidden
+                    required
+                >
+
+                <label for="fileInput" class="upload-area">
+
+                    <div class="upload-icon">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+
+                    <h2>Drag & Drop Your PDF</h2>
+
+                    <p>or click below to browse</p>
+
+                    <button
+                        type="button"
+                        class="choose-btn"
+                        onclick="document.getElementById('fileInput').click()"
+                    >
+                        Choose PDF
+                    </button>
+
+                    <!-- File Preview -->
+
+                    <div
+                        id="fileCard"
+                        class="file-card success-card"
+                        style="display:none;"
+                    >
+
+                        <div class="file-left">
+
+                            <div class="success-icon">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+
+                            <div>
+
+                                <h3 id="fileName"></h3>
+
+                                <p id="fileSize"></p>
+
+                                <span class="ready-tag">
+
+                                    Ready for conversion
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="removeFile"
+                            class="remove-btn"
+                        >
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+
+                    </div>
+
+                    <!-- Convert Button -->
+
+                    <button
+                        class="convert-btn"
+                        id="convertBtn"
+                        type="submit"
+                        disabled
+                    >
+
+                        <i class="fa-solid fa-file-word"></i>
+
+                        Convert to Word
+
+                    </button>
+
+                </label>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- =========================
+            FEATURES
+    ========================== -->
+
+    <section class="features">
+
+        <div class="feature-card">
+            <i class="fa-solid fa-bolt"></i>
+            <h3>Lightning Fast</h3>
+            <p>Convert large PDF files within seconds.</p>
+        </div>
+
+        <div class="feature-card">
+            <i class="fa-solid fa-shield-halved"></i>
+            <h3>100% Secure</h3>
+            <p>Your files are encrypted and deleted automatically.</p>
+        </div>
+
+        <div class="feature-card">
+            <i class="fa-solid fa-gift"></i>
+            <h3>Free Forever</h3>
+            <p>No subscriptions. No hidden charges.</p>
+        </div>
+
+        <div class="feature-card">
+            <i class="fa-solid fa-cloud"></i>
+            <h3>Cloud Powered</h3>
+            <p>No software installation required.</p>
+        </div>
+
+    </section>
+
+    <!-- =========================
+            HOW IT WORKS
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>How It Works</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <span>1</span>
+
+                <h3>Upload PDF</h3>
+
+                <p>Select your PDF file.</p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>2</span>
+
+                <h3>Convert</h3>
+
+                <p>ToolHub converts it instantly.</p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>3</span>
+
+                <h3>Download</h3>
+
+                <p>Download your editable Word document.</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+            SEO ARTICLE
+    ========================== -->
+
+    <section class="tool-article">
+        <article class="article-card">
+
+            <span class="article-badge">Complete Guide</span>
+
+            <h2>PDF to Word Converter: The Complete Guide to Converting PDF Documents to Editable Word Files</h2>
+
+            <p>
+                In today's digital workspace, the ability to <strong>convert PDF to Word</strong> is no longer a luxury — it is a daily necessity. Whether you are a student editing a research paper, a business professional updating a contract, or a freelancer polishing a client proposal, a reliable <strong>PDF to Word converter</strong> saves you hours of retyping and frustration. ToolHub offers a powerful, browser-based solution that lets you <strong>convert PDF to Word online free</strong> without installing any software, creating an account, or worrying about hidden charges. This comprehensive guide covers everything you need to know: what PDF-to-Word conversion is, why it matters, how to do it step by step, the key features to look for, real-world use cases, expert tips, and answers to the most common questions users ask.
+            </p>
+
+            <h2>What Is PDF to Word Conversion?</h2>
+
+            <p>
+                PDF to Word conversion is the process of transforming a Portable Document Format (.pdf) file into an editable Microsoft Word document (.docx). The PDF format was originally designed to preserve layout, fonts, and formatting across devices and operating systems — which makes PDFs excellent for sharing but notoriously difficult to edit. When you <strong>change PDF to Word</strong>, the converter extracts the text, images, tables, and layout information from the PDF and reconstructs them inside a Word-compatible file that you can freely modify.
+            </p>
+
+            <p>
+                There are two main categories of PDF files that require different conversion approaches. The first is a standard PDF created from a Word document, spreadsheet, or presentation. These files contain selectable text and embedded images, making them relatively straightforward to convert. The second category is a scanned PDF — essentially a photograph of a physical document stored as a PDF. Converting a scanned PDF requires Optical Character Recognition (OCR) technology to recognize and extract the text from the image layer. ToolHub supports both types, allowing you to <strong>convert scanned PDF to Word</strong> with impressive accuracy.
+            </p>
+
+            <h2>Why Convert PDF to Word? Key Reasons</h2>
+
+            <p>
+                You might wonder why anyone would want to <strong>change PDF to Word</strong> when PDFs are so widely used. The answer lies in editability. Here are the most compelling reasons professionals and students need to <strong>convert PDF to Word</strong> on a regular basis:
+            </p>
+
+            <h3>1. Easy Editing Without Specialized Software</h3>
+            <p>
+                Editing a PDF directly often requires expensive software like Adobe Acrobat. By converting the file to Word, you gain access to all the familiar editing tools in Microsoft Word, Google Docs, or any word processor — tools you already know how to use. This is the essence of a <strong>PDF to Word without software</strong> approach: you avoid installation entirely and edit in the tools you already have.
+            </p>
+
+            <h3>2. Preserving and Updating Content</h3>
+            <p>
+                Contracts, resumes, reports, and academic papers frequently need updates. Instead of recreating the entire document from scratch, converting it to Word lets you make targeted edits while preserving the original structure and formatting.
+            </p>
+
+            <h3>3. Collaboration and Review</h3>
+            <p>
+                Word documents support track changes, comments, and real-time collaboration features that PDFs lack. When you convert a PDF to Word, team members can collaboratively edit, suggest changes, and leave feedback — all within a single document.
+            </p>
+
+            <h3>4. Accessibility and Compliance</h3>
+            <p>
+                Converting PDFs to Word makes content accessible to screen readers and other assistive technologies. Organizations that need to comply with accessibility standards (such as WCAG or ADA) often convert PDF documents to editable formats first.
+            </p>
+
+            <h3>5. Repurposing Content</h3>
+            <p>
+                Marketers, writers, and educators frequently need to repurpose content from existing PDFs — extracting sections for blog posts, creating summaries, or translating material into other languages. A Word document provides the flexibility to rearrange and restructure content effortlessly.
+            </p>
+
+            <h2>How to Convert PDF to Word: Step-by-Step Guide</h2>
+
+            <p>
+                Learning <strong>how to convert PDF to Word</strong> with ToolHub is simple and takes less than a minute. Follow these steps:
+            </p>
+
+            <h3>Step 1: Open the ToolHub PDF to Word Page</h3>
+            <p>
+                Navigate to the ToolHub PDF to Word Converter page in your browser. No downloads, no sign-ups, and no software installation required. The tool works on Windows, Mac, Linux, ChromeOS, and any device with a modern web browser.
+            </p>
+
+            <h3>Step 2: Upload Your PDF File</h3>
+            <p>
+                Click the "Choose PDF" button or simply drag and drop your PDF file into the upload zone. ToolHub accepts PDF files of all sizes and automatically detects whether the document contains standard text or scanned images. You can upload multiple pages without restrictions — whether your PDF is a single-page form or a 500-page report.
+            </p>
+
+            <h3>Step 3: Start the Conversion</h3>
+            <p>
+                Once your file is uploaded and confirmed, click the "Convert to Word" button. ToolHub's cloud-powered engine processes your document in seconds. The converter preserves text formatting, headings, bullet points, tables, and images as faithfully as possible. For scanned documents, the built-in OCR engine kicks in automatically to recognize and extract text from each page.
+            </p>
+
+            <h3>Step 4: Download Your Word Document</h3>
+            <p>
+                After conversion completes, a download link appears. Click it to save your newly created .docx file to your computer or phone. You can then open it in Microsoft Word, Google Docs, LibreOffice Writer, or any compatible application. The entire process — from upload to download — typically takes under 30 seconds for standard documents.
+            </p>
+
+            <h2>Key Features of ToolHub's PDF to Word Converter</h2>
+
+            <p>
+                Not all converters are created equal. Here is what makes ToolHub stand out as the <strong>best PDF to Word converter</strong> available today:
+            </p>
+
+            <h3>High-Fidelity Formatting Preservation</h3>
+            <p>
+                ToolHub's conversion engine is built to maintain the original layout of your document. Headings stay as headings, tables remain structured, images stay positioned correctly, and font styling is preserved wherever possible. The result is a Word document that closely mirrors your original PDF — not a messy wall of unformatted text.
+            </p>
+
+            <h3>Built-In OCR for Scanned Documents</h3>
+            <p>
+                The integrated Optical Character Recognition engine can <strong>convert scanned PDF to Word</strong> with high accuracy. Whether your scanned document is in English, Arabic, French, or dozens of other languages, the OCR technology recognizes text and places it into an editable Word format, ready for modification.
+            </p>
+
+            <h3>100% Browser-Based — No Software Needed</h3>
+            <p>
+                Everything happens in your web browser. There is nothing to install, no plugins to enable, and no browser extensions to download. This is true <strong>PDF to Word without software</strong> functionality — just open the page and convert.
+            </p>
+
+            <h3>Automatic File Deletion for Privacy</h3>
+            <p>
+                ToolHub takes your privacy seriously. Every uploaded file is encrypted during transfer and automatically deleted from the server immediately after conversion. Your documents are never stored, shared, or accessed by anyone else. This makes ToolHub one of the most secure options for handling confidential or sensitive files.
+            </p>
+
+            <h3>Unlimited Free Conversions</h3>
+            <p>
+                There are no daily limits, no file quotas, and no premium tiers required for standard conversions. ToolHub lets you <strong>convert PDF to Word online free</strong> as many times as you need. Whether you convert one file a month or a hundred files a day, the service remains completely free.
+            </p>
+
+            <h3>Cross-Platform Compatibility</h3>
+            <p>
+                ToolHub works seamlessly on desktop computers, laptops, tablets, and smartphones. Whether you are on a Windows PC, a MacBook, an iPad, or an Android phone, the converter delivers consistent results across all platforms and browsers.
+            </p>
+
+            <h2>Benefits of Using an Online PDF to Word Converter</h2>
+
+            <p>
+                Choosing an online converter over desktop software comes with significant advantages. Here is why millions of users prefer the <strong>PDF to Word online free</strong> approach:
+            </p>
+
+            <h3>No Installation Required</h3>
+            <p>
+                Desktop PDF converters require downloading, installing, and often purchasing expensive software licenses. An online tool eliminates all of those steps. You simply visit the website, upload your file, and download the result. There is zero commitment and zero cost.
+            </p>
+
+            <h3>Always Up to Date</h3>
+            <p>
+                Online tools are continuously updated behind the scenes. New conversion algorithms, improved OCR engines, and enhanced formatting logic are deployed automatically — you always get the latest version without needing to download patches or updates.
+            </p>
+
+            <h3>Storage Space Savings</h3>
+            <p>
+                Since conversions happen in the cloud, no processing power or storage is consumed on your local device. This is especially valuable for users on older hardware, low-storage mobile devices, or Chromebooks with limited local resources.
+            </p>
+
+            <h3>Instant Accessibility</h3>
+            <p>
+                You can access the converter from any device with an internet connection. Need to convert a PDF on a borrowed laptop at a hotel business center? No problem. Traveling and need to edit a document on your phone? ToolHub handles it.
+            </p>
+
+            <h2>Real-World Use Cases</h2>
+
+            <p>
+                The need to <strong>convert PDF to Word</strong> spans virtually every industry and profession. Here are some of the most common scenarios where ToolHub proves invaluable:
+            </p>
+
+            <h3>Students and Academics</h3>
+            <p>
+                Students frequently receive lecture notes, research papers, and textbook excerpts in PDF format. Converting these to Word allows them to highlight passages, add annotations, extract quotes for essays, and integrate content into assignments without retyping entire passages manually.
+            </p>
+
+            <h3>Business Professionals</h3>
+            <p>
+                Contracts, proposals, reports, and policy documents often arrive as PDFs. HR departments, legal teams, and project managers regularly need to <strong>change PDF to Word</strong> in order to update clauses, modify budgets, or tailor templates for new clients — all without starting from scratch.
+            </p>
+
+            <h3>Freelancers and Consultants</h3>
+            <p>
+                Freelancers who work with clients across different platforms frequently receive briefs, specifications, and deliverable requirements as PDFs. Converting these to editable documents streamlines the workflow and allows faster turnaround on projects.
+            </p>
+
+            <h3>Job Seekers</h3>
+            <p>
+                Many job seekers have their resumes saved as PDFs for easy sharing. When applying for a position that requires a Word document or when tailoring a resume for a specific role, converting the PDF to Word makes quick work of customizing content, keywords, and formatting.
+            </p>
+
+            <h3>Administrative and Government Workers</h3>
+            <p>
+                Government agencies and administrative offices deal with vast amounts of documentation in PDF format. Converting these documents to Word enables easier data entry, form completion, and content restructuring for internal records and public-facing communications.
+            </p>
+
+            <h3>Translators and Content Creators</h3>
+            <p>
+                Translators and content creators often receive source material in PDF format. Converting to Word provides a workable canvas for making translations, adaptations, or derivative works while preserving the original layout and structure.
+            </p>
+
+            <h2>Expert Tips for Best Conversion Results</h2>
+
+            <p>
+                To get the most out of any <strong>PDF to Word converter</strong>, keep these practical tips in mind:
+            </p>
+
+            <h3>Start With High-Quality PDFs</h3>
+            <p>
+                The quality of your output depends heavily on the quality of your input. PDFs created directly from digital sources (Word, Google Docs, InDesign) convert far more accurately than low-resolution scans. If possible, always use the original digital file rather than a photograph or low-DPI scan.
+            </p>
+
+            <h3>Check Formatting After Conversion</h3>
+            <p>
+                While ToolHub does an excellent job preserving layouts, complex formatting such as nested tables, text boxes, or unusual font choices may require minor manual adjustments in Word. A quick review after conversion ensures everything looks polished.
+            </p>
+
+            <h3>Use OCR for Scanned Documents</h3>
+            <p>
+                If your PDF is a scanned document, make sure you use a converter with built-in OCR capability. ToolHub automatically detects scanned PDFs and applies OCR — but always verify the extracted text for accuracy, especially with handwritten content or unusual fonts.
+            </p>
+
+            <h3>Convert One File at a Time for Best Results</h3>
+            <p>
+                While batch conversion is tempting, converting one file at a time often yields more accurate results, especially for complex documents with mixed content types, embedded images, and non-standard layouts.
+            </p>
+
+            <h3>Keep File Sizes Manageable</h3>
+            <p>
+                Extremely large PDF files (over 100 MB) may take longer to upload and process. If you are working with a very large document, consider splitting it into smaller sections before converting, or ensure you have a stable, high-speed internet connection.
+            </p>
+
+            <h3>Save Your Original PDF</h3>
+            <p>
+                Always keep a backup of your original PDF file before converting. While the conversion process does not modify the original, having a backup ensures you can reconvert if needed or revert to the original if the Word version does not meet your expectations.
+            </p>
+
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="step-grid">
+
+                <div class="step-card">
+
+                    <h3>Is this tool free?</h3>
+
+                    <p>Yes, ToolHub's PDF to Word converter is completely free to use. There are no hidden charges, no subscription tiers, and no file-size limits for standard conversions. You can convert as many PDF files as you need without paying anything.</p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>Are my files secure?</h3>
+
+                    <p>Absolutely. All files are encrypted during upload and automatically deleted from ToolHub's servers immediately after conversion. Your documents are never stored, shared, or accessed by third parties. ToolHub is designed with privacy and security as top priorities.</p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>Do I need to install software?</h3>
+
+                    <p>No. Everything works directly in your web browser. There is nothing to download, no plugins to install, and no browser extensions required. You can use ToolHub on any device — Windows, Mac, Linux, ChromeOS, iOS, or Android — with a modern web browser.</p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>Can I convert scanned PDFs to Word?</h3>
+
+                    <p>Yes. ToolHub includes built-in OCR (Optical Character Recognition) technology that can convert scanned PDFs into fully editable Word documents. The OCR engine supports multiple languages and handles both printed and typed text with high accuracy.</p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>What file formats are supported?</h3>
+
+                    <p>ToolHub accepts standard .pdf files and outputs .docx (Microsoft Word) files. The output Word document is compatible with Microsoft Word, Google Docs, LibreOffice Writer, Apple Pages, and any other application that supports the .docx format.</p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>Is there a file size limit?</h3>
+
+                    <p>ToolHub handles PDFs of all sizes, from single-page documents to multi-hundred-page reports. Very large files may take slightly longer to process depending on your internet connection speed, but there is no hard file-size cap for standard conversions.</p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>Does the conversion preserve formatting?</h3>
+
+                    <p>ToolHub's conversion engine is optimized to preserve as much of the original formatting as possible — including headings, paragraphs, tables, images, bullet points, and font styles. Some complex layouts may require minor manual adjustments after conversion.</p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>Can I use this on my phone?</h3>
+
+                    <p>Yes. ToolHub is fully responsive and works on any smartphone or tablet with a modern web browser. Simply open the PDF to Word page in your mobile browser, upload your file, and download the converted Word document.</p>
+
+                </div>
+
+            </div>
+
+        </article>
+            <div class="article-card">
+                <h2>Related Tools You Might Like</h2>
+                <p>Explore our other free online tools that complement PDF to Word:</p>
+                <div class="related-tools-grid">
+                    <a href="/word-to-pdf"><i class="fa-solid fa-link"></i> Word to PDF</a>
+                    <a href="/merge-pdf"><i class="fa-solid fa-link"></i> Merge PDF</a>
+                    <a href="/split-pdf"><i class="fa-solid fa-link"></i> Split PDF</a>
+                    <a href="/compress-pdf"><i class="fa-solid fa-link"></i> Compress PDF</a>
+                </div>
+            </div>
+    </section>
+        <div class="share-bar">
+            <span>Share this tool:</span>
+            <a class="share-btn facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+            <a class="share-btn twitter" href="https://twitter.com/intent/tweet?url={{ request.url }}&text={{ self.title() }}" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a>
+            <a class="share-btn linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+            <a class="share-btn whatsapp" href="https://wa.me/?text={{ self.title() }}%20{{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+
+
+    <section class="seo-related" aria-labelledby="related-tools-title">
+        <h2 id="related-tools-title">Explore More PDF Tools</h2>
+        <p>Continue with related ToolHub tools for your next file task.</p>
+        <div class="seo-related-grid">
+            <a class="seo-related-card" href="/word-to-pdf"><strong>Word to PDF</strong><span>Convert Word documents to PDF.</span></a>
+            <a class="seo-related-card" href="/pdf-to-jpg"><strong>PDF to JPG</strong><span>Turn PDF pages into JPG images.</span></a>
+            <a class="seo-related-card" href="/merge-pdf"><strong>Merge PDF</strong><span>Combine multiple PDFs.</span></a>
+        </div>
+    </section>
+</section>
+
+<!-- =========================
+        Loading Overlay
+========================= -->
+
+<div id="loader" class="loader-overlay" style="display:none;">
+
+    <div class="loader-box">
+
+        <div class="spinner"></div>
+
+        <h2>Converting PDF...</h2>
+
+        <p>Please wait while we process your file.</p>
+
+        <div class="progress">
+
+            <div class="progress-bar" id="progressBar"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

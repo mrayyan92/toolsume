@@ -1,0 +1,654 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Remove Background from Image - Free Online Tool | ToolHub{% endblock %}
+{% block og_title %}Remove Background from Image - Free Online Tool | ToolHub{% endblock %}
+{% block twitter_title %}Remove Background from Image - Free Online Tool | ToolHub{% endblock %}
+
+{% block seo_description %}
+    <meta name="description" content="Remove background from images online for free. Delete unwanted backgrounds, create transparent PNGs, and download results instantly with ToolHub.">
+{% endblock %}
+
+{% block structured_data_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is ToolHub Background Remover really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub is completely free with no hidden fees, no watermarks, and no subscription requirements."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to create an account to use the tool?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. ToolHub does not require registration, email verification, or account creation. Simply upload, process, and download."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What image formats are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ToolHub supports JPG, JPEG, PNG, and WebP image formats. The processed output is delivered as a PNG file to preserve transparency."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my uploaded image stored or shared?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. ToolHub processes your image securely and does not store, share, or use your photos for any purpose."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use ToolHub to remove background from product photos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. Removing background from product photos is one of the most popular use cases. Clean product images help your listings look professional."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<section class="tool-page">
+
+    <div class="tool-header">
+
+        <div class="tool-icon">
+
+            <i class="fa-solid fa-eraser"></i>
+
+        </div>
+
+        <h1>Background Remover</h1>
+
+        <p>
+
+            Upload an image and remove its background automatically in seconds.
+
+        </p>
+
+    </div>
+
+    <div class="upload-box">
+
+        <form
+            action="/remove-background"
+            method="POST"
+            enctype="multipart/form-data">
+
+            <div class="drop-zone" id="dropZone">
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    name="image"
+                    accept=".png,.jpg,.jpeg,.webp"
+                    hidden
+                    required>
+
+                <label
+                    for="fileInput"
+                    class="upload-area">
+
+                    <div class="upload-icon">
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    </div>
+
+                    <h2>
+
+                        Drag & Drop Your Image
+
+                    </h2>
+
+                    <p>
+
+                        or click below to browse
+
+                    </p>
+
+                    <button
+                        type="button"
+                        class="choose-btn"
+                        onclick="document.getElementById('fileInput').click()">
+
+                        <i class="fa-solid fa-image"></i>
+
+                        Choose Image
+
+                    </button>
+
+                    <p class="supported-files">
+
+                        Supported formats:
+                        JPG • JPEG • PNG • WEBP
+
+                    </p>
+
+                    <!-- File Preview -->
+
+                    <div
+                        id="fileCard"
+                        class="file-card"
+                        style="display:none;">
+
+                        <div class="file-left">
+
+                            <div class="success-icon">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h3 id="fileName"></h3>
+
+                                <p id="fileSize"></p>
+
+                                <span class="ready-tag">
+
+                                    Ready for background removal
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="removeFile"
+                            class="remove-btn">
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </button>
+
+                    </div>
+
+                </label>
+
+                    <button
+                        type="submit"
+                        class="compress-btn">
+
+                        <i class="fa-solid fa-eraser"></i>
+
+                        Remove Background
+
+                    </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+
+<style>
+/* =========================================================
+   TOOLHUB — SEO ARTICLE / GUIDE SECTION
+   ========================================================= */
+
+.tool-article{
+    width:min(1000px,calc(100% - 32px));
+    margin:70px auto 90px;
+    color:#cbd5e1;
+}
+
+.tool-article .article-card{
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(148,163,184,.12);
+    border-radius:24px;
+    padding:38px;
+    box-shadow:0 22px 55px rgba(0,0,0,.16);
+}
+
+.tool-article .article-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 13px;
+    border-radius:999px;
+    color:#93c5fd;
+    background:rgba(59,130,246,.10);
+    border:1px solid rgba(96,165,250,.16);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    margin-bottom:16px;
+}
+
+.tool-article h2{
+    color:#f8fafc;
+    font-size:30px;
+    line-height:1.2;
+    margin:0 0 16px;
+}
+
+.tool-article h3{
+    color:#f8fafc;
+    font-size:21px;
+    margin:30px 0 10px;
+}
+
+.tool-article p,
+.tool-article li{
+    color:#aab7c9;
+    font-size:15px;
+    line-height:1.85;
+}
+
+.tool-article p{
+    margin:0 0 15px;
+}
+
+.tool-article ul,
+.tool-article ol{
+    padding-left:24px;
+    margin:10px 0 20px;
+}
+
+.tool-article li{
+    margin:7px 0;
+}
+
+.tool-article .article-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+    margin:24px 0 8px;
+}
+
+.tool-article .article-mini{
+    padding:22px;
+    border-radius:18px;
+    background:rgba(15,23,42,.55);
+    border:1px solid rgba(148,163,184,.10);
+}
+
+.tool-article .article-mini h3{
+    margin:0 0 8px;
+    font-size:18px;
+}
+
+.tool-article .article-mini p{
+    margin:0;
+    font-size:14px;
+}
+
+.tool-article .faq-item{
+    padding:18px 0;
+    border-top:1px solid rgba(148,163,184,.10);
+}
+
+.tool-article .faq-item:first-child{
+    border-top:0;
+}
+
+.tool-article .faq-item h3{
+    margin:0 0 7px;
+    font-size:17px;
+}
+
+.tool-article .faq-item p{
+    margin:0;
+    font-size:14px;
+}
+
+@media(max-width:700px){
+    .tool-article{
+        width:calc(100% - 22px);
+        margin:48px auto 65px;
+    }
+
+    .tool-article .article-card{
+        padding:23px;
+        border-radius:19px;
+    }
+
+    .tool-article h2{
+        font-size:25px;
+    }
+
+    .tool-article .article-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+
+<section class="tool-article" aria-labelledby="background-remover-guide">
+    <div class="article-card">
+
+        <span class="article-badge">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            Complete Background Removal Guide
+        </span>
+
+        <h2 id="background-remover-guide">
+            Background Remover: The Complete Guide to Removing Image Backgrounds for Free
+        </h2>
+
+        <p>
+            Whether you are building an online store, designing social media content, or preparing professional presentations, a cluttered or distracting image background can undermine the quality of your work. Learning how to remove background from an image is one of the most valuable skills in digital content creation today. ToolHub's AI background remover free online tool makes this process fast, accurate, and completely free, giving you professional-grade results without the need for expensive software or advanced design skills.
+        </p>
+
+        <p>
+            In this comprehensive guide, we will cover everything you need to know about background removal, including what it is, why it matters, how to erase background from any photo using ToolHub, the key features that set our tool apart, practical use cases across industries, and expert tips to help you get the best possible results every single time.
+        </p>
+
+        <h3>What Is Background Removal?</h3>
+
+        <p>
+            Background removal is the process of isolating the main subject in an image by erasing everything behind it. When you remove bg from a photo, the tool identifies the edges and contours of the subject, separates it from the surrounding environment, and replaces the original background with transparency. The result is a clean, isolated subject that can be placed onto any new background, color, or design without the distractions of the original setting.
+        </p>
+
+        <p>
+            In the past, removing a background required manual tracing in complex photo editing software like Photoshop, a process that could take hours and demanded significant technical expertise. Today, AI background remover free online tools like ToolHub use advanced machine learning algorithms to detect subjects automatically, analyze pixel differences, and generate precise cutouts in a matter of seconds. This technology has made background removal accessible to everyone, from professional designers to casual users who simply need a clean image for a profile picture.
+        </p>
+
+        <h3>Why Remove Background from Images?</h3>
+
+        <p>
+            There are countless reasons why you might want to erase background from a photo. Here are some of the most common and compelling reasons:
+        </p>
+
+        <ul>
+            <li><strong>E-commerce and Online Stores:</strong> Most online marketplaces, including Amazon, eBay, Shopify, and Etsy, require product images to have clean, white, or transparent backgrounds. Removing the background from product photos makes listings look professional and helps products stand out in search results.</li>
+            <li><strong>Professional Profile Pictures:</strong> A clean headshot with a transparent or solid background looks polished and professional on LinkedIn, company websites, resumes, and business cards.</li>
+            <li><strong>Graphic Design and Marketing:</strong> Designers frequently need to isolate subjects to combine them with other visual elements. Whether creating banners, advertisements, or social media posts, removing the background is often the first step.</li>
+            <li><strong>Presentations and Documents:</strong> Placing isolated images onto presentation slides or documents creates a cleaner, more cohesive look than using raw photos with busy backgrounds.</li>
+            <li><strong>Social Media Content:</strong> Eye-catching social media posts often feature subjects placed over custom backgrounds, gradients, or branded designs. Background removal makes this easy.</li>
+            <li><strong>Photo Editing and Creative Projects:</strong> Artists and hobbyists use background removal to create collages, double exposures, memes, and other creative compositions.</li>
+        </ul>
+
+        <h3>How to Remove Background from Image Using ToolHub</h3>
+
+        <p>
+            ToolHub's background remover is designed to be intuitive and fast. You do not need to download any software, create an account, or have any design experience. Here is how to remove background from photo free no signup in just a few steps:
+        </p>
+
+        <ol>
+            <li><strong>Upload Your Image:</strong> Click the "Choose Image" button or drag and drop your photo directly into the upload area. ToolHub accepts JPG, JPEG, PNG, and WebP formats, so you can work with almost any image file.</li>
+            <li><strong>Automatic Processing:</strong> Once your image is uploaded, the AI background remover free online engine analyzes the image, detects the subject, and erases the background automatically. This happens in seconds with no manual intervention required.</li>
+            <li><strong>Review the Result:</strong> After processing, preview the result to make sure the subject has been cleanly isolated. Pay special attention to fine details like hair strands, transparent objects, and soft edges.</li>
+            <li><strong>Download the Image:</strong> When you are satisfied with the result, click the download button to save your image with a transparent background. The output preserves the quality of the original while giving you a clean, versatile file ready for any use case.</li>
+        </ol>
+
+        <p>
+            That is all there is to it. No complicated software, no manual tracing, and no watermarks on your results. ToolHub lets you remove background from photo free no signup so you can get straight to creating.
+        </p>
+
+        <h3>Key Features of ToolHub Background Remover</h3>
+
+        <p>
+            ToolHub is built to deliver the best free background remover experience available online. Here are the features that make it the right choice for your background removal needs:
+        </p>
+
+        <div class="article-grid">
+
+            <div class="article-mini">
+                <h3>AI-Powered Detection</h3>
+                <p>
+                    Advanced machine learning algorithms accurately identify and separate subjects from backgrounds, even in complex images with multiple objects or busy surroundings.
+                </p>
+            </div>
+
+            <div class="article-mini">
+                <h3>100% Free to Use</h3>
+                <p>
+                    ToolHub is a background remover no watermark tool. You get full-quality results without paying anything or dealing with intrusive watermarks on your processed images.
+                </p>
+            </div>
+
+            <div class="article-mini">
+                <h3>No Account Required</h3>
+                <p>
+                    Remove background from photo free no signup. There is no need to register, provide an email, or create a password. Just upload, process, and download.
+                </p>
+            </div>
+
+            <div class="article-mini">
+                <h3>Fast Processing</h3>
+                <p>
+                    The AI engine processes images in seconds, allowing you to remove bg from multiple photos quickly when working on batch projects or tight deadlines.
+                </p>
+            </div>
+
+            <div class="article-mini">
+                <h3>Multiple Format Support</h3>
+                <p>
+                    Upload JPG, JPEG, PNG, or WebP files. ToolHub handles all popular image formats so you can work with whatever file type you have on hand.
+                </p>
+            </div>
+
+            <div class="article-mini">
+                <h3>Transparent Output</h3>
+                <p>
+                    The processed image is delivered with a transparent background, making it easy to place your subject onto any new background, color, or design instantly.
+                </p>
+            </div>
+
+            <div class="article-mini">
+                <h3>No Software Installation</h3>
+                <p>
+                    Everything runs directly in your browser. There is nothing to download, install, or update. ToolHub works on any device with an internet connection.
+                </p>
+            </div>
+
+            <div class="article-mini">
+                <h3>High-Quality Results</h3>
+                <p>
+                    The AI preserves fine details like hair, edges, and textures while cleanly removing the background, delivering professional-quality results every time.
+                </p>
+            </div>
+
+        </div>
+
+        <h3>Benefits of Using ToolHub Background Remover</h3>
+
+        <p>
+            Choosing the right background remover can make the difference between a frustrating experience and a seamless one. Here are the key benefits of using ToolHub to erase background from your photos:
+        </p>
+
+        <ul>
+            <li><strong>Save Time:</strong> What used to take hours of manual editing in Photoshop now takes seconds with ToolHub. You can process an image, review the result, and download it in under a minute, freeing up your time for more important tasks.</li>
+            <li><strong>No Learning Curve:</strong> You do not need to understand layers, masks, pen tools, or any advanced editing concepts. ToolHub handles the technical complexity so you can focus on your project.</li>
+            <li><strong>Cost-Free Solution:</strong> Professional photo editing software often requires expensive subscriptions. ToolHub delivers comparable results for free, making it the best free background remover for individuals, small businesses, and anyone on a budget.</li>
+            <li><strong>Consistent Results:</strong> The AI engine provides reliable, consistent background removal across different types of images, from product photos to portraits to complex scenes.</li>
+            <li><strong>Privacy Focused:</strong> Your images are processed securely and are not stored or shared. You maintain full control over your content at all times.</li>
+            <li><strong>Works Everywhere:</strong> ToolHub runs in your web browser, so it works on Windows, Mac, Linux, tablets, and smartphones without any compatibility issues.</li>
+        </ul>
+
+        <h3>Use Cases: Who Needs Background Removal?</h3>
+
+        <p>
+            Background removal is one of the most widely used image editing techniques across industries. Here is how different professionals and users benefit from being able to erase background from images:
+        </p>
+
+        <h3>E-Commerce and Online Retailers</h3>
+
+        <p>
+            If you sell products online, clean product images are non-negotiable. Amazon, eBay, Shopify, Walmart Marketplace, and virtually every other platform requires or strongly prefers product photos with white or transparent backgrounds. Using a background remover to remove background from product photo files ensures your listings look professional, comply with marketplace guidelines, and convert more browsers into buyers. A cluttered background can distract from the product itself, while a clean, isolated image puts the focus exactly where it belongs.
+        </p>
+
+        <h3>Professional Headshots and Profile Pictures</h3>
+
+        <p>
+            First impressions matter, and your profile picture is often the first thing people see on LinkedIn, your company website, or a professional directory. A photo with a busy office background, a messy room, or inconsistent lighting can look unprofessional. By using a background remover to isolate your portrait, you can create a consistent, polished appearance across all your professional profiles. This is especially useful for team pages, corporate directories, and speaking engagements where a uniform look is important.
+        </p>
+
+        <h3>Graphic Designers and Content Creators</h3>
+
+        <p>
+            For designers, background removal is a foundational workflow step. Whether you are creating social media graphics, YouTube thumbnails, podcast covers, email headers, or print materials, you frequently need to isolate subjects and place them into custom compositions. ToolHub's AI background remover free online tool speeds up this workflow by handling the tedious masking and cutting work automatically, letting designers focus on creativity rather than technical editing.
+        </p>
+
+        <h3>Marketing and Advertising Teams</h3>
+
+        <p>
+            Marketing teams create dozens or even hundreds of visual assets each month. Social media posts, banner ads, email campaigns, and printed materials all require clean images. Having a fast, free background remover in your toolkit means your team can produce more assets in less time without relying on a designer for every single image edit. This is particularly valuable for small businesses and startups that do not have a dedicated design team.
+        </p>
+
+        <h3>Personal and Creative Projects</h3>
+
+        <p>
+            Beyond professional use cases, background removal is useful for personal projects like photo albums, greeting cards, school presentations, and creative art. Making image background transparent opens up possibilities for photo manipulation, double exposures, custom collages, and fun social media content that stands out in crowded feeds.
+        </p>
+
+        <h3>Tips for Getting the Best Background Removal Results</h3>
+
+        <p>
+            While ToolHub's AI does most of the heavy lifting, there are a few things you can do to ensure you get the best possible results when you remove background from a photo:
+        </p>
+
+        <ol>
+            <li><strong>Start with a High-Quality Image:</strong> The better the input, the better the output. Use the highest resolution version of your image available. Low-resolution or heavily compressed images can make it harder for the AI to detect edges accurately.</li>
+            <li><strong>Ensure Good Lighting:</strong> Images where the subject is well-lit and clearly visible tend to produce cleaner cutouts. Avoid photos where the subject blends into the background due to similar colors or poor lighting.</li>
+            <li><strong>Choose Images with Clear Subject Separation:</strong> Photos where there is a distinct difference between the subject and the background, such as color contrast or depth of field blur, are easier for the AI to process.</li>
+            <li><strong>Watch for Fine Details:</strong> Hair, fur, lace, glass, and other semi-transparent or intricate elements can be challenging for any background removal tool. If your image contains these elements, review the result carefully and consider re-uploading a different version if needed.</li>
+            <li><strong>Keep Your Original:</strong> Always save the original image before processing. This gives you a backup to fall back on if you need to reprocess the image or try a different approach.</li>
+            <li><strong>Use Appropriate Formats:</strong> When downloading your result, keep in mind that PNG format preserves transparency. If you save a transparent image as JPG, the transparent areas will be filled with a solid color (usually white), which defeats the purpose of background removal.</li>
+            <li><strong>Batch Process When Needed:</strong> If you have multiple images that need background removal, process them one at a time through ToolHub. Consistent, clean results across a batch of product photos or headshots creates a more professional overall presentation.</li>
+        </ol>
+
+        <h3>Frequently Asked Questions</h3>
+
+        <div class="faq-item">
+            <h3>Is ToolHub's Background Remover really free?</h3>
+            <p>
+                Yes. ToolHub is a background remover no watermark tool that is completely free to use. There are no hidden fees, no subscription requirements, and no watermarks added to your processed images. You can remove bg from as many photos as you need without paying anything.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Do I need to create an account to use the tool?</h3>
+            <p>
+                No. You can remove background from photo free no signup. ToolHub does not require registration, email verification, or account creation. Simply upload your image, let the AI process it, and download the result.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What image formats are supported?</h3>
+            <p>
+                ToolHub's background remover supports JPG, JPEG, PNG, and WebP image formats. These cover the vast majority of image files you will encounter. The processed output is typically delivered as a PNG file to preserve transparency.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How does the AI background removal work?</h3>
+            <p>
+                ToolHub uses artificial intelligence and machine learning models trained on millions of images to detect the subject of a photo and separate it from the background. The AI analyzes color differences, edge patterns, textures, and depth information to create a precise cutout automatically. This process happens entirely in the cloud, so your device does not need any special processing power.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Can I use ToolHub to remove background from product photos?</h3>
+            <p>
+                Absolutely. Removing background from product photos is one of the most popular use cases for ToolHub. Whether you sell on Amazon, eBay, Shopify, Etsy, or your own website, clean product images with transparent backgrounds help your listings look professional and meet marketplace requirements.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Is my uploaded image stored or shared?</h3>
+            <p>
+                No. ToolHub processes your image securely and does not store, share, or use your photos for any purpose. Your privacy is important, and the tool is designed to handle images safely. Once processing is complete, you download your result and the original is not retained.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What types of images work best for background removal?</h3>
+            <p>
+                Images with a clear, well-lit subject that stands out from the background tend to produce the best results. Portraits, product photos, and isolated objects generally work very well. Images with strong color contrast between the subject and background are ideal. Avoid extremely blurry, dark, or low-resolution images for the cleanest cutouts.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Can I remove background from images on my phone?</h3>
+            <p>
+                Yes. ToolHub runs entirely in your web browser, so it works on any device including smartphones and tablets. You can upload and process images directly from your phone without downloading any app or software. This makes it easy to remove background from photos on the go.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What is the difference between a transparent background and a white background?</h3>
+            <p>
+                A transparent background means there is no background at all. The subject exists on a clear canvas that allows whatever is behind it, such as a website design, presentation slide, or another image, to show through. A white background fills the area behind the subject with solid white. ToolHub delivers transparent backgrounds by default, giving you maximum flexibility for placing your subject in any context.
+            </p>
+        </div>
+
+    </div>
+            <div class="article-card">
+                <h2>Related Tools You Might Like</h2>
+                <p>Explore our other free online tools that complement Background Remover:</p>
+                <div class="related-tools-grid">
+                    <a href="/compressor"><i class="fa-solid fa-link"></i> Compress Image</a>
+                    <a href="/crop-image"><i class="fa-solid fa-link"></i> Crop Image</a>
+                    <a href="/resize-image"><i class="fa-solid fa-link"></i> Resize Image</a>
+                </div>
+            </div>
+</section>
+        <div class="share-bar">
+            <span>Share this tool:</span>
+            <a class="share-btn facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+            <a class="share-btn twitter" href="https://twitter.com/intent/tweet?url={{ request.url }}&text={{ self.title() }}" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a>
+            <a class="share-btn linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+            <a class="share-btn whatsapp" href="https://wa.me/?text={{ self.title() }}%20{{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+
+
+<script>
+
+const fileInput = document.getElementById("fileInput");
+const fileCard = document.getElementById("fileCard");
+const fileName = document.getElementById("fileName");
+const fileSize = document.getElementById("fileSize");
+const removeBtn = document.getElementById("removeFile");
+
+fileInput.addEventListener("change", function(){
+
+    if(this.files.length > 0){
+
+        const file = this.files[0];
+
+        fileName.textContent = file.name;
+
+        fileSize.innerHTML =
+            (file.size / (1024 * 1024)).toFixed(2) + " MB";
+
+        fileCard.style.display = "flex";
+
+    }
+
+});
+
+removeBtn.addEventListener("click", function(){
+
+    fileInput.value = "";
+
+    fileCard.style.display = "none";
+
+});
+
+</script>
+
+{% endblock %}

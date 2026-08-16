@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Disclaimer — ToolHub{% endblock %}
+
+{% block seo_description %}
+<meta name="description" content="Read ToolHub's disclaimer regarding the use of our free online tools, file processing limitations, and liability information.">
+{% endblock %}
+
+{% block content %}
+<style>
+.legal-page{min-height:70vh;padding:75px 0 95px;color:#fff;background:radial-gradient(circle at 12% 8%,rgba(37,99,235,.14),transparent 30%),radial-gradient(circle at 88% 18%,rgba(14,165,233,.08),transparent 28%),linear-gradient(180deg,#06101e 0%,#071426 55%,#06101d 100%)}
+.legal-wrap{width:min(980px,calc(100% - 32px));margin:auto}
+.legal-breadcrumb{display:flex;align-items:center;gap:9px;margin-bottom:28px;color:#64748b;font-size:13px}
+.legal-breadcrumb a{color:#60a5fa;text-decoration:none}.legal-breadcrumb i{font-size:9px;color:#475569}
+.legal-hero{text-align:center;margin-bottom:38px}
+.legal-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;color:#93c5fd;background:rgba(37,99,235,.12);border:1px solid rgba(96,165,250,.20);font-size:11px;font-weight:800;letter-spacing:.08em}
+.legal-hero h1{margin:18px 0 10px;font-size:clamp(38px,5vw,58px);line-height:1.08;letter-spacing:-.03em}
+.legal-hero h1 span{color:#3b82f6}
+.legal-hero p{max-width:720px;margin:auto;color:#94a3b8;line-height:1.8;font-size:15px}
+.legal-card{padding:36px;border-radius:24px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);box-shadow:0 22px 60px rgba(0,0,0,.20)}
+.legal-note{margin-bottom:28px;padding:15px 17px;border-radius:13px;color:#bfdbfe;background:rgba(37,99,235,.08);border:1px solid rgba(96,165,250,.16);font-size:13px;line-height:1.7}
+.legal-card h2{margin:31px 0 9px;color:#f8fafc;font-size:21px}.legal-card h2:first-of-type{margin-top:0}
+.legal-card p,.legal-card li{color:#a7b4c7;line-height:1.8;font-size:14px}.legal-card ul{padding-left:22px}.legal-card li{margin:6px 0}.legal-card a{color:#60a5fa}
+.legal-footer{margin-top:25px;padding-top:20px;border-top:1px solid rgba(148,163,184,.10);color:#64748b;font-size:12px}
+@media(max-width:600px){.legal-page{padding:50px 0 70px}.legal-wrap{width:calc(100% - 22px)}.legal-card{padding:22px;border-radius:19px}.legal-hero h1{font-size:39px}}
+</style>
+
+<section class="legal-page">
+<div class="legal-wrap">
+    <div class="legal-breadcrumb">
+        <a href="/">Home</a><i class="fa-solid fa-chevron-right"></i><span>Disclaimer</span>
+    </div>
+
+    <div class="legal-hero">
+        <span class="legal-badge"><i class="fa-solid fa-triangle-exclamation"></i> DISCLAIMER</span>
+        <h1>Important <span>Information</span></h1>
+        <p>Please review this disclaimer before relying on information, tools, or results provided through ToolHub.</p>
+    </div>
+
+    <div class="legal-card">
+        <div class="legal-note">
+            ToolHub provides general online tools for convenience. Results should be reviewed independently before being used for important or consequential purposes.
+        </div>
+
+        <h2>1. General Information</h2>
+        <p>The information and tools available through ToolHub are provided for general informational, practical, and productivity purposes. They are not intended to replace professional advice or specialized services.</p>
+
+        <h2>2. Tool Results</h2>
+        <p>ToolHub aims to provide useful and accurate results, but we do not guarantee that every result will be complete, accurate, error-free, or suitable for a particular purpose.</p>
+        <p>Results may depend on the input file, its format and quality, the selected settings, and the technology used by the individual tool.</p>
+
+        <h2>3. Review Your Results</h2>
+        <p>You should always review files, conversions, calculations, generated content, or other results before relying on them. This is especially important for legal, financial, medical, academic, professional, business, or other consequential uses.</p>
+
+        <h2>4. No Professional Advice</h2>
+        <p>ToolHub does not provide legal, medical, financial, tax, accounting, cybersecurity, or other professional advice through its general-purpose tools or website content.</p>
+        <p>If you need professional advice, consult an appropriately qualified professional.</p>
+
+        <h2>5. File Processing</h2>
+        <p>Some ToolHub features require users to upload files for processing. Users are responsible for ensuring that they have the right to upload and process those files.</p>
+        <p>Users should maintain their own backups of important files and should not rely on ToolHub as their sole storage or backup solution.</p>
+
+        <h2>6. Third-Party Services and Links</h2>
+        <p>ToolHub may use third-party technologies or link to external websites and services. Those third parties may operate under their own terms, privacy policies, and practices. ToolHub does not control all external services and is not responsible for their content or availability.</p>
+
+        <h2>7. Availability</h2>
+        <p>ToolHub may occasionally experience maintenance, technical problems, interruptions, or changes to individual tools. We do not guarantee uninterrupted availability of every feature at all times.</p>
+
+        <h2>8. Advertising and External Content</h2>
+        <p>ToolHub may display advertisements or other third-party content. The presence of an advertisement does not necessarily mean that ToolHub endorses the advertised product or service.</p>
+
+        <h2>9. Limitation of Responsibility</h2>
+        <p>To the extent permitted by applicable law, ToolHub and its operators are not responsible for losses or damages resulting from reliance on information, tools, generated results, or external services accessed through the website.</p>
+
+        <h2>10. Changes to This Disclaimer</h2>
+        <p>This Disclaimer may be updated when ToolHub's services, technologies, or requirements change. The latest version will be published on this page.</p>
+
+        <h2>11. Related Policies</h2>
+        <p>For additional information, please review our <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms of Service</a>.</p>
+
+        <h2>12. Contact</h2>
+        <p>If you have questions about this Disclaimer, please use our <a href="/contact">Contact page</a>.</p>
+
+        <div class="legal-footer">
+            This Disclaimer is a general website draft and is not legal advice. It should be reviewed and adapted to the actual ToolHub business, jurisdiction, services, and applicable laws before commercial launch.
+        </div>
+    </div>
+</div>
+</section>
+{% endblock %}

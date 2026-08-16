@@ -1,0 +1,799 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Rotate PDF Pages Online - Free PDF Rotation Tool | ToolHub{% endblock %}
+{% block og_title %}Rotate PDF Pages Online - Free PDF Rotation Tool | ToolHub{% endblock %}
+{% block twitter_title %}Rotate PDF Pages Online - Free PDF Rotation Tool | ToolHub{% endblock %}
+
+{% block seo_description %}
+    <meta name="description" content="Rotate PDF pages online for free. Fix page orientation, flip documents, and adjust PDF rotation instantly with ToolHub's free tool.">
+{% endblock %}
+
+
+{% block structured_data_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.url_root.rstrip('/') }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PDF Tools",
+          "item": "{{ request.url_root.rstrip('/') }}/pdf-tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Rotate Pdf"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Rotate Pdf — ToolHub",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "url": "{{ request.url_root.rstrip('/') }}{{ request.path }}",
+      "description": "{{ self.seo_description()|meta_content }}",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is Rotate PDF free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub lets you rotate PDF files completely free with no hidden charges or watermarks."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I rotate by 180 degrees?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. You can rotate your PDF by 90, 180 or 270 degrees."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will the PDF quality change?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Rotation modifies the page orientation metadata without re-encoding images or altering vector paths."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my uploaded PDF file safe and private?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub uses TLS encryption for all file transfers and automatically deletes uploaded files from its servers after processing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I rotate a single page in a PDF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ToolHub applies rotation to all pages. To rotate only specific pages, use the Split PDF tool to extract those pages first, rotate them individually, and then merge them back."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<section class="tool-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="separator">›</span>
+        <a href="/pdf-tools">PDF Tools</a><span class="separator">›</span>
+        <span>Rotate Pdf</span>
+    </nav>
+
+
+    <!-- TOOL HEADER -->
+
+    <div class="tool-header">
+
+        <div class="tool-icon">
+            <i class="fa-solid fa-rotate-right"></i>
+        </div>
+
+        <h1>Rotate PDF</h1>
+
+        <p>
+            Rotate PDF pages by 90°, 180° or 270° quickly and securely.
+        </p>
+
+    </div>
+
+    <!-- UPLOAD BOX -->
+
+    <div class="upload-box">
+
+        <form
+            action="/rotate-pdf-file"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="drop-zone" id="dropZone">
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    name="pdf"
+                    accept=".pdf"
+                    hidden
+                    required
+                >
+
+                <label for="fileInput" class="upload-area">
+
+                    <div class="upload-icon">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+
+                    <h2>Drag & Drop Your PDF</h2>
+
+                    <p>or click below to browse</p>
+
+                    <button
+                        type="button"
+                        class="choose-btn"
+                        onclick="document.getElementById('fileInput').click()"
+                    >
+                        Choose PDF
+                    </button>
+
+                    <!-- SUCCESS CARD -->
+
+                    <div
+                        id="fileCard"
+                        class="file-card success-card"
+                        style="display:none;"
+                    >
+
+                        <div class="file-left">
+
+                            <div class="success-icon">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+
+                            <div>
+
+                                <h3 id="fileName"></h3>
+
+                                <p id="fileSize"></p>
+
+                                <span class="ready-tag">
+                                    Ready for rotation
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="removeFile"
+                            class="remove-btn"
+                        >
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+
+                    </div>
+
+                    <!-- ROTATION OPTION -->
+
+                    <div style="margin-top:20px;">
+
+                       <label>
+
+    <strong class="rotation-title">
+
+        Rotation Angle
+
+    </strong>
+
+</label>
+
+<select
+    name="angle"
+    class="rotation-select">
+
+    <option value="90">90° Clockwise</option>
+    <option value="180">180°</option>
+    <option value="270">270° Counter Clockwise</option>
+
+</select>
+
+                    </div>
+
+                </label>
+
+                    <!-- BUTTON -->
+
+                    <button
+                        class="convert-btn"
+                        id="convertBtn"
+                        type="submit"
+                        disabled
+                    >
+
+                        <i class="fa-solid fa-rotate-right"></i>
+
+                        Rotate PDF
+
+                    </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- LOADER -->
+
+    <div
+        id="loader"
+        class="loader-overlay"
+        style="display:none;"
+    >
+
+        <div class="loader-box">
+
+            <div class="spinner"></div>
+
+            <h3>Rotating PDF...</h3>
+
+            <p>
+                Please wait while ToolHub rotates your document.
+            </p>
+
+            <div class="progress">
+                <div id="progressBar"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+        <!-- =========================
+            FEATURES
+    ========================== -->
+
+    <section class="features">
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            <h3>Lightning Fast</h3>
+
+            <p>
+                Rotate PDF pages in just a few seconds.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <h3>100% Secure</h3>
+
+            <p>
+                Your PDF files are securely processed and automatically deleted.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-rotate-right"></i>
+
+            <h3>Any Rotation Angle</h3>
+
+            <p>
+                Rotate your PDF by 90°, 180° or 270° with one click.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-gift"></i>
+
+            <h3>Free Forever</h3>
+
+            <p>
+                Unlimited PDF rotations with no subscriptions or hidden fees.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            HOW IT WORKS
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>How It Works</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <span>1</span>
+
+                <h3>Upload PDF</h3>
+
+                <p>
+                    Select or drag your PDF into the upload area.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>2</span>
+
+                <h3>Select Rotation</h3>
+
+                <p>
+                    Choose 90°, 180° or 270° rotation.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>3</span>
+
+                <h3>Download</h3>
+
+                <p>
+                    Download your rotated PDF instantly.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            SEO ARTICLE
+    ========================== -->
+
+    <section class="tool-article">
+
+        <div class="article-card">
+
+            <span class="article-badge">Complete Guide</span>
+
+            <h2>What Is Rotate PDF and Why Do You Need It?</h2>
+
+            <p>
+                A Rotate PDF tool is an online utility that lets you change the orientation of pages inside a PDF document without altering the original content, layout integrity, or text quality. Whether you received a scanned contract that lands sideways, a landscape invoice embedded in a portrait report, or a presentation slide that was exported upside down, the ability to rotate PDF pages instantly solves a frustrating problem that almost every computer user encounters at some point.
+            </p>
+
+            <p>
+                When you rotate PDF 90 degrees clockwise, counterclockwise, or flip it a full 180 degrees, the tool recalculates the page dimensions and re-renders every element—text, images, vector graphics, headers, footers, and form fields—so the document displays correctly on any screen or printer. Unlike desktop software that requires installation, a browser-based rotate PDF pages online free tool does all the heavy lifting on secure servers, meaning your device storage and operating system are never burdened.
+            </p>
+
+            <h2>Why Would You Need to Rotate a PDF?</h2>
+
+            <p>
+                There are dozens of real-world scenarios where turning a PDF becomes essential. Understanding these use cases helps you appreciate the value of a reliable rotation tool and how it fits into your daily workflow.
+            </p>
+
+            <p>
+                <strong>Scanned Documents.</strong> Flatbed scanners often feed pages in a fixed orientation. If the original paper was placed landscape but the scanner defaults to portrait, the resulting PDF arrives sideways. Instead of re-scanning every page, you simply rotate the PDF and save the corrected version in seconds.
+            </p>
+
+            <p>
+                <strong>Email Attachments.</strong> Colleagues and clients send PDFs created on different systems with different default settings. A report composed in landscape may be embedded inside a portrait-oriented email attachment, creating a visual mismatch that looks unprofessional when printed or presented.
+            </p>
+
+            <p>
+                <strong>Mobile Captures.</strong> Smartphones capture photos in portrait or landscape depending on how you hold the device. When those photos are converted to PDF—expense receipts, whiteboard notes, signed agreements—the orientation is locked to the original capture angle. Rotating the PDF corrects the viewing direction without retaking the photo.
+            </p>
+
+            <p>
+                <strong>Legal and Compliance.</strong> Courts, government agencies, and corporate compliance departments often mandate that documents appear in a specific orientation. A contract that arrives rotated 90 degrees off must be corrected before filing, otherwise it may be rejected or cause confusion during review.
+            </p>
+
+            <p>
+                <strong>Presentation and Publishing.</strong> Graphic designers, educators, and publishers frequently need to rotate PDF pages to match a specific layout template. A horizontal chart placed inside a vertical textbook chapter, for instance, requires a 90-degree turn so readers do not have to tilt their screens.
+            </p>
+
+            <p>
+                <strong>Accessibility.</strong> Users with visual impairments who rely on screen readers or zoom tools benefit from correctly oriented pages. Rotating a PDF ensures assistive technologies interpret the content in the proper reading order, improving overall accessibility and compliance with WCAG guidelines.
+            </p>
+
+            <h2>How to Rotate a PDF Using ToolHub: Step-by-Step Guide</h2>
+
+            <p>
+                ToolHub makes the process of rotating PDF pages online free and straightforward. Follow these simple steps to rotate PDF and save the corrected document to your device.
+            </p>
+
+            <p>
+                <strong>Step 1: Open the Rotate PDF Tool.</strong> Navigate to the ToolHub Rotate PDF page using any modern web browser—Chrome, Firefox, Safari, Edge, or Opera. No account creation, software download, or browser extension is required.
+            </p>
+
+            <p>
+                <strong>Step 2: Upload Your PDF File.</strong> Click the "Choose PDF" button or drag and drop your PDF file directly onto the upload zone. The tool accepts PDF files of all sizes, from single-page receipts to multi-hundred-page reports. A confirmation card appears showing the file name, size, and a "Ready for rotation" status badge.
+            </p>
+
+            <p>
+                <strong>Step 3: Select the Rotation Angle.</strong> Use the dropdown menu to choose your desired rotation. Select 90° Clockwise to turn the page a quarter turn to the right, 180° to flip it completely upside down, or 270° Counter Clockwise to turn it a quarter turn to the left. Each option applies the rotation uniformly across every page in the document.
+            </p>
+
+            <p>
+                <strong>Step 4: Click Rotate PDF.</strong> Press the "Rotate PDF" button to begin processing. A progress bar and spinner animation indicate that the server is applying the rotation. Processing typically completes in a few seconds, depending on file size and server load.
+            </p>
+
+            <p>
+                <strong>Step 5: Download the Rotated PDF.</strong> Once rotation finishes, the tool presents a download link. Click it to save the corrected PDF to your computer, phone, or tablet. The downloaded file retains the original file name with a "_rotated" suffix so you can easily distinguish it from the original.
+            </p>
+
+            <p>
+                That is all it takes to rotate PDF pages. The entire workflow—from upload to download—happens in your browser without installing Adobe Acrobat, Preview, or any other desktop application.
+            </p>
+
+            <h2>Key Features of ToolHub Rotate PDF</h2>
+
+            <p>
+                ToolHub is built with speed, security, and simplicity in mind. Here are the standout features that make it the best choice when you need to rotate PDF pages online free.
+            </p>
+
+            <p>
+                <strong>Instant Processing.</strong> The rotation engine runs on optimized cloud servers that process pages in parallel. Even large PDF files with hundreds of pages rotate in seconds, not minutes.
+            </p>
+
+            <p>
+                <strong>Three Rotation Angles.</strong> Choose from 90°, 180°, or 270° rotation. Whether you need to turn a PDF 90 degrees to fix a sideways scan or flip it 180 degrees to correct an upside-down capture, the tool covers every common orientation scenario.
+            </p>
+
+            <p>
+                <strong>Lossless Quality.</strong> Rotation is a metadata operation in the PDF specification. The tool modifies the page rotation attribute without re-encoding images or re-rendering vector graphics, so the output file maintains the exact same visual quality as the original.
+            </p>
+
+            <p>
+                <strong>No File Size Limits.</strong> Upload small invoices or massive architectural blueprints—the tool handles files of all sizes without requiring a premium subscription or imposing artificial caps.
+            </p>
+
+            <p>
+                <strong>100% Secure.</strong> All file transfers use TLS encryption. Uploaded PDFs are stored temporarily on secure servers and automatically deleted after processing, ensuring your sensitive documents never remain on third-party infrastructure.
+            </p>
+
+            <p>
+                <strong>Works Everywhere.</strong> ToolHub runs in any modern web browser on Windows, macOS, Linux, ChromeOS, iOS, and Android. There is nothing to install, configure, or update.
+            </p>
+
+            <p>
+                <strong>Completely Free.</strong> There are no hidden fees, no watermarks, no registration walls, and no usage limits. Rotate as many PDFs as you need, every day, at no cost.
+            </p>
+
+            <h2>Benefits of Using an Online PDF Rotation Tool</h2>
+
+            <p>
+                Choosing an online tool like ToolHub over desktop software or manual workarounds delivers several important advantages.
+            </p>
+
+            <p>
+                <strong>No Installation Required.</strong> Desktop PDF editors like Adobe Acrobat Pro require a paid license, periodic updates, and significant disk space. An online tool eliminates all of those requirements. You open a browser tab, complete your task, and close the tab—zero footprint left behind.
+            </p>
+
+            <p>
+                <strong>Cross-Platform Compatibility.</strong> A web-based tool works identically on every operating system. Whether you use Windows 11, Ubuntu, macOS Sonoma, or ChromeOS, the interface and output remain consistent. This is especially valuable for teams that operate across different platforms.
+            </p>
+
+            <p>
+                <strong>Speed and Efficiency.</strong> Installing software, opening it, importing a file, locating the rotate function, configuring settings, and exporting the result takes time. An online tool reduces the entire process to three clicks: upload, select angle, download.
+            </p>
+
+            <p>
+                <strong>Always Up to Date.</strong> Software requires updates and patches. With an online tool, the latest version is always running. New features and security improvements deploy automatically without user intervention.
+            </p>
+
+            <p>
+                <strong>Collaboration Friendly.</strong> Because the tool runs in a browser, you can rotate a PDF on your laptop and download it, then send the link to a colleague who opens it on their phone. No file transfer protocols, no shared drives, no compatibility issues.
+            </p>
+
+            <p>
+                <strong>Reduced Hardware strain.</strong> PDF rendering and rotation can be CPU-intensive for very large files. Offloading the task to cloud servers means your device stays responsive and battery life is preserved, which matters when working on a laptop or tablet.
+            </p>
+
+            <h2>Real-World Use Cases for Rotate PDF</h2>
+
+            <p>
+                Below are practical scenarios where the ToolHub Rotate PDF tool proves indispensable.
+            </p>
+
+            <p>
+                <strong>Accounting and Finance.</strong> Accountants process hundreds of scanned receipts and invoices each week. Many arrive sideways due to scanner feed direction. Rotating the PDF and saving the corrected version ensures clean bookkeeping records and audit-ready documentation.
+            </p>
+
+            <p>
+                <strong>Legal Professionals.</strong> Lawyers receive depositions, contracts, and court filings from multiple parties, each using different creation tools. A document that arrives rotated 90 degrees must be corrected before filing with the court. ToolHub lets paralegals fix orientation in seconds.
+            </p>
+
+            <p>
+                <strong>Healthcare.</strong> Medical records, lab results, and insurance forms are frequently scanned at facilities with legacy equipment. Rotating PDF pages ensures clinicians and administrators can read documents without tilting screens or reorienting printed copies.
+            </p>
+
+            <p>
+                <strong>Education.</strong> Teachers and students download research papers, textbooks, and worksheets from online databases. Occasionally, a chapter or figure is oriented incorrectly. A quick rotation fixes the problem without disrupting the study session.
+            </p>
+
+            <p>
+                <strong>Real Estate.</strong> Property listings include floor plans, inspection reports, and closing documents. Floor plans are almost always landscape, while closing packages are portrait. Rotating the landscape pages ensures a cohesive, professionally presented file.
+            </p>
+
+            <p>
+                <strong>Graphic Design.</strong> Designers export PDF proofs from Adobe Illustrator, InDesign, or Canva. Sometimes the export orientation differs from the intended layout. Rather than re-exporting the entire project, a simple rotation corrects the issue.
+            </p>
+
+            <p>
+                <strong>Government and Public Administration.</strong> Citizens submit permit applications, tax forms, and identification documents through online portals. These submissions often arrive with incorrect orientations due to mobile scanning. ToolHub enables quick correction before official review.
+            </p>
+
+            <h2>Tips for Getting the Best Results When Rotating PDFs</h2>
+
+            <p>
+                Maximize your efficiency and output quality with these expert tips.
+            </p>
+
+            <p>
+                <strong>Verify Before You Rotate.</strong> Open the original PDF in your browser or a preview tool to confirm which pages need rotation and in which direction. Rotating an already-correct page will require a second rotation to fix, wasting time.
+            </p>
+
+            <p>
+                <strong>Rotate All Pages at Once.</strong> ToolHub applies the selected rotation angle to every page in the document. If you need to rotate only specific pages, consider splitting the PDF first using the ToolHub Split PDF tool, rotating the affected section, and then merging the files back together.
+            </p>
+
+            <p>
+                <strong>Check File Size.</strong> Very large PDF files (over 100 MB) may take slightly longer to upload on slow internet connections. Compressing the PDF with ToolHub Compress PDF before rotating can speed up the upload step without affecting rotation quality.
+            </p>
+
+            <p>
+                <strong>Use Descriptive File Names.</strong> After rotating, append "_rotated" or "_corrected" to the file name before saving. This helps you and your team quickly identify the corrected version and avoid confusion with the original.
+            </p>
+
+            <p>
+                <strong>Save the Original.</strong> Always keep the un-rotated original file in case you need to revert. ToolHub does not modify your source file, so your original remains intact on your device.
+            </p>
+
+            <p>
+                <strong>Test with a Sample.</strong> If you are rotating a large or critical document, test the rotation on a single-page extract first. Use ToolHub Split PDF to isolate one page, rotate it, and verify the result before applying the rotation to the full document.
+            </p>
+
+            <p>
+                <strong>Combine with Other Tools.</strong> Rotation is often just one step in a larger document preparation workflow. After rotating, you may need to compress the file for email, add a watermark for branding, or merge multiple rotated files into a single package. ToolHub offers all of these complementary tools in one place.
+            </p>
+
+            <h2>Frequently Asked Questions About Rotate PDF</h2>
+
+            <div class="step-grid">
+
+                <div class="step-card">
+
+                    <h3>Is it really free to rotate PDF pages?</h3>
+
+                    <p>
+                        Yes. ToolHub Rotate PDF is completely free with no hidden charges, no watermarks, and no registration requirements. You can rotate unlimited PDF files without paying anything.
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>How do I rotate a single page in a PDF?</h3>
+
+                    <p>
+                        ToolHub applies rotation to all pages in the uploaded document. To rotate only specific pages, use the Split PDF tool to extract those pages first, rotate them individually, and then merge them back with the remaining pages.
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>Can I rotate a PDF 90 degrees counterclockwise?</h3>
+
+                    <p>
+                        Absolutely. The tool offers three rotation options: 90° Clockwise, 180°, and 270° Counter Clockwise. Selecting 270° Counter Clockwise is equivalent to rotating 90 degrees counterclockwise.
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>Will rotating a PDF reduce its quality?</h3>
+
+                    <p>
+                        No. PDF rotation modifies the page orientation metadata without re-encoding images or altering vector paths. The output file maintains the exact same resolution and visual quality as the original.
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>Is my uploaded PDF file safe and private?</h3>
+
+                    <p>
+                        Yes. ToolHub uses TLS encryption for all file transfers and automatically deletes uploaded files from its servers after processing. Your documents are never stored permanently or shared with third parties.
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>Do I need to install any software to rotate a PDF?</h3>
+
+                    <p>
+                        No installation is needed. ToolHub is a fully browser-based tool that works on Windows, macOS, Linux, iOS, and Android. Simply open your browser, upload your PDF, and download the rotated result.
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>What is the maximum file size I can rotate?</h3>
+
+                    <p>
+                        ToolHub does not impose strict file size limits for rotation. Whether your PDF is a few kilobytes or several hundred megabytes, the tool processes it efficiently on optimized cloud servers.
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>Can I rotate a password-protected PDF?</h3>
+
+                    <p>
+                        If the PDF has an owner password that restricts editing, you may need to unlock it first. ToolHub does not bypass encryption, but many free PDF unlock tools can remove restrictions so you can rotate the file.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+            <div class="article-card">
+                <h2>Related Tools You Might Like</h2>
+                <p>Explore our other free online tools that complement Rotate PDF:</p>
+                <div class="related-tools-grid">
+                    <a href="/rotate-image"><i class="fa-solid fa-link"></i> Rotate Image</a>
+                    <a href="/split-pdf"><i class="fa-solid fa-link"></i> Split PDF</a>
+                    <a href="/merge-pdf"><i class="fa-solid fa-link"></i> Merge PDF</a>
+                </div>
+            </div>
+    </section>
+        <div class="share-bar">
+            <span>Share this tool:</span>
+            <a class="share-btn facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+            <a class="share-btn twitter" href="https://twitter.com/intent/tweet?url={{ request.url }}&text={{ self.title() }}" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a>
+            <a class="share-btn linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+            <a class="share-btn whatsapp" href="https://wa.me/?text={{ self.title() }}%20{{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+
+
+    <!-- =========================
+            FAQ
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <h3>Is Rotate PDF free?</h3>
+
+                <p>
+                    Yes. ToolHub lets you rotate PDF files completely free.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Can I rotate by 180°?</h3>
+
+                <p>
+                    Yes. You can rotate your PDF by 90°, 180° or 270°.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Will the PDF quality change?</h3>
+
+                <p>
+                    No. Rotation does not reduce the quality of your document.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Are my files safe?</h3>
+
+                <p>
+                    Yes. Uploaded PDFs are processed securely and automatically deleted.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Do I need any software?</h3>
+
+                <p>
+                    No. Everything works directly in your browser.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Does it work on mobile?</h3>
+
+                <p>
+                    Yes. ToolHub works perfectly on desktop, tablet and mobile devices.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="seo-related" aria-labelledby="related-tools-title">
+        <h2 id="related-tools-title">Explore More PDF Tools</h2>
+        <p>Continue with related ToolHub tools for your next file task.</p>
+        <div class="seo-related-grid">
+            <a class="seo-related-card" href="/compress-pdf"><strong>Compress PDF</strong><span>Reduce PDF size.</span></a>
+            <a class="seo-related-card" href="/split-pdf"><strong>Split PDF</strong><span>Separate PDF pages.</span></a>
+            <a class="seo-related-card" href="/watermark-pdf"><strong>Watermark PDF</strong><span>Add watermarks to PDF pages.</span></a>
+        </div>
+    </section>
+</section>
+
+<script src="{{ url_for('static', filename='js/tools.js') }}"></script>
+
+{% endblock %}

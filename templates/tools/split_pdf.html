@@ -1,0 +1,832 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Split PDF Pages Online - Free PDF Splitter | ToolHub{% endblock %}
+{% block og_title %}Split PDF Pages Online - Free PDF Splitter | ToolHub{% endblock %}
+{% block twitter_title %}Split PDF Pages Online - Free PDF Splitter | ToolHub{% endblock %}
+
+{% block seo_description %}
+    <meta name="description" content="Split PDF files online for free. Extract specific pages, divide documents, and download separate PDF files instantly with ToolHub.">
+{% endblock %}
+
+
+{% block structured_data_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.url_root.rstrip('/') }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PDF Tools",
+          "item": "{{ request.url_root.rstrip('/') }}/pdf-tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Split Pdf"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Split Pdf — ToolHub",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "url": "{{ request.url_root.rstrip('/') }}{{ request.path }}",
+      "description": "{{ self.seo_description()|meta_content }}",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is Split PDF free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub allows you to split PDF documents completely free with no hidden fees."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I select pages to extract?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Enter a page range such as 1-5 to extract those pages. You can also use comma-separated ranges like 1-3,7,10-12."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will the PDF quality change after splitting?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The extracted PDF keeps the original quality, formatting, text, images, and layout."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it safe to upload confidential documents?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. All file uploads use encrypted HTTPS connections and files are permanently deleted from servers after you download the result."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I split large PDFs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub handles PDFs of all sizes without file size restrictions or degradation in processing speed."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<section class="tool-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="separator">›</span>
+        <a href="/pdf-tools">PDF Tools</a><span class="separator">›</span>
+        <span>Split Pdf</span>
+    </nav>
+
+
+    <!-- TOOL HEADER -->
+
+    <div class="tool-header">
+
+        <div class="tool-icon">
+
+            <i class="fa-solid fa-scissors"></i>
+
+        </div>
+
+        <h1>Split PDF</h1>
+
+        <p>
+
+            Extract specific pages from your PDF into a new document.
+
+        </p>
+
+    </div>
+
+    <!-- UPLOAD BOX -->
+
+    <div class="upload-box">
+
+        <form
+            action="/split-pdf-file"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="drop-zone" id="dropZone">
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    name="pdf"
+                    accept=".pdf"
+                    hidden
+                    required
+                >
+
+                <label
+                    for="fileInput"
+                    class="upload-area"
+                >
+
+                    <div class="upload-icon">
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    </div>
+
+                    <h2>
+
+                        Drag & Drop Your PDF
+
+                    </h2>
+
+                    <p>
+
+                        or click below to browse
+
+                    </p>
+
+                    <button
+                        type="button"
+                        class="choose-btn"
+                        onclick="document.getElementById('fileInput').click()"
+                    >
+
+                        Choose PDF
+
+                    </button>
+
+                    <!-- SUCCESS CARD -->
+
+                    <div
+                        id="fileCard"
+                        class="file-card success-card"
+                        style="display:none;"
+                    >
+
+                        <div class="file-left">
+
+                            <div class="success-icon">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h3 id="fileName"></h3>
+
+                                <p id="fileSize"></p>
+
+                                <span class="ready-tag">
+
+                                    Ready to split
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="removeFile"
+                            class="remove-btn"
+                        >
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </button>
+
+                    </div>
+
+                    <!-- PAGE RANGE -->
+
+                    <div style="margin-top:20px;">
+
+                       <label>
+
+    <strong class="page-range-title">
+
+        Page Range
+
+    </strong>
+
+</label>
+
+<input
+    type="text"
+    name="page_range"
+    required
+    placeholder="Example: 1-5"
+    class="page-range-input"
+>
+
+                    </div>
+
+                </label>
+
+                    <!-- BUTTON -->
+
+                    <button
+                        class="convert-btn"
+                        id="convertBtn"
+                        type="submit"
+                        disabled
+                    >
+
+                        <i class="fa-solid fa-scissors"></i>
+
+                        Split PDF
+
+                    </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- LOADER -->
+
+    <div
+        id="loader"
+        class="loader-overlay"
+        style="display:none;"
+    >
+
+        <div class="loader-box">
+
+            <div class="spinner"></div>
+
+            <h3>
+
+                Splitting PDF...
+
+            </h3>
+
+            <p>
+
+                Please wait while ToolHub extracts the selected pages.
+
+            </p>
+
+            <div class="progress">
+
+                <div id="progressBar"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+        <!-- =========================
+            FEATURES
+    ========================== -->
+
+    <section class="features">
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-scissors"></i>
+
+            <h3>Split PDF Easily</h3>
+
+            <p>
+                Extract any page range from your PDF into a new document in seconds.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <h3>100% Secure</h3>
+
+            <p>
+                Your uploaded PDFs are processed securely and automatically deleted after conversion.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            <h3>Fast Processing</h3>
+
+            <p>
+                Split PDF files instantly while preserving the original quality.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-gift"></i>
+
+            <h3>Free Forever</h3>
+
+            <p>
+                Split unlimited PDF files with no subscriptions or hidden fees.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            HOW IT WORKS
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>How It Works</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <span>1</span>
+
+                <h3>Upload PDF</h3>
+
+                <p>
+                    Choose or drag your PDF file into the upload area.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>2</span>
+
+                <h3>Select Page Range</h3>
+
+                <p>
+                    Enter the page range you want to extract (for example: 1-5).
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>3</span>
+
+                <h3>Download</h3>
+
+                <p>
+                    Download your new PDF containing only the selected pages.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            SEO ARTICLE
+    ========================== -->
+
+    <section class="tool-article">
+        <div class="article-card">
+
+            <span class="article-badge">Complete Guide</span>
+
+            <h2>What Is Split PDF and Why Do You Need It?</h2>
+
+            <p>
+                A split PDF tool is a powerful online utility designed to separate PDF pages into individual files or extract only the pages you need from a larger document. Whether you have a 200-page report and only need chapter three, or you want to divide a collection of invoices into individual files, the ability to split PDF documents saves time, reduces file sizes, and keeps your workflow organized. With ToolHub's free PDF splitter, you can perform this task in seconds without installing any software, creating an account, or paying hidden fees.
+            </p>
+
+            <p>
+                PDF files have become the universal standard for sharing documents across industries. From legal contracts and academic papers to business proposals and digital invoices, the format is everywhere. But what happens when a single PDF contains far more information than you need? Sending a massive 150-page document to a colleague who only requires pages 12 through 18 is inefficient and unprofessional. This is exactly the problem that a PDF page extractor solves. By using a reliable online tool to separate PDF pages, you can deliver precisely the content that matters, nothing more and nothing less.
+            </p>
+
+            <p>
+                ToolHub's split PDF tool operates entirely in your browser and on secure cloud servers. Your original file is uploaded through an encrypted connection, processed within moments, and then permanently deleted from our servers. There is no registration, no watermarks, and no limitations on how many times you use the service each day. It is the best PDF splitter free solution available for anyone who needs to divide PDF by page range online without technical expertise.
+            </p>
+
+            <h2>Why Should You Split PDF Files?</h2>
+
+            <p>
+                There are numerous scenarios where splitting a PDF document becomes essential. Understanding these use cases helps you appreciate the value of having instant access to a dependable PDF splitter tool. Below are the most common reasons people choose to split PDF files every day around the world.
+            </p>
+
+            <h3>Reduce File Size for Faster Sharing</h3>
+
+            <p>
+                Large PDF files can be difficult to email, upload to cloud storage, or transfer through messaging apps. Many email providers enforce strict attachment size limits, often between 10MB and 25MB. If your PDF exceeds that threshold, you will encounter errors or be forced to use alternative file-sharing services that may not be convenient for the recipient. By splitting the PDF into smaller sections based on page ranges, you create lightweight files that transmit quickly and reliably across any platform.
+            </p>
+
+            <h3>Extract Only the Relevant Pages</h3>
+
+            <p>
+                Imagine you download a 300-page government form document, but you only need to fill out pages 15 through 20. Rather than keeping the entire file stored on your device or sending the full document to your printer, you can extract specific pages from PDF free using ToolHub. This targeted approach saves storage space, reduces printing costs, and eliminates the confusion of scrolling through hundreds of irrelevant pages.
+            </p>
+
+            <h3>Organize Documents for Professional Use</h3>
+
+            <p>
+                In corporate environments, professionals frequently handle multi-part documents. A single project proposal might contain an executive summary, technical specifications, budget breakdowns, and appendices. Each stakeholder may require different sections. Splitting the PDF allows you to create separate, focused documents tailored to each audience. This level of organization reflects professionalism and attention to detail.
+            </p>
+
+            <h3>Separate Confidential Information</h3>
+
+            <p>
+                Not every section of a document should be accessible to every person. Human resources files, financial reports, and legal agreements often contain sensitive data. By splitting the PDF and distributing only the appropriate pages, you maintain confidentiality while still sharing necessary information with relevant parties.
+            </p>
+
+            <h3>Prepare Documents for Digital Signatures</h3>
+
+            <p>
+                Many电子 signature platforms work best with smaller, focused documents. If you need someone to sign only a specific page of a contract, extracting that page into its own PDF streamlines the signature process and reduces the chance of errors or confusion during the signing workflow.
+            </p>
+
+            <h2>How to Split a PDF: Step-by-Step Guide</h2>
+
+            <p>
+                Learning how to split a PDF with ToolHub is straightforward. The entire process takes less than a minute from start to finish. Follow these detailed steps to separate PDF pages into a new document.
+            </p>
+
+            <h3>Step 1: Upload Your PDF File</h3>
+
+            <p>
+                Navigate to the Split PDF tool page on ToolHub. You will see a clean, intuitive upload area in the center of the screen. You have two options for uploading your file. First, you can click the "Choose PDF" button to browse your computer's file system and select the document you want to split. Second, you can simply drag and drop your PDF file directly onto the upload zone. The tool supports all standard PDF formats, including password-protected files (you will be prompted to enter the password). Both methods work identically, so choose whichever is most convenient for you.
+            </p>
+
+            <h3>Step 2: Enter the Page Range</h3>
+
+            <p>
+                Once your file has been uploaded and validated, you will see a text field labeled "Page Range." This is where you define which pages you want to extract from the original document. The input field accepts several formats. For a continuous range, type "1-5" to extract pages one through five. For individual pages, type "1,3,7" to grab pages one, three, and seven. You can also combine both formats, such as "1-3,7,10-12," to create a custom selection. Take a moment to count the total pages in your uploaded file and plan your selection accordingly. If you are unsure about specific page numbers, most PDF viewers display the current page number in the toolbar, making it easy to identify the pages you need before uploading.
+            </p>
+
+            <h3>Step 3: Click Split PDF</h3>
+
+            <p>
+                After entering your desired page range, click the "Split PDF" button at the bottom of the form. The tool will immediately begin processing your request. A progress indicator will appear on screen, showing you that the operation is underway. Depending on the size of your file and the number of pages being extracted, this process typically completes within two to five seconds. ToolHub's cloud servers handle the extraction with precision, ensuring that all text, images, formatting, hyperlinks, and embedded fonts are preserved exactly as they appear in the original document.
+            </p>
+
+            <h3>Step 4: Download Your New PDF</h3>
+
+            <p>
+                Once processing is complete, a download link will automatically appear. Click it to save your newly created PDF to your device. The extracted file will be named systematically, making it easy to identify and organize. You can then open the file to verify that all selected pages are present and correctly formatted. If you need to extract additional pages from the same source document, simply upload the original PDF again and repeat the process with a different page range.
+            </p>
+
+            <h2>Key Features of ToolHub's Split PDF Tool</h2>
+
+            <p>
+                ToolHub's PDF splitter is built with user experience and reliability at its core. The following features distinguish it from other tools available online and make it the best PDF splitter free option for personal and professional use.
+            </p>
+
+            <h3>Complete Browser-Based Operation</h3>
+
+            <p>
+                There is nothing to download or install. The entire splitting process occurs through your web browser. This means you can use the tool on any computer, whether it runs Windows, macOS, Linux, or ChromeOS. No administrative privileges are required, making it ideal for workplace environments where software installation is restricted.
+            </p>
+
+            <h3>No File Size Restrictions</h3>
+
+            <p>
+                Unlike many competing tools that impose artificial limits on file size, ToolHub handles PDFs of all sizes. Whether your document is 10 pages or 1,000 pages, the tool processes it with the same speed and accuracy. This makes it particularly valuable for professionals who work with extensive reports, research compilations, or multi-chapter books.
+            </p>
+
+            <h3>Unlimited Daily Usage</h3>
+
+            <p>
+                There are no caps on how many times you can use the Split PDF tool each day. Need to split 50 different PDF files before a deadline? ToolHub lets you do exactly that without counting your usage or restricting access after a certain number of operations.
+            </p>
+
+            <h3>Automatic File Deletion for Privacy</h3>
+
+            <p>
+                Privacy is a top priority. Every file you upload is processed over an encrypted HTTPS connection. After the splitting operation completes and you download your result, the uploaded file and all generated fragments are permanently deleted from ToolHub's servers. No copies are retained, no backups are stored, and no one else can ever access your documents.
+            </p>
+
+            <h3>Preserves Original Quality and Formatting</h3>
+
+            <p>
+                The extracted pages are identical in quality to the original document. Text remains sharp, images retain their resolution, and complex layouts including tables, columns, headers, footers, and page numbers are preserved without distortion. You will not notice any difference between pages in the original PDF and the pages in your split output.
+            </p>
+
+            <h3>Works on All Devices</h3>
+
+            <p>
+                ToolHub's responsive design ensures the Split PDF tool functions flawlessly on desktop computers, laptops, tablets, and smartphones. Whether you are at your office desk, commuting on a train, or working from a coffee shop, you can split PDFs on the go with just a few taps.
+            </p>
+
+            <h2>Benefits of Using an Online PDF Splitter</h2>
+
+            <p>
+                Choosing an online PDF splitter over desktop software offers several significant advantages. These benefits compound over time, making online tools the preferred choice for millions of users worldwide.
+            </p>
+
+            <h3>Zero Cost, Zero Commitment</h3>
+
+            <p>
+                Desktop PDF editing software often requires expensive subscriptions ranging from fifteen to thirty dollars per month. ToolHub provides the same core functionality completely free. You never need to enter payment information, and there is no trial period that suddenly expires. The service is free today, and it will remain free for every split operation you perform.
+            </p>
+
+            <h3>No Learning Curve</h3>
+
+            <p>
+                Professional PDF editors can be overwhelming with their extensive feature sets, complex menus, and steep learning curves. ToolHub strips away the complexity and focuses on one task done exceptionally well. If you can type a page number and click a button, you can use this tool. There is no manual to read and no tutorial to watch.
+            </p>
+
+            <h3>Always Up to Date</h3>
+
+            <p>
+                Desktop software requires periodic updates that can be disruptive and time-consuming. Online tools are updated automatically on the server side, meaning you always have access to the latest version without doing anything. Bug fixes, performance improvements, and new features are deployed seamlessly behind the scenes.
+            </p>
+
+            <h3>Platform Independence</h3>
+
+            <p>
+                Desktop applications are built for specific operating systems. A tool designed for Windows will not work on macOS, and vice versa. Online PDF splitters eliminate this problem entirely. As long as you have a modern web browser and an internet connection, the tool works identically on every platform.
+            </p>
+
+            <h2>Common Use Cases for Splitting PDFs</h2>
+
+            <p>
+                The applications for a PDF page extractor span across virtually every industry and personal scenario. Here are some of the most frequent use cases that demonstrate the versatility of this tool.
+            </p>
+
+            <h3>Education and Academia</h3>
+
+            <p>
+                Students and educators regularly work with lengthy academic papers, textbooks, and research compilations. A student studying for a biology exam may want to extract only the chapters covering cellular respiration and photosynthesis from a 400-page textbook PDF. A professor might need to share a specific journal article from a compilation with their class. Splitting PDFs enables focused, efficient studying and teaching.
+            </p>
+
+            <h3>Legal Professionals</h3>
+
+            <p>
+                Attorneys and paralegals handle contracts, depositions, court filings, and case files that often span hundreds of pages. When preparing for a hearing, a lawyer may need to extract specific exhibits or clauses from a larger document. Splitting the PDF into targeted sections ensures that judges, juries, and opposing counsel receive only the relevant material.
+            </p>
+
+            <h3>Business and Corporate Communications</h3>
+
+            <p>
+                Business professionals split PDFs when sharing quarterly reports with board members, distributing department-specific sections of an annual report, or extracting financial summaries for investor presentations. The ability to divide a comprehensive document into focused segments improves communication clarity and decision-making efficiency.
+            </p>
+
+            <h3>Healthcare and Medical Records</h3>
+
+            <p>
+                Medical professionals frequently deal with patient records, lab results, imaging reports, and insurance documents bundled into single PDF files. Splitting these documents allows providers to share specific test results with specialists, submit particular records to insurance companies, or organize patient files into logical categories.
+            </p>
+
+            <h3>Personal Document Management</h3>
+
+            <p>
+                On a personal level, individuals split PDFs to extract specific pages from rental agreements, separate bank statements by month, isolate recipe pages from a cookbook, or organize travel itineraries. The tool is equally valuable for casual and professional use.
+            </p>
+
+            <h2>Tips for Getting the Best Results When You Split PDF</h2>
+
+            <p>
+                While the Split PDF tool is designed to be intuitive, following these tips will help you achieve optimal results every time.
+            </p>
+
+            <h3>Verify Page Numbers Before Splitting</h3>
+
+            <p>
+                Open your PDF in any viewer and note the exact page numbers of the content you need. PDF page numbering can sometimes differ from what you see in the viewer's display, particularly with documents that have front matter, blank pages, or non-sequential numbering schemes. Always cross-reference the internal page count before entering your range.
+            </p>
+
+            <h3>Use Comma-Separated Ranges for Multiple Sections</h3>
+
+            <p>
+                When you need to split PDF into single pages or extract non-contiguous sections, take advantage of the comma-separated format. For example, entering "1,5-8,12" will extract page 1, pages 5 through 8, and page 12 into a single new document. This eliminates the need to perform multiple separate split operations.
+            </p>
+
+            <h3>Check Password-Protected Files</h3>
+
+            <p>
+                If your PDF is password-protected, ensure you have the correct password before uploading. ToolHub will prompt you for the password during processing, but entering an incorrect password will cause the operation to fail. Keep your password handy when working with secured documents.
+            </p>
+
+            <h3>Split Large Projects in Logical Groups</h3>
+
+            <p>
+                When dealing with a massive PDF containing multiple distinct sections, consider splitting it into logical groups rather than individual pages. For example, split a textbook by chapter rather than by page. This approach creates manageable, well-organized files that are easier to navigate and share.
+            </p>
+
+            <h3>Preview and Verify After Splitting</h3>
+
+            <p>
+                After downloading your split PDF, open it immediately and verify that all intended pages are present and correctly formatted. While ToolHub processes files with high accuracy, it is always good practice to confirm the output meets your expectations before sending it to others.
+            </p>
+
+            <h3>Keep Original Files Organized</h3>
+
+            <p>
+                Create a consistent naming convention for your original and split PDF files. For instance, use a format like "Report-2024-Original.pdf" for the source file and "Report-2024-Pages-1-10.pdf" for the extracted section. This simple habit prevents confusion and saves time when you need to reference or re-split the document later.
+            </p>
+
+            <h2>Frequently Asked Questions About Splitting PDFs</h2>
+
+            <div class="faq-list">
+
+                <div class="faq-item">
+                    <h3>How do I split a PDF into separate pages?</h3>
+                    <p>
+                        To split PDF into single pages, upload your document to ToolHub, then enter the page range "1-1" for the first page, download it, and repeat for each page you need. Alternatively, if you want to extract pages 1 through 10 individually, enter "1-10" and ToolHub will create a new PDF containing those ten pages in sequence. The tool gives you complete control over which pages to extract and how to organize them.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is ToolHub the best PDF splitter free tool available?</h3>
+                    <p>
+                        ToolHub is widely regarded as one of the best PDF splitter free tools on the internet. It offers unlimited usage, no file size restrictions, complete privacy through automatic file deletion, and preserves the original document quality. There are no hidden fees, no watermarks added to your output, and no registration required. Thousands of users rely on it daily for both personal and professional PDF splitting tasks.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I split PDF by page range online without installing software?</h3>
+                    <p>
+                        Absolutely. ToolHub is a fully browser-based tool, which means you can split PDF by page range online from any device with an internet connection. There is no software to download, no plugins to install, and no browser extensions required. Simply visit the Split PDF page, upload your document, enter your desired page range, and download the result.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is it safe to upload confidential documents to ToolHub?</h3>
+                    <p>
+                        Yes. Security is a fundamental part of ToolHub's architecture. All file uploads and downloads use encrypted HTTPS connections. Your files are processed on secure servers and are permanently deleted immediately after you download the result. No files are stored, backed up, or accessible to anyone else. ToolHub does not read, analyze, or share the contents of your documents.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I extract specific pages from a PDF for free?</h3>
+                    <p>
+                        Yes. ToolHub allows you to extract specific pages from PDF free without any limitations. Enter the exact page numbers or ranges you need, and the tool will create a new PDF containing only those pages. This is perfect for sharing targeted content, reducing file sizes, or organizing documents into logical sections.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Does splitting a PDF reduce its quality?</h3>
+                    <p>
+                        No. The splitting process preserves every element of the original document. Text remains crisp and searchable, images retain their full resolution, vector graphics stay sharp, and all formatting including fonts, colors, spacing, and layouts are maintained exactly as they appear in the source file. The only difference is that your new file contains fewer pages.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What file formats does ToolHub support for PDF splitting?</h3>
+                    <p>
+                        ToolHub accepts standard PDF files in all versions, from PDF 1.0 through the latest PDF 2.0 specification. This includes PDFs created by Adobe Acrobat, Microsoft Word, Google Docs, LibreOffice, and virtually any other application that generates PDF output. Password-protected PDFs are also supported as long as you provide the correct password during processing.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How many pages can I split at once?</h3>
+                    <p>
+                        There is no limit. You can split PDFs of any length and extract any number of pages in a single operation. Whether your source document contains 10 pages or 10,000 pages, and whether you need to extract 1 page or all pages, ToolHub handles it without restriction or degradation in processing speed.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+            <div class="article-card">
+                <h2>Related Tools You Might Like</h2>
+                <p>Explore our other free online tools that complement Split PDF:</p>
+                <div class="related-tools-grid">
+                    <a href="/merge-pdf"><i class="fa-solid fa-link"></i> Merge PDF</a>
+                    <a href="/compress-pdf"><i class="fa-solid fa-link"></i> Compress PDF</a>
+                    <a href="/extract-pdf"><i class="fa-solid fa-link"></i> Extract PDF</a>
+                </div>
+            </div>
+    </section>
+        <div class="share-bar">
+            <span>Share this tool:</span>
+            <a class="share-btn facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+            <a class="share-btn twitter" href="https://twitter.com/intent/tweet?url={{ request.url }}&text={{ self.title() }}" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a>
+            <a class="share-btn linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+            <a class="share-btn whatsapp" href="https://wa.me/?text={{ self.title() }}%20{{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+
+
+    <!-- =========================
+            FAQ
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <h3>Is Split PDF free?</h3>
+
+                <p>
+                    Yes. ToolHub allows you to split PDF documents completely free.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>How do I select pages?</h3>
+
+                <p>
+                    Enter a page range such as 1-5 to extract those pages into a new PDF.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Will the PDF quality change?</h3>
+
+                <p>
+                    No. The extracted PDF keeps the original quality and formatting.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Are my files secure?</h3>
+
+                <p>
+                    Yes. Your uploaded files are securely processed and automatically deleted afterwards.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Can I split large PDFs?</h3>
+
+                <p>
+                    Yes. ToolHub supports both small and large PDF documents.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Does it work on mobile?</h3>
+
+                <p>
+                    Yes. Split PDF works perfectly on desktop, tablet and mobile devices.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="seo-related" aria-labelledby="related-tools-title">
+        <h2 id="related-tools-title">Explore More PDF Tools</h2>
+        <p>Continue with related ToolHub tools for your next file task.</p>
+        <div class="seo-related-grid">
+            <a class="seo-related-card" href="/merge-pdf"><strong>Merge PDF</strong><span>Combine PDF documents.</span></a>
+            <a class="seo-related-card" href="/extract-pdf"><strong>Extract PDF Pages</strong><span>Save selected PDF pages.</span></a>
+            <a class="seo-related-card" href="/delete-pdf-pages"><strong>Delete PDF Pages</strong><span>Remove unwanted PDF pages.</span></a>
+        </div>
+    </section>
+</section>
+
+<script src="{{ url_for('static', filename='js/tools.js') }}"></script>
+
+{% endblock %}

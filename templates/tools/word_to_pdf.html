@@ -1,0 +1,818 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Word to PDF Converter - Free Online Tool | ToolHub{% endblock %}
+{% block og_title %}Word to PDF Converter - Free Online Tool | ToolHub{% endblock %}
+{% block twitter_title %}Word to PDF Converter - Free Online Tool | ToolHub{% endblock %}
+
+{% block seo_description %}
+    <meta name="description" content="Convert Word documents to PDF online for free. Preserve formatting, fonts, and layout while converting DOC to PDF instantly with ToolHub.">
+{% endblock %}
+
+
+{% block structured_data_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.url_root.rstrip('/') }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PDF Tools",
+          "item": "{{ request.url_root.rstrip('/') }}/pdf-tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Word To Pdf"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Word To Pdf — ToolHub",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "url": "{{ request.url_root.rstrip('/') }}{{ request.path }}",
+      "description": "{{ self.seo_description()|meta_content }}",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is this converter free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub is a completely free Word to PDF converter with no subscriptions, paywalls, or premium plans required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which file types are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ToolHub supports both Microsoft Word (.doc) and (.docx) documents for conversion."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will formatting stay the same after conversion?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Fonts, colors, images, tables, headers, footers, page breaks, and all other layout elements are preserved with high fidelity."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my uploaded files stored on your servers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Files are encrypted during upload, processed in a secure environment, and permanently deleted from the server immediately after conversion."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the PDF include watermarks or branding?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. ToolHub is a true docx to pdf free no watermark converter. Your PDF output is completely clean."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<section class="tool-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="separator">›</span>
+        <a href="/pdf-tools">PDF Tools</a><span class="separator">›</span>
+        <span>Word To Pdf</span>
+    </nav>
+
+
+    <!-- =========================
+            TOOL HEADER
+    ========================== -->
+
+    <div class="tool-header">
+
+        <div class="tool-icon">
+            <i class="fa-solid fa-file-word"></i>
+        </div>
+
+        <h1>Word to PDF Converter</h1>
+
+        <p>
+            Convert Microsoft Word documents into high-quality PDF files in seconds.
+            Fast, secure and completely free.
+        </p>
+
+    </div>
+
+    <!-- =========================
+            UPLOAD BOX
+    ========================== -->
+
+    <div class="upload-box">
+
+        <form
+            action="/convert-word"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="drop-zone" id="dropZone">
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    name="word"
+                    accept=".doc,.docx"
+                    hidden
+                    required
+                >
+
+                <label for="fileInput" class="upload-area">
+
+                    <div class="upload-icon">
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    </div>
+
+                    <h2>Drag & Drop Your Word File</h2>
+
+                    <p>
+                        or click below to browse
+                    </p>
+
+                    <button
+                        type="button"
+                        class="choose-btn"
+                        onclick="document.getElementById('fileInput').click()"
+                    >
+
+                        Choose Word File
+
+                    </button>
+
+                    <!-- =====================
+                           SUCCESS CARD
+                    ====================== -->
+
+                    <div
+                        id="fileCard"
+                        class="file-card success-card"
+                        style="display:none;"
+                    >
+
+                        <div class="file-left">
+
+                            <div class="success-icon">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h3 id="fileName"></h3>
+
+                                <p id="fileSize"></p>
+
+                                <span class="ready-tag">
+
+                                    Ready for conversion
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="removeFile"
+                            class="remove-btn"
+                        >
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </button>
+
+                    </div>
+
+                    <!-- =====================
+                          CONVERT BUTTON
+                    ====================== -->
+
+                    <button
+                        class="convert-btn"
+                        id="convertBtn"
+                        type="submit"
+                        disabled
+                    >
+
+                        <i class="fa-solid fa-file-pdf"></i>
+
+                        Convert to PDF
+
+                    </button>
+
+                </label>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- =========================
+            LOADER
+    ========================== -->
+
+    <div
+        id="loader"
+        class="loader-overlay"
+        style="display:none;"
+    >
+
+        <div class="loader-box">
+
+            <div class="spinner"></div>
+
+            <h3>Converting Document...</h3>
+
+            <p>
+
+                Please wait while ToolHub converts your Word file.
+
+            </p>
+
+            <div class="progress">
+
+                <div id="progressBar"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+            FEATURES
+    ========================== -->
+
+    <section class="features">
+
+    <div class="feature-card">
+
+        <i class="fa-solid fa-bolt"></i>
+
+        <h3>Lightning Fast</h3>
+
+        <p>
+            Convert Word documents into PDF within seconds.
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        <h3>100% Secure</h3>
+
+        <p>
+            Your uploaded files are encrypted and automatically deleted after processing.
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <i class="fa-solid fa-gift"></i>
+
+        <h3>Free Forever</h3>
+
+        <p>
+            No subscriptions, no hidden charges, unlimited conversions.
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <i class="fa-solid fa-cloud"></i>
+
+        <h3>Cloud Powered</h3>
+
+        <p>
+            Works directly in your browser without installing extra software.
+        </p>
+
+    </div>
+
+</section>
+
+<!-- =========================
+        HOW IT WORKS
+========================== -->
+
+<section class="steps">
+
+    <h2>How It Works</h2>
+
+    <div class="step-grid">
+
+        <div class="step-card">
+
+            <span>1</span>
+
+            <h3>Upload</h3>
+
+            <p>
+                Select or drag your Word (.doc/.docx) file into the upload box.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <span>2</span>
+
+            <h3>Convert</h3>
+
+            <p>
+                ToolHub securely converts your Word document into a PDF.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <span>3</span>
+
+            <h3>Download</h3>
+
+            <p>
+                Your PDF is downloaded automatically once the conversion is complete.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+        SEO ARTICLE
+========================== -->
+
+<section class="tool-article">
+    <div class="article-card">
+
+        <span class="article-badge">Complete Guide</span>
+
+        <h2>What Is a Word to PDF Converter?</h2>
+
+        <p>
+            A <strong>word to pdf converter</strong> is a digital tool that transforms Microsoft Word documents into
+            Portable Document Format (PDF) files. PDF has become the universal standard for sharing documents because
+            it preserves formatting, fonts, images, and layout across every device and operating system. When you
+            <strong>convert word to pdf</strong>, the resulting file looks exactly the same on a Windows laptop, a
+            Mac, a smartphone, or a tablet — no missing fonts, no shifted columns, no broken tables.
+        </p>
+
+        <p>
+            ToolHub's online converter handles both the legacy <code>.doc</code> format and the modern <code>.docx</code>
+            format used by Microsoft Word 2007 and later. Because the entire process runs in your browser and on secure
+            cloud servers, there is nothing to download or install. You simply upload your document, click a button, and
+            receive a perfectly formatted PDF in seconds.
+        </p>
+
+        <p>
+            Whether you are a student submitting an assignment, a business professional sending a contract, or a
+            freelancer delivering a report, using a reliable <strong>docx to pdf</strong> tool ensures your content
+            arrives exactly as intended — without surprises.
+        </p>
+
+        <h2>Why Convert Word to PDF?</h2>
+
+        <p>
+            There are several compelling reasons to convert a Word document to PDF before sharing it with others:
+        </p>
+
+        <h3>Formatting Consistency</h3>
+        <p>
+            Word documents can render differently depending on the software version, installed fonts, and operating
+            system. A PDF locks every visual element in place. When you <strong>convert word to pdf without losing
+            format</strong>, you guarantee that headlines stay on one page, images remain aligned, and tables keep
+            their column widths — regardless of who opens the file.
+        </p>
+
+        <h3>Universal Compatibility</h3>
+        <p>
+            PDF files can be opened with virtually any device using free readers such as Adobe Acrobat, Apple Preview,
+            or any modern web browser. Recipients do not need Microsoft Word installed, which eliminates the common
+            "I can't open this file" problem.
+        </p>
+
+        <h3>Security and Control</h3>
+        <p>
+            PDFs support password protection, encryption, and permission settings. You can prevent others from editing,
+            copying, or printing your document. This makes PDF the preferred format for contracts, legal filings, and
+            sensitive reports.
+        </p>
+
+        <h3>Smaller File Sizes</h3>
+        <p>
+            PDF files are often significantly smaller than their Word counterparts, especially when the document
+            contains many images. Smaller files are faster to email, quicker to download, and consume less cloud
+            storage.
+        </p>
+
+        <h3>Professional Appearance</h3>
+        <p>
+            Sending a PDF instead of a Word document signals professionalism. Clients, professors, and partners
+            expect polished, final-form documents — and PDF delivers exactly that.
+        </p>
+
+        <h2>How to Save Word as PDF Using ToolHub</h2>
+
+        <p>
+            Learning <strong>how to save word as pdf</strong> with ToolHub takes less than a minute. Follow these
+            simple steps:
+        </p>
+
+        <h3>Step 1 — Open the Tool</h3>
+        <p>
+            Navigate to the Word to PDF page on ToolHub. The tool loads instantly in your browser — no registration,
+            no plugin, no software installation required.
+        </p>
+
+        <h3>Step 2 — Upload Your Document</h3>
+        <p>
+            Click the <strong>Choose Word File</strong> button or simply drag and drop your <code>.doc</code> /
+            <code>.docx</code> file into the upload area. ToolHub accepts documents of all sizes and will display
+            the file name and size so you can confirm the correct file was selected.
+        </p>
+
+        <h3>Step 3 — Start the Conversion</h3>
+        <p>
+            Click the <strong>Convert to PDF</strong> button. The tool begins processing immediately. A progress bar
+            shows you exactly where the conversion stands. Most documents convert in under five seconds.
+        </p>
+
+        <h3>Step 4 — Download Your PDF</h3>
+        <p>
+            Once conversion finishes, your PDF downloads automatically. The file is saved to your default downloads
+            folder with the same name as the original document, but with a <code>.pdf</code> extension.
+        </p>
+
+        <p>
+            That is all there is to it. You have just completed a <strong>word to pdf online free</strong> conversion
+            without touching a single setting.
+        </p>
+
+        <h2>Key Features of ToolHub's Word to PDF Converter</h2>
+
+        <p>
+            Not all converters are created equal. Here is what sets ToolHub apart when you need the
+            <strong>best word to pdf converter free</strong> available today:
+        </p>
+
+        <ul>
+            <li><strong>Zero Cost</strong> — Every conversion is completely free. There are no hidden fees, no trial
+                periods, and no premium tier required to unlock basic functionality.</li>
+            <li><strong>No Watermarks</strong> — Your converted PDF appears clean and unmarked. If you have been
+                searching for a <strong>docx to pdf free no watermark</strong> solution, ToolHub delivers exactly
+                that.</li>
+            <li><strong>High-Fidelity Conversion</strong> — Fonts, colors, images, tables, headers, footers, and
+                page breaks are preserved with pixel-level accuracy.</li>
+            <li><strong>Lightning Speed</strong> — The cloud-powered engine processes documents in seconds, even for
+                files containing dozens of pages and high-resolution images.</li>
+            <li><strong>Privacy First</strong> — All uploaded files are encrypted during transfer and automatically
+                deleted from the server immediately after conversion. Nothing is stored, shared, or accessed by
+                third parties.</li>
+            <li><strong>Cross-Platform</strong> — Use ToolHub on Windows, macOS, Linux, ChromeOS, Android, or iOS.
+                The only requirement is a modern web browser.</li>
+            <li><strong>No Registration</strong> — Skip the sign-up forms. Upload, convert, download. It is that
+                straightforward.</li>
+        </ul>
+
+        <h2>Benefits of Converting Word Documents to PDF</h2>
+
+        <p>
+            The advantages extend far beyond simple file sharing. Here is a deeper look at why making PDF your
+            default output format is a smart move:
+        </p>
+
+        <h3>Preserve Your Work Exactly as Designed</h3>
+        <p>
+            When you <strong>convert word to pdf without losing format</strong>, every design decision you made —
+            the font pairings, the image placement, the spacing — remains intact. This is especially critical for
+            resumes, portfolios, marketing brochures, and academic papers where visual presentation matters as much
+            as content.
+        </p>
+
+        <h3>Streamline Collaboration</h3>
+        <p>
+            PDFs support annotation tools, comment threads, and digital signatures. Teams can review, mark up, and
+            approve documents without needing the original Word file or any special software.
+        </p>
+
+        <h3>Improve Accessibility</h3>
+        <p>
+            Modern PDF files can include tags, alt text, and reading order that make documents accessible to people
+            using screen readers. Converting well-structured Word documents to PDF helps ensure compliance with
+            accessibility standards.
+        </p>
+
+        <h3>Long-Term Archival</h3>
+        <p>
+            PDF/A, a specialized version of the format, is designed for long-term document preservation. Government
+            agencies, libraries, and enterprises use PDF/A to archive records that must remain readable for decades.
+        </p>
+
+        <h2>Use Cases — When You Need a Word to PDF Converter</h2>
+
+        <p>
+            A <strong>word to pdf converter</strong> is useful in virtually every professional and academic setting.
+            Consider these common scenarios:
+        </p>
+
+        <ul>
+            <li><strong>Job Applications</strong> — Employers often request resumes and cover letters in PDF to
+                ensure consistent formatting across all applicants.</li>
+            <li><strong>Academic Submissions</strong> — Universities and schools typically require essays, theses,
+                and research papers in PDF format through their online portals.</li>
+            <li><strong>Business Proposals</strong> — Sending a polished PDF proposal to a potential client
+                demonstrates attention to detail and professionalism.</li>
+            <li><strong>Legal Documents</strong> — Contracts, agreements, and court filings are almost exclusively
+                handled in PDF to maintain integrity and prevent unauthorized edits.</li>
+            <li><strong>Invoices and Receipts</strong> — Freelancers and small businesses convert Word invoices
+                to PDF before sending them to clients for a clean, tamper-resistant record.</li>
+            <li><strong>Ebooks and Reports</strong> — Authors and analysts convert long-form Word documents into
+                PDF for easy distribution and consistent reading experiences.</li>
+            <li><strong>Email Attachments</strong> — Smaller PDF files load faster in email clients and are less
+                likely to be blocked by attachment size limits.</li>
+        </ul>
+
+        <h2>Tips for Getting the Best Results</h2>
+
+        <p>
+            To make the most of your <strong>word to pdf online free</strong> conversion, keep these practical tips
+            in mind:
+        </p>
+
+        <h3>Check Your Document Before Converting</h3>
+        <p>
+            Review your Word document for any last-minute edits. Once converted, you will need to go back to the
+            original Word file to make changes rather than editing the PDF directly.
+        </p>
+
+        <h3>Use High-Quality Images</h3>
+        <p>
+            PDF preserves image quality, but it cannot improve low-resolution images. Insert high-resolution images
+            into your Word document before converting to ensure the final PDF looks crisp and professional.
+        </p>
+
+        <h3>Set Page Margins and Orientation</h3>
+        <p>
+            Configure your page layout in Word — margins, orientation, and paper size — before uploading. The PDF
+            will mirror whatever layout you have defined.
+        </p>
+
+        <h3>Embed Fonts if Using Custom Typefaces</h3>
+        <p>
+            If your document uses non-standard fonts, enable font embedding in Word's save options. This ensures
+            the PDF renders text correctly even on systems where those fonts are not installed.
+        </p>
+
+        <h3>Keep File Sizes Manageable</h3>
+        <p>
+            While ToolHub handles large files efficiently, compressing extremely large images in your Word document
+            before conversion can speed up the process and produce a smaller, more shareable PDF.
+        </p>
+
+        <h3>Batch Convert When Needed</h3>
+        <p>
+            If you have multiple Word documents to convert, simply repeat the process for each file. ToolHub's fast
+            conversion engine makes batch workflows quick and painless.
+        </p>
+
+        <h2>Frequently Asked Questions About Word to PDF Conversion</h2>
+
+        <div class="faq-list">
+
+            <div class="faq-item">
+                <h3>Is ToolHub really a free word to pdf converter with no hidden charges?</h3>
+                <p>
+                    Yes. ToolHub is a completely <strong>word to pdf online free</strong> tool. There are no
+                    subscriptions, no paywalls, and no premium plans required. You can convert unlimited documents
+                    every day without spending a single cent.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Does the converter support both .doc and .docx files?</h3>
+                <p>
+                    Absolutely. ToolHub's <strong>docx to pdf</strong> engine supports both the older Word 97-2003
+                    (<code>.doc</code>) format and the modern Word 2007+ (<code>.docx</code>) format. Simply upload
+                    whichever format your document uses.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Will my formatting stay intact when I convert word to pdf without losing format?</h3>
+                <p>
+                    Yes. ToolHub is specifically designed to <strong>convert word to pdf without losing format</strong>.
+                    Fonts, colors, images, tables, headers, footers, page breaks, and all other layout elements are
+                    preserved with high fidelity in the resulting PDF.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Is there a file size limit for uploads?</h3>
+                <p>
+                    ToolHub supports large documents including multi-page reports and image-heavy presentations. While
+                    there is no strict limit for most use cases, extremely large files (hundreds of megabytes) may
+                    take a few additional seconds to process.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Are my uploaded files stored on your servers?</h3>
+                <p>
+                    No. Your privacy is protected at every stage. Files are encrypted during upload, processed in a
+                    secure environment, and permanently deleted from the server immediately after the conversion
+                    completes. ToolHub never retains, shares, or accesses your documents.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Can I use this tool on my phone or tablet?</h3>
+                <p>
+                    Yes. ToolHub is fully responsive and works on any device with a modern web browser — iPhone,
+                    Android, iPad, or any tablet. No app download is needed.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Does the PDF include watermarks or branding?</h3>
+                <p>
+                    No. ToolHub is a true <strong>docx to pdf free no watermark</strong> converter. Your PDF output is
+                    completely clean, with no ToolHub branding, watermarks, or overlays added to the document.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Can I convert password-protected Word documents?</h3>
+                <p>
+                    If your Word document is password-protected, you will need to remove the password in Microsoft Word
+                    first before uploading. The tool requires an unlocked document to read and convert the content.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How does ToolHub compare to the best word to pdf converter free options available?</h3>
+                <p>
+                    ToolHub offers a combination of speed, formatting fidelity, privacy, and zero-cost access that
+                    rivals — and often exceeds — other free converters. There are no watermarks, no sign-ups, and no
+                    feature restrictions, making it one of the <strong>best word to pdf converter free</strong>
+                    solutions on the web.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+            <div class="article-card">
+                <h2>Related Tools You Might Like</h2>
+                <p>Explore our other free online tools that complement Word to PDF:</p>
+                <div class="related-tools-grid">
+                    <a href="/pdf-to-word"><i class="fa-solid fa-link"></i> PDF to Word</a>
+                    <a href="/merge-pdf"><i class="fa-solid fa-link"></i> Merge PDF</a>
+                    <a href="/split-pdf"><i class="fa-solid fa-link"></i> Split PDF</a>
+                </div>
+            </div>
+</section>
+        <div class="share-bar">
+            <span>Share this tool:</span>
+            <a class="share-btn facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+            <a class="share-btn twitter" href="https://twitter.com/intent/tweet?url={{ request.url }}&text={{ self.title() }}" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a>
+            <a class="share-btn linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+            <a class="share-btn whatsapp" href="https://wa.me/?text={{ self.title() }}%20{{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+
+<!-- =========================
+        FAQ
+========================== -->
+
+<section class="steps">
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="step-grid">
+
+        <div class="step-card">
+
+            <h3>Is this converter free?</h3>
+
+            <p>
+                Yes. You can convert Word documents to PDF without any cost.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <h3>Which file types are supported?</h3>
+
+            <p>
+                ToolHub supports both Microsoft Word (.doc) and (.docx) documents.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <h3>Are my files secure?</h3>
+
+            <p>
+                Absolutely. Your uploaded files are processed securely and removed after conversion.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <h3>Will formatting stay the same?</h3>
+
+            <p>
+                Yes. The converter preserves fonts, layouts, images and formatting as accurately as possible.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <h3>Is there a file size limit?</h3>
+
+            <p>
+                Large Word documents are supported, although very large files may take slightly longer to process.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <h3>Can I use ToolHub on mobile?</h3>
+
+            <p>
+                Yes. ToolHub works on desktops, tablets and smartphones.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+    <section class="seo-related" aria-labelledby="related-tools-title">
+        <h2 id="related-tools-title">Explore More PDF Tools</h2>
+        <p>Continue with related ToolHub tools for your next file task.</p>
+        <div class="seo-related-grid">
+            <a class="seo-related-card" href="/pdf-to-word"><strong>PDF to Word</strong><span>Convert PDF documents to editable Word files.</span></a>
+            <a class="seo-related-card" href="/jpg-to-pdf"><strong>JPG to PDF</strong><span>Create PDFs from images.</span></a>
+            <a class="seo-related-card" href="/merge-pdf"><strong>Merge PDF</strong><span>Combine PDF documents.</span></a>
+        </div>
+    </section>
+</section>
+
+{% endblock %}

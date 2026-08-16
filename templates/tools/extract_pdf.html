@@ -1,0 +1,799 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Extract PDF Pages Online - Free PDF Extractor | ToolHub{% endblock %}
+{% block og_title %}Extract PDF Pages Online - Free PDF Extractor | ToolHub{% endblock %}
+{% block twitter_title %}Extract PDF Pages Online - Free PDF Extractor | ToolHub{% endblock %}
+
+{% block seo_description %}
+    <meta name="description" content="Extract specific pages from PDF files online for free. Select pages, create new documents, and download extracted PDFs instantly with ToolHub.">
+{% endblock %}
+
+
+{% block structured_data_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.url_root.rstrip('/') }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PDF Tools",
+          "item": "{{ request.url_root.rstrip('/') }}/pdf-tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Extract Pdf"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Extract Pdf — ToolHub",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "url": "{{ request.url_root.rstrip('/') }}{{ request.path }}",
+      "description": "{{ self.seo_description()|meta_content }}",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is it free to extract pages from a PDF using ToolHub?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub's Extract PDF Pages tool is completely free to use. There are no limits on the number of extractions, no file size restrictions, and no account required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I extract pages from a PDF by range?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. ToolHub supports page range input, so you can enter ranges like 2-5 or 1-3, 8-10 and extract those pages instantly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will extracting pages reduce the quality of my PDF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The extracted pages are copied exactly as they appear in the original document. Fonts, images, vector graphics, and formatting all remain intact."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my uploaded PDF stored on ToolHub servers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your file is processed in a secure environment and is automatically and permanently deleted immediately after extraction. ToolHub does not store or share your documents."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How many pages can I extract at once?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There is no limit. You can extract a single page, a handful of pages, or hundreds of pages in one operation."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<section class="tool-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="separator">›</span>
+        <a href="/pdf-tools">PDF Tools</a><span class="separator">›</span>
+        <span>Extract Pdf</span>
+    </nav>
+
+
+    <!-- TOOL HEADER -->
+
+    <div class="tool-header">
+
+        <div class="tool-icon">
+
+            <i class="fa-solid fa-file-export"></i>
+
+        </div>
+
+        <h1>Extract PDF Pages</h1>
+
+        <p>
+
+            Extract selected pages from your PDF into a brand-new document.
+
+        </p>
+
+    </div>
+
+    <!-- UPLOAD -->
+
+    <div class="upload-box">
+
+        <form
+            action="/extract-pdf-file"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="drop-zone" id="dropZone">
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    name="pdf"
+                    accept=".pdf"
+                    hidden
+                    required
+                >
+
+                <label
+                    for="fileInput"
+                    class="upload-area"
+                >
+
+                    <div class="upload-icon">
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    </div>
+
+                    <h2>
+
+                        Drag & Drop Your PDF
+
+                    </h2>
+
+                    <p>
+
+                        or click below to browse
+
+                    </p>
+
+                    <button
+                        type="button"
+                        class="choose-btn"
+                        onclick="document.getElementById('fileInput').click()"
+                    >
+
+                        Choose PDF
+
+                    </button>
+
+                    <!-- SUCCESS CARD -->
+
+                    <div
+                        id="fileCard"
+                        class="file-card success-card"
+                        style="display:none;"
+                    >
+
+                        <div class="file-left">
+
+                            <div class="success-icon">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h3 id="fileName"></h3>
+
+                                <p id="fileSize"></p>
+
+                                <span class="ready-tag">
+
+                                    Ready to extract pages
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="removeFile"
+                            class="remove-btn"
+                        >
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </button>
+
+                    </div>
+
+                    <!-- PAGE INPUT -->
+
+                    <div style="margin-top:20px;">
+
+                       <label>
+
+    <strong class="tool-label">
+
+        Page Range
+
+    </strong>
+
+</label>
+
+<input
+    type="text"
+    name="pages"
+    class="tool-input"
+    placeholder="Example: 2-5"
+    required
+>
+
+                    </div>
+
+                    <button
+                        class="convert-btn"
+                        id="convertBtn"
+                        type="submit"
+                        disabled
+                    >
+
+                        <i class="fa-solid fa-file-export"></i>
+
+                        Extract Pages
+
+                    </button>
+
+                </label>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- LOADER -->
+
+    <div
+        id="loader"
+        class="loader-overlay"
+        style="display:none;"
+    >
+
+        <div class="loader-box">
+
+            <div class="spinner"></div>
+
+            <h3>
+
+                Extracting Pages...
+
+            </h3>
+
+            <p>
+
+                Please wait while ToolHub prepares your new PDF.
+
+            </p>
+
+            <div class="progress">
+
+                <div id="progressBar"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <!-- =========================
+            FEATURES
+    ========================== -->
+
+    <section class="features">
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-file-export"></i>
+
+            <h3>Extract Specific Pages</h3>
+
+            <p>
+                Select exactly the pages you need and create a new PDF instantly.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <h3>100% Secure</h3>
+
+            <p>
+                Your uploaded PDFs are processed securely and automatically deleted after conversion.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            <h3>Fast Processing</h3>
+
+            <p>
+                Extract PDF pages within seconds while preserving the original quality.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-gift"></i>
+
+            <h3>Free Forever</h3>
+
+            <p>
+                Extract unlimited PDF pages without subscriptions or hidden charges.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            HOW IT WORKS
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>How It Works</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <span>1</span>
+
+                <h3>Upload PDF</h3>
+
+                <p>
+                    Choose or drag your PDF document into the upload area.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>2</span>
+
+                <h3>Select Pages</h3>
+
+                <p>
+                    Enter the page numbers or ranges you want to extract (for example: 1,3,5 or 2-4).
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <span>3</span>
+
+                <h3>Download</h3>
+
+                <p>
+                    Download your new PDF containing only the selected pages.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+            SEO ARTICLE
+    ========================== -->
+
+    <section class="tool-article">
+        <div class="article-card">
+
+            <span class="article-badge">Complete Guide</span>
+
+            <h2>Extract Pages from PDF — The Ultimate Online Guide</h2>
+
+            <p>
+                Every day millions of professionals, students, and casual users open a PDF only to realize they need just a handful of pages from a much larger document. Whether it is a 200-page legal contract where you only need the signature clause, a research paper where a single chart matters, or a training manual where chapters three and seven hold the answers, the ability to <strong>extract pages from PDF</strong> files saves time, storage, and sanity. ToolHub provides a fast, free, and secure way to <strong>pull pages from PDF</strong> documents without installing any software. This comprehensive guide covers everything you need to know — what the tool does, why you would use it, how to operate it step by step, the key features it offers, and practical tips to get the best results every single time.
+            </p>
+
+            <h3>What Is Extract PDF Pages?</h3>
+
+            <p>
+                Extracting PDF pages means selecting specific page numbers or ranges from an existing PDF and generating a brand-new, smaller document that contains only those selected pages. The original file remains untouched. You are essentially creating a subset — a focused slice of the source material that contains exactly the information you need and nothing more.
+            </p>
+
+            <p>
+                Unlike splitting a PDF into individual files (one per page), extraction lets you pick and choose. You might pull pages 1 through 5 and also page 12 from a 50-page report. The output is a single cohesive PDF with those pages in the order you specified. This makes it ideal for anyone who needs to <strong>save PDF pages as separate</strong> files or create targeted excerpts from larger documents.
+            </p>
+
+            <p>
+                ToolHub's Extract PDF Pages tool works entirely in the browser. There is no software to download, no registration required, and no watermarks added to your output. You simply upload, choose your pages, and download the result.
+            </p>
+
+            <h3>Why Extract Pages from a PDF?</h3>
+
+            <p>
+                There are dozens of reasons you might need to extract specific pages from a PDF. Here are the most common scenarios that drive people to search for how to <strong>extract specific pages from PDF online free</strong>:
+            </p>
+
+            <p>
+                <strong>Reduce file size for sharing.</strong> Email providers and messaging apps impose attachment limits. Sending a 15 MB document when you only need two pages is wasteful. Extracting those two pages creates a file that is a fraction of the size, making sharing instant and effortless.
+            </p>
+
+            <p>
+                <strong>Remove confidential or irrelevant content.</strong> When you share a report with a client, you may not want them to see internal notes, draft sections, or proprietary data buried on other pages. Extracting only the relevant pages ensures the recipient sees only what they should see.
+            </p>
+
+            <p>
+                <strong>Organize documents by topic.</strong> Students and researchers frequently work with lengthy academic papers, theses, or government reports. Extracting specific chapters or sections by page range lets them build organized reference folders without carrying the full weight of every document.
+            </p>
+
+            <p>
+                <strong>Prepare presentations and proposals.</strong> When building slide decks or pitch documents, you often need charts, graphs, or specific text blocks from existing PDFs. Extracting those pages gives you clean, presentation-ready content.
+            </p>
+
+            <p>
+                <strong>Comply with legal and regulatory requirements.</strong> Lawyers and compliance officers regularly need to produce specific pages from contracts, filings, or audit reports. Being able to <strong>extract pages from PDF by range</strong> ensures accuracy and saves billable hours.
+            </p>
+
+            <p>
+                <strong>Archive and backup critical sections.</strong> Rather than archiving entire multi-hundred-page documents, you can extract the sections that matter for long-term storage, reducing disk usage and simplifying future retrieval.
+            </p>
+
+            <h3>How to Extract Pages from PDF Using ToolHub — Step by Step</h3>
+
+            <p>
+                The process is straightforward and takes less than a minute for most documents. Here is exactly <strong>how to extract pages from PDF</strong> files using ToolHub:
+            </p>
+
+            <p>
+                <strong>Step 1: Open the Tool Page.</strong> Navigate to the Extract PDF Pages tool on the ToolHub website. The tool loads instantly with no plugins or installations required.
+            </p>
+
+            <p>
+                <strong>Step 2: Upload Your PDF.</strong> Click the "Choose PDF" button or drag and drop your file into the upload area. ToolHub accepts any standard PDF regardless of file size. The upload is encrypted end to end, so your data never travels unprotected.
+            </p>
+
+            <p>
+                <strong>Step 3: Enter Your Page Range.</strong> In the "Page Range" field, type the page numbers you want to extract. You can enter individual pages separated by commas (for example: 1, 4, 7), contiguous ranges using a hyphen (for example: 3-10), or combine both (for example: 1-3, 8, 12-15). The tool is flexible enough to handle any combination.
+            </p>
+
+            <p>
+                <strong>Step 4: Click "Extract Pages."</strong> Once you have entered your desired pages, click the "Extract Pages" button. ToolHub processes your request in seconds. The processing happens server-side with automatic cleanup, meaning your file is permanently deleted from ToolHub servers immediately after the extraction completes.
+            </p>
+
+            <p>
+                <strong>Step 5: Download Your New PDF.</strong> Your extracted pages are bundled into a single, clean PDF ready for download. Open it to verify that the content, formatting, images, and layout have been preserved exactly as they appeared in the original document.
+            </p>
+
+            <h3>Key Features of ToolHub's Extract PDF Pages Tool</h3>
+
+            <p>
+                ToolHub is built for simplicity and reliability. Here is what sets it apart:
+            </p>
+
+            <p>
+                <strong>Flexible page range input.</strong> Enter single pages, multiple ranges, or any combination. The tool parses your input intelligently and extracts exactly what you specify. There is no limit to the number of pages you can extract in a single operation.
+            </p>
+
+            <p>
+                <strong>No file size restrictions.</strong> Whether your PDF is 50 KB or 500 MB, ToolHub handles it. The processing infrastructure scales to accommodate documents of any size without slowing down or rejecting large uploads.
+            </p>
+
+            <p>
+                <strong>Original quality preservation.</strong> Extracted pages retain the exact resolution, font rendering, vector graphics, and embedded media from the source document. The output is indistinguishable from the corresponding pages in the original PDF.
+            </p>
+
+            <p>
+                <strong>Complete security and privacy.</strong> All uploads use encrypted connections. Files are processed in isolated environments and automatically purged from the system after extraction. ToolHub never reads, stores, or shares your documents beyond the processing stage.
+            </p>
+
+            <p>
+                <strong>Zero cost, zero registration.</strong> There are no hidden fees, no subscription tiers, and no account creation required. You use the tool, get your result, and leave — completely free.
+            </p>
+
+            <p>
+                <strong>Cross-platform compatibility.</strong> The tool runs in any modern web browser on Windows, macOS, Linux, ChromeOS, iOS, and Android. There is nothing to install and nothing to update.
+            </p>
+
+            <p>
+                <strong>No watermarks or branding.</strong> The output PDF is clean and professional. No ToolHub logo, no watermark, no added metadata that marks it as having been processed by a third-party tool.
+            </p>
+
+            <h3>Benefits of Using ToolHub to Extract PDF Pages</h3>
+
+            <p>
+                The benefits extend beyond the immediate feature set:
+            </p>
+
+            <p>
+                <strong>Time savings.</strong> Manual PDF editing software requires installation, navigation through complex menus, and often a learning curve. ToolHub eliminates all of that. From upload to download, the entire process takes under sixty seconds for most documents.
+            </p>
+
+            <p>
+                <strong>Cost savings.</strong> Professional PDF editing suites charge monthly or annual subscriptions that can run into hundreds of dollars. ToolHub delivers the core extraction functionality you need at zero cost, making it accessible to freelancers, students, small businesses, and anyone on a budget.
+            </p>
+
+            <p>
+                <strong>Reduced clutter.</strong> By extracting only the pages you need, you reduce file clutter on your devices. Instead of storing a 100-page document for the sake of three pages, you store only those three pages. Over time, this leads to cleaner file systems and faster searches.
+            </p>
+
+            <p>
+                <strong>Improved collaboration.</strong> Sending focused, relevant documents to colleagues and clients improves communication. Recipients can immediately find the information they need without scrolling through irrelevant content.
+            </p>
+
+            <p>
+                <strong>Accessibility.</strong> Because the tool runs in a browser, it is accessible to anyone with an internet connection. There are no compatibility concerns, no system requirements, and no technical barriers.
+            </p>
+
+            <h3>Practical Use Cases</h3>
+
+            <p>
+                To illustrate how the tool applies to real work, consider these scenarios:
+            </p>
+
+            <p>
+                <strong>Legal professionals.</strong> A paralegal preparing a court filing needs pages 14-18 and page 22 from a 150-page deposition. Extracting those specific pages creates a concise exhibit that meets the filing requirements without the bulk.
+            </p>
+
+            <p>
+                <strong>Academic researchers.</strong> A graduate student reviewing a 300-page government report needs only the executive summary (pages 1-5) and the data tables (pages 87-94). Extracting these sections creates a lightweight reference document for their thesis.
+            </p>
+
+            <p>
+                <strong>Business proposals.</strong> A sales team needs a specific chart from a 40-page market analysis to include in a client pitch deck. Extracting that single page provides a clean, professional graphic without the surrounding context.
+            </p>
+
+            <p>
+                <strong>Healthcare administration.</strong> A hospital administrator needs to extract specific pages from a multi-page insurance policy to share with the billing department. Pulling only the relevant pages protects patient privacy and reduces confusion.
+            </p>
+
+            <p>
+                <strong>Personal document management.</strong> A homeowner extracting specific pages from a 100-page home inspection report to share with a contractor, or a student pulling key pages from a textbook PDF to review before an exam.
+            </p>
+
+            <p>
+                <strong>Journalism and media.</strong> Reporters extracting specific pages from government filings, court documents, or public records to reference in published articles. Quick extraction keeps deadlines on track.
+            </p>
+
+            <h3>Tips for Extracting PDF Pages Effectively</h3>
+
+            <p>
+                Get the most out of the tool with these practical tips:
+            </p>
+
+            <p>
+                <strong>Plan your page selection first.</strong> Open the PDF in any reader and note the exact page numbers you need before entering them into the tool. This avoids unnecessary re-extraction and saves time.
+            </p>
+
+            <p>
+                <strong>Use comma-separated values for non-sequential pages.</strong> If you need pages 1, 5, 12, and 30, enter them as "1, 5, 12, 30." For a continuous block, use a hyphen: "1-30." For mixed selections, combine both: "1-5, 12, 30."
+            </p>
+
+            <p>
+                <strong>Double-check page numbers.</strong> PDF page numbers displayed in a reader sometimes differ from the actual internal page order, especially in documents with front matter, appendices, or blank pages. Verify the numbers against the actual document structure.
+            </p>
+
+            <p>
+                <strong>Extract in batches for very large selections.</strong> If you need to extract 50+ pages from a very large document, consider splitting the extraction into smaller batches. This ensures smooth processing and makes it easier to verify each batch.
+            </p>
+
+            <p>
+                <strong>Verify the output.</strong> Always open the downloaded PDF and scroll through it to confirm that the correct pages were extracted, the order is right, and the formatting is intact. A quick 30-second review prevents sharing incorrect documents.
+            </p>
+
+            <p>
+                <strong>Keep the original file.</strong> ToolHub does not modify your source PDF. Always retain the original document in case you need to extract different pages later or require the full context in the future.
+            </p>
+
+            <p>
+                <strong>Use descriptive file names.</strong> After extracting, rename the output file to something meaningful like "Project-Proposal-Pages-3-8" instead of keeping the default name. This makes file retrieval faster and more intuitive.
+            </p>
+
+            <!-- FAQ SECTION -->
+
+            <h3>Frequently Asked Questions</h3>
+
+            <p>
+                <strong>Is it free to extract pages from a PDF using ToolHub?</strong>
+            </p>
+            <p>
+                Yes. ToolHub's Extract PDF Pages tool is completely free to use. There are no limits on the number of extractions, no file size restrictions, and no account or registration required.
+            </p>
+
+            <p>
+                <strong>Can I extract pages from a PDF by range online free?</strong>
+            </p>
+            <p>
+                Absolutely. ToolHub supports page range input, so you can enter ranges like "2-5" or "1-3, 8-10" and extract those pages instantly at no cost.
+            </p>
+
+            <p>
+                <strong>Will extracting pages reduce the quality of my PDF?</strong>
+            </p>
+            <p>
+                No. The extracted pages are copied exactly as they appear in the original document. Fonts, images, vector graphics, and formatting all remain intact at the original resolution.
+            </p>
+
+            <p>
+                <strong>Is my uploaded PDF stored on ToolHub servers?</strong>
+            </p>
+            <p>
+                Your file is processed in a secure, isolated environment and is automatically and permanently deleted immediately after extraction. ToolHub does not store, archive, or share your documents.
+            </p>
+
+            <p>
+                <strong>How many pages can I extract at once?</strong>
+            </p>
+            <p>
+                There is no limit. You can extract a single page, a handful of pages, or hundreds of pages in one operation. The tool handles any quantity efficiently.
+            </p>
+
+            <p>
+                <strong>Can I use this tool on my phone or tablet?</strong>
+            </p>
+            <p>
+                Yes. ToolHub is fully responsive and works on any device with a modern web browser, including smartphones and tablets running iOS or Android.
+            </p>
+
+            <p>
+                <strong>Does the extracted PDF include bookmarks or annotations?</strong>
+            </p>
+            <p>
+                Bookmarks, annotations, and form fields that exist on the extracted pages are preserved in the output. Elements that reference pages outside the extraction range may be removed, as their targets no longer exist in the new document.
+            </p>
+
+            <p>
+                <strong>Can I extract pages from a password-protected PDF?</strong>
+            </p>
+            <p>
+                ToolHub requires the PDF to be unlocked before upload. If your document is password-protected, you will need to unlock it using a PDF reader that supports password removal before uploading it to the tool.
+            </p>
+
+        </div>
+            <div class="article-card">
+                <h2>Related Tools You Might Like</h2>
+                <p>Explore our other free online tools that complement Extract PDF:</p>
+                <div class="related-tools-grid">
+                    <a href="/split-pdf"><i class="fa-solid fa-link"></i> Split PDF</a>
+                    <a href="/pdf-to-word"><i class="fa-solid fa-link"></i> PDF to Word</a>
+                    <a href="/delete-pdf-pages"><i class="fa-solid fa-link"></i> Delete PDF Pages</a>
+                </div>
+            </div>
+    </section>
+        <div class="share-bar">
+            <span>Share this tool:</span>
+            <a class="share-btn facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+            <a class="share-btn twitter" href="https://twitter.com/intent/tweet?url={{ request.url }}&text={{ self.title() }}" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a>
+            <a class="share-btn linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+            <a class="share-btn whatsapp" href="https://wa.me/?text={{ self.title() }}%20{{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+
+
+    <!-- =========================
+            FAQ
+    ========================== -->
+
+    <section class="steps">
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="step-grid">
+
+            <div class="step-card">
+
+                <h3>Is Extract PDF Pages free?</h3>
+
+                <p>
+                    Yes. ToolHub lets you extract pages from PDF documents completely free.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Can I extract multiple pages?</h3>
+
+                <p>
+                    Yes. You can enter individual page numbers or page ranges, such as 1,3,5 or 2-4.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Will the PDF quality change?</h3>
+
+                <p>
+                    No. The extracted PDF maintains the original quality and formatting.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Are my files secure?</h3>
+
+                <p>
+                    Yes. Your files are securely processed and automatically removed after completion.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Can I extract pages from large PDFs?</h3>
+
+                <p>
+                    Yes. ToolHub supports both small and large PDF documents.
+                </p>
+
+            </div>
+
+            <div class="step-card">
+
+                <h3>Does it work on mobile?</h3>
+
+                <p>
+                    Yes. ToolHub works perfectly on desktop, tablet and mobile devices.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="seo-related" aria-labelledby="related-tools-title">
+        <h2 id="related-tools-title">Explore More PDF Tools</h2>
+        <p>Continue with related ToolHub tools for your next file task.</p>
+        <div class="seo-related-grid">
+            <a class="seo-related-card" href="/delete-pdf-pages"><strong>Delete PDF Pages</strong><span>Remove unwanted pages.</span></a>
+            <a class="seo-related-card" href="/split-pdf"><strong>Split PDF</strong><span>Separate PDF pages.</span></a>
+            <a class="seo-related-card" href="/merge-pdf"><strong>Merge PDF</strong><span>Combine PDF documents.</span></a>
+        </div>
+    </section>
+</section>
+
+<script src="{{ url_for('static', filename='js/tools.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+<div class="upload-wrapper">
+
+    <div class="upload-box" id="dropZone">
+
+        <div class="upload-icon">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+        </div>
+
+        <h2>Drag & Drop Your File</h2>
+
+        <p>
+            or click below to browse
+        </p>
+
+        <input
+            type="file"
+            id="fileInput"
+            hidden>
+
+        <button
+            class="upload-btn"
+            onclick="document.getElementById('fileInput').click()">
+
+            Choose File
+
+        </button>
+
+        <div id="filePreview" class="file-preview">
+
+            <i class="fa-solid fa-file"></i>
+
+            <div>
+
+                <h4 id="fileName">No file selected</h4>
+
+                <span id="fileSize"></span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

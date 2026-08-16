@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}ToolHub — Free Online PDF, Image & Utility Tools{% endblock %}
+
+{% block seo_description %}
+<meta name="description" content="Use ToolHub's free online PDF, image and utility tools to convert, compress, edit and manage files quickly and securely.">
+{% endblock %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "ToolHub",
+  "url": "{{ request.url_root.rstrip('/') }}/",
+  "description": "Free online PDF, image and utility tools for everyday file tasks.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{ request.url_root.rstrip('/') }}/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+
+
+{% include "components/hero.html" %}
+
+{% include "components/tool_categories.html" %}
+
+{% include "components/stats.html" %}
+
+{% include "components/why_choose.html" %}
+
+{% endblock %}

@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if category == "pdf" %}PDF Tools Online — Free PDF Tools | ToolHub
+{% elif category == "image" %}Image Tools Online — Free Image Tools | ToolHub
+{% else %}Utility Tools Online — Free Online Utilities | ToolHub
+{% endif %}
+{% endblock %}
+
+{% block seo_description %}
+{% if category == "pdf" %}
+<meta name="description" content="Use free PDF tools online to convert, merge, split, compress, rotate, protect and edit PDF files with ToolHub.">
+{% elif category == "image" %}
+<meta name="description" content="Use free image tools online to compress, resize, crop, rotate, convert and edit JPG, PNG and WebP images with ToolHub.">
+{% else %}
+<meta name="description" content="Use free online utility tools from ToolHub for QR codes, passwords, UUIDs, Lorem Ipsum and word counting.">
+{% endif %}
+{% endblock %}
+
+
+{% block structured_data_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{ request.url_root.rstrip('/') }}/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ title }}"
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<nav class="seo-breadcrumb" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="/">Home</a></li>
+    <li class="separator" aria-hidden="true">›</li>
+    <li class="current" aria-current="page">{{ title }}</li>
+  </ol>
+</nav>
+
+
+<section class="category-page">
+
+    <div class="category-container">
+
+        <!-- HEADER -->
+        <div class="category-hero">
+
+            <div class="category-badge">
+                <i class="fa-solid {{ icon }}"></i>
+                TOOLHUB
+            </div>
+
+            <h1>{{ title }}</h1>
+
+            {% if category == "pdf" %}
+                <p>Free online PDF tools to convert, merge, split, compress, rotate, protect and manage PDF files quickly.</p>
+            {% elif category == "image" %}
+                <p>Free online image tools to compress, resize, crop, rotate and convert JPG, PNG and WebP images.</p>
+            {% else %}
+                <p>Free online utility tools for QR codes, passwords, UUIDs, Lorem Ipsum and everyday productivity tasks.</p>
+            {% endif %}
+
+        </div>
+
+
+        <!-- PDF TOOLS -->
+        {% if category == "pdf" %}
+
+        {% set tools = [
+            {"name":"PDF to Word","route":"/pdf-to-word","icon":"fa-file-word","color":"blue","badge":"POPULAR","desc":"Convert PDF documents into fully editable Microsoft Word files while preserving formatting.","features":["Fast Conversion","Secure Upload","Free Forever"]},
+            {"name":"Word to PDF","route":"/word-to-pdf","icon":"fa-file-word","color":"green","badge":"NEW","desc":"Turn DOC and DOCX documents into high-quality PDF files within seconds.","features":["DOC & DOCX","High Quality","Unlimited"]},
+            {"name":"JPG to PDF","route":"/jpg-to-pdf","icon":"fa-file-image","color":"orange","badge":"","desc":"Convert JPG, PNG and WEBP images into a professional PDF document.","features":["Multiple Images","Single PDF","Instant"]},
+            {"name":"PDF to JPG","route":"/pdf-to-jpg","icon":"fa-file-image","color":"purple","badge":"","desc":"Convert every PDF page into crisp, high-quality JPG images.","features":["HD Images","Fast","Secure"]},
+            {"name":"Merge PDF","route":"/merge-pdf","icon":"fa-object-group","color":"blue","badge":"POPULAR","desc":"Combine multiple PDF documents into one organized file while preserving quality.","features":["Multiple PDFs","Fast Merge","Secure"]},
+            {"name":"Split PDF","route":"/split-pdf","icon":"fa-scissors","color":"orange","badge":"","desc":"Extract specific pages or split one PDF into multiple separate documents.","features":["Extract Pages","Instant Split","High Quality"]},
+            {"name":"Compress PDF","route":"/compress-pdf","icon":"fa-file-zipper","color":"red","badge":"HOT","desc":"Reduce PDF file size without sacrificing document quality for easier sharing.","features":["Smaller Files","Fast Compression","High Quality"]},
+            {"name":"Rotate PDF","route":"/rotate-pdf","icon":"fa-rotate-right","color":"purple","badge":"","desc":"Rotate PDF pages by 90°, 180° or 270° instantly.","features":["90° Rotation","All Pages","Instant"]},
+            {"name":"Protect PDF","route":"/protect-pdf","icon":"fa-lock","color":"red","badge":"NEW","desc":"Secure your PDF documents with password protection to prevent unauthorized access.","features":["Password Protection","Secure Encryption","Instant Processing"]},
+            {"name":"Unlock PDF","route":"/unlock-pdf","icon":"fa-lock-open","color":"green","badge":"","desc":"Remove passwords from PDF files safely when you know the correct password.","features":["Remove Password","Fast Unlock","Original Quality"]},
+            {"name":"Watermark PDF","route":"/watermark-pdf","icon":"fa-droplet","color":"blue","badge":"","desc":"Add custom text or image watermarks to every page of your PDF documents.","features":["Text Watermark","Image Watermark","One Click"]},
+            {"name":"Extract PDF Pages","route":"/extract-pdf","icon":"fa-file-export","color":"orange","badge":"","desc":"Extract one or multiple pages from a PDF and save them as a new document.","features":["Select Pages","Fast Export","High Quality"]},
+            {"name":"Delete PDF Pages","route":"/delete-pdf-pages","icon":"fa-trash-can","color":"red","badge":"","desc":"Remove unwanted pages from your PDF without affecting the remaining pages.","features":["Remove Pages","Quick Edit","Preserve Quality"]},
+            {"name":"Add Page Numbers","route":"/add-page-numbers","icon":"fa-list-ol","color":"purple","badge":"NEW","desc":"Automatically insert professional page numbers into every page of your PDF.","features":["Auto Numbering","All Pages","Instant"]}
+        ] %}
+
+        {% endif %}
+
+
+        <!-- IMAGE TOOLS -->
+        {% if category == "image" %}
+
+        {% set tools = [
+            {"name":"Image Compressor","route":"/compressor","icon":"fa-compress","color":"blue","badge":"POPULAR","desc":"Reduce image size while maintaining excellent visual quality for faster uploads and sharing.","features":["Smaller Files","JPG PNG WEBP","Fast Compression"]},
+            {"name":"Background Remover","route":"/remover","icon":"fa-eraser","color":"purple","badge":"HOT","desc":"Remove image backgrounds automatically using powerful AI while preserving image quality.","features":["AI Powered","One Click","HD Quality"]},
+            {"name":"JPG to PNG","route":"/jpg-to-png","icon":"fa-file-image","color":"orange","badge":"","desc":"Convert JPG and JPEG images into high-quality PNG images instantly.","features":["HD Output","Fast Conversion","Unlimited"]},
+            {"name":"PNG to JPG","route":"/png-to-jpg","icon":"fa-file-image","color":"green","badge":"","desc":"Convert transparent PNG files into optimized JPG images for easy sharing.","features":["High Quality","Instant","Secure"]},
+            {"name":"Resize Image","route":"/resize-image","icon":"fa-expand","color":"red","badge":"POPULAR","desc":"Resize images to custom width and height without losing quality.","features":["Custom Size","Fast Resize","Preserve Quality"]},
+            {"name":"Crop Image","route":"/crop-image","icon":"fa-crop","color":"blue","badge":"","desc":"Crop images precisely to remove unwanted areas or create perfect thumbnails.","features":["Precise Crop","Instant","HD Output"]},
+            {"name":"Rotate Image","route":"/rotate-image","icon":"fa-rotate-right","color":"purple","badge":"","desc":"Rotate JPG, PNG and WEBP images by 90°, 180° or any custom angle.","features":["90° Rotation","Fast","High Quality"]},
+            {"name":"Flip Image","route":"/flip-image","icon":"fa-arrows-left-right","color":"green","badge":"","desc":"Flip images horizontally or vertically without affecting image quality.","features":["Horizontal","Vertical","Instant"]},
+            {"name":"Image to WebP","route":"/image-to-webp","icon":"fa-file-image","color":"orange","badge":"NEW","desc":"Convert JPG and PNG images into lightweight WebP images for faster websites.","features":["Web Optimized","Smaller Size","Fast"]},
+            {"name":"WebP to JPG","route":"/webp-to-jpg","icon":"fa-file-image","color":"blue","badge":"","desc":"Convert WebP images into standard JPG format for maximum compatibility.","features":["High Quality","Fast Conversion","Free"]},
+            {"name":"WebP to PNG","route":"/webp-to-png","icon":"fa-file-image","color":"red","badge":"","desc":"Convert WebP images into PNG while preserving transparency.","features":["Transparent PNG","Fast","HD Quality"]},
+            {"name":"Image Watermark","route":"/image-watermark","icon":"fa-signature","color":"purple","badge":"POPULAR","desc":"Protect your images by adding custom text or logo watermarks in seconds.","features":["Text Watermark","Logo Watermark","Copyright Protection"]},
+            {"name":"Image to Text (OCR)","route":"/image-to-text","icon":"fa-file-lines","color":"blue","badge":"AI","desc":"Extract editable text from JPG, PNG and WebP images using advanced OCR technology.","features":["AI OCR","Editable Text","Instant Extraction"]}
+        ] %}
+
+        {% endif %}
+
+
+        <!-- UTILITY TOOLS -->
+        {% if category == "utility" %}
+
+        {% set tools = [
+            {"name":"QR Code Generator","route":"/qr-generator","icon":"fa-qrcode","color":"blue","badge":"POPULAR","desc":"Generate QR Codes instantly for URLs, text, WiFi, email addresses and much more.","features":["All QR Types","Instant","Free"]},
+            {"name":"QR Code Scanner","route":"/qr-scanner","icon":"fa-camera","color":"purple","badge":"AI","desc":"Upload a QR code image and instantly decode URLs, WiFi credentials, contact information and more.","features":["Scan Images","Instant Results","Secure"]},
+            {"name":"Password Generator","route":"/password-generator","icon":"fa-key","color":"green","badge":"HOT","desc":"Generate strong, secure passwords with custom length, symbols, uppercase letters and numbers.","features":["Strong Passwords","One Click","Unlimited"]},
+            {"name":"Password Strength Checker","route":"/password-strength-checker","icon":"fa-shield-halved","color":"red","badge":"NEW","desc":"Analyse your password security instantly and receive suggestions for stronger protection.","features":["Live Analysis","Instant Check","Security Score"]},
+            {"name":"UUID Generator","route":"/uuid-generator","icon":"fa-fingerprint","color":"orange","badge":"","desc":"Generate secure UUID Version 4 identifiers individually or in bulk for software development.","features":["UUID v4","Bulk Generate","Download TXT"]},
+            {"name":"Lorem Ipsum Generator","route":"/lorem-ipsum-generator","icon":"fa-font","color":"blue","badge":"","desc":"Generate professional Lorem Ipsum placeholder text in words, sentences or paragraphs.","features":["Paragraphs","Sentences","Instant Generate"]},
+            {"name":"Word Counter","route":"/word-counter","icon":"fa-file-word","color":"green","badge":"POPULAR","desc":"Count words, characters, sentences, paragraphs, reading time and speaking time instantly as you type.","features":["Live Statistics","Reading Time","Speaking Time"]}
+        ] %}
+
+        {% endif %}
+
+
+        <!-- TOOL GRID -->
+
+        <div class="category-page-grid">
+
+            {% for tool in tools %}
+
+            <a href="{{ tool.route }}" class="category-page-card">
+
+                <div class="category-card-top">
+
+                    <div class="category-card-icon {{ tool.color }}">
+                        <i class="fa-solid {{ tool.icon }}"></i>
+                    </div>
+
+                    {% if tool.badge %}
+                    <span class="category-card-badge {{ tool.badge|lower }}">
+                        {{ tool.badge }}
+                    </span>
+                    {% endif %}
+
+                </div>
+
+
+                <h2>{{ tool.name }}</h2>
+
+                <p>{{ tool.desc }}</p>
+
+
+                <ul class="category-card-features">
+
+                    {% for feature in tool.features %}
+
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+                        {{ feature }}
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+
+                <div class="category-card-action">
+
+                    Open Tool
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </div>
+
+            </a>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,127 @@
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+
+        <!-- ToolHub branded logo -->
+        <a href="/" class="logo" aria-label="ToolHub Home">
+            <img
+                src="{{ url_for('static', filename='images/toolhub-full-logo.png') }}"
+                alt="ToolHub — All Your File Tools In One Place"
+                class="logo-image">
+        </a>
+
+        <!-- Mobile hamburger -->
+        <button
+            type="button"
+            class="hamburger"
+            id="hamburger"
+            aria-label="Open menu"
+            aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- Main navigation -->
+        <ul class="nav-links" id="navLinks">
+
+            <li class="nav-item">
+                <a href="/">Home</a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a href="#" class="dropdown-trigger" aria-expanded="false">
+                    PDF Tools
+                    <i class="fa-solid fa-chevron-down"></i>
+                </a>
+
+                <div class="mega-menu">
+                    <a href="/pdf-to-word"><i class="fa-solid fa-file-word"></i> PDF to Word</a>
+                    <a href="/word-to-pdf"><i class="fa-solid fa-file-pdf"></i> Word to PDF</a>
+                    <a href="/pdf-to-jpg"><i class="fa-solid fa-image"></i> PDF to JPG</a>
+                    <a href="/jpg-to-pdf"><i class="fa-solid fa-file-image"></i> JPG to PDF</a>
+                    <a href="/merge-pdf"><i class="fa-solid fa-object-group"></i> Merge PDF</a>
+                    <a href="/split-pdf"><i class="fa-solid fa-scissors"></i> Split PDF</a>
+                    <a href="/compress-pdf"><i class="fa-solid fa-file-zipper"></i> Compress PDF</a>
+                    <a href="/rotate-pdf"><i class="fa-solid fa-rotate-right"></i> Rotate PDF</a>
+                    <a href="/protect-pdf"><i class="fa-solid fa-lock"></i> Protect PDF</a>
+                    <a href="/unlock-pdf"><i class="fa-solid fa-lock-open"></i> Unlock PDF</a>
+                    <a href="/watermark-pdf"><i class="fa-solid fa-droplet"></i> Watermark PDF</a>
+                    <a href="/extract-pdf"><i class="fa-solid fa-file-export"></i> Extract Pages</a>
+                    <a href="/delete-pdf-pages"><i class="fa-solid fa-trash"></i> Delete Pages</a>
+                    <a href="/add-page-numbers"><i class="fa-solid fa-list-ol"></i> Page Numbers</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a href="#" class="dropdown-trigger" aria-expanded="false">
+                    Image Tools
+                    <i class="fa-solid fa-chevron-down"></i>
+                </a>
+
+                <div class="mega-menu">
+                    <a href="/compressor">Image Compressor</a>
+                    <a href="/remover">Background Remover</a>
+                    <a href="/image-to-text">Image to Text (OCR)</a>
+                    <a href="/resize-image">Resize Image</a>
+                    <a href="/crop-image">Crop Image</a>
+                    <a href="/rotate-image">Rotate Image</a>
+                    <a href="/flip-image">Flip Image</a>
+                    <a href="/jpg-to-png">JPG to PNG</a>
+                    <a href="/png-to-jpg">PNG to JPG</a>
+                    <a href="/image-to-webp">Image to WebP</a>
+                    <a href="/webp-to-jpg">WebP to JPG</a>
+                    <a href="/webp-to-png">WebP to PNG</a>
+                    <a href="/image-watermark">Image Watermark</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a href="#" class="dropdown-trigger" aria-expanded="false">
+                    Utility Tools
+                    <i class="fa-solid fa-chevron-down"></i>
+                </a>
+
+                <div class="mega-menu">
+                    <a href="/qr-generator">QR Generator</a>
+                    <a href="/qr-scanner">QR Scanner</a>
+                    <a href="/password-generator">Password Generator</a>
+                    <a href="/password-strength-checker">Password Checker</a>
+                    <a href="/uuid-generator">UUID Generator</a>
+                    <a href="/lorem-ipsum-generator">Lorem Ipsum</a>
+                    <a href="/word-counter">Word Counter</a>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a href="/contact">Contact</a>
+            </li>
+
+             <li class="nav-item">
+                <a href="/about">About Us</a>
+            </li>
+
+            <!-- GitHub is inside the mobile menu as well -->
+            <li class="nav-item mobile-github-item">
+                <a
+                    href="https://github.com/mrayyan92/ToolHub"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="github-mobile-link">
+                    <i class="fa-brands fa-github"></i>
+                    GitHub
+                </a>
+            </li>
+        </ul>
+
+        <!-- Desktop GitHub -->
+        <a
+            href="https://github.com/mrayyan92/ToolHub"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="github-btn">
+            <i class="fa-brands fa-github"></i>
+            GitHub
+        </a>
+
+    </div>
+</nav>

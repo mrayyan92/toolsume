@@ -1,0 +1,716 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Word Counter Online - Count Words and Characters | ToolHub{% endblock %}
+{% block og_title %}Word Counter Online - Count Words and Characters | ToolHub{% endblock %}
+{% block twitter_title %}Word Counter Online - Count Words and Characters | ToolHub{% endblock %}
+
+{% block seo_description %}
+    <meta name="description" content="Count words, characters, and sentences online for free. Analyze text length, readability, and get instant results with ToolHub.">
+{% endblock %}
+
+
+{% block structured_data_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.url_root.rstrip('/') }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Utility Tools",
+          "item": "{{ request.url_root.rstrip('/') }}/utility-tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Word Counter"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Word Counter — ToolHub",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "url": "{{ request.url_root.rstrip('/') }}{{ request.path }}",
+      "description": "{{ self.seo_description()|meta_content }}",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is there a word limit?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. ToolHub can handle both short notes and long articles of any length."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is reading time calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Reading time is estimated using an average reading speed of approximately 200 words per minute."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is speaking time calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Speaking time is estimated using an average speaking speed of approximately 130 words per minute."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my text uploaded when I use the word counter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens directly in your browser. Your text is never uploaded to ToolHub's servers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I download my text after counting words?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ToolHub includes a Download TXT button that saves your text as a plain text file."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<section class="tool-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="separator">›</span>
+        <a href="/utility-tools">Utility Tools</a><span class="separator">›</span>
+        <span>Word Counter</span>
+    </nav>
+
+
+    <div class="tool-header">
+
+        <div class="tool-icon">
+
+            <i class="fa-solid fa-file-word"></i>
+
+        </div>
+
+        <h1>Word Counter</h1>
+
+        <p>
+
+            Count words, characters, sentences, paragraphs, reading time and speaking time instantly.
+
+        </p>
+
+    </div>
+
+    <div class="tool-container">
+
+        <div class="result-card">
+
+            <textarea
+                id="textInput"
+                rows="15"
+                placeholder="Start typing or paste your text here..."
+            ></textarea>
+
+        </div>
+
+        <div class="button-group">
+
+            <button
+                id="copyBtn"
+                class="secondary-btn"
+                type="button"
+            >
+
+                <i class="fa-solid fa-copy"></i>
+
+                Copy
+
+            </button>
+
+            <button
+                id="clearBtn"
+                class="secondary-btn"
+                type="button"
+            >
+
+                <i class="fa-solid fa-trash"></i>
+
+                Clear
+
+            </button>
+
+            <button
+                id="downloadBtn"
+                class="secondary-btn"
+                type="button"
+            >
+
+                <i class="fa-solid fa-download"></i>
+
+                Download TXT
+
+            </button>
+
+        </div>
+
+        <div class="stats-grid">
+
+            <div class="feature-card">
+
+                <h3 id="wordCount">0</h3>
+
+                <p>Words</p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <h3 id="characterCount">0</h3>
+
+                <p>Characters</p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <h3 id="characterNoSpace">0</h3>
+
+                <p>Characters (No Spaces)</p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <h3 id="sentenceCount">0</h3>
+
+                <p>Sentences</p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <h3 id="paragraphCount">0</h3>
+
+                <p>Paragraphs</p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <h3 id="readingTime">0 min</h3>
+
+                <p>Reading Time</p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <h3 id="speakingTime">0 min</h3>
+
+                <p>Speaking Time</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- =========================
+        FEATURES
+========================= -->
+
+<section class="features">
+
+    <div class="feature-card">
+
+        <i class="fa-solid fa-file-word"></i>
+
+        <h3>Instant Statistics</h3>
+
+        <p>
+
+            Count words, characters, sentences and paragraphs in real time while you type.
+
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <i class="fa-solid fa-book-open-reader"></i>
+
+        <h3>Reading Time</h3>
+
+        <p>
+
+            Estimate how long it will take an average reader to finish your text.
+
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <i class="fa-solid fa-microphone"></i>
+
+        <h3>Speaking Time</h3>
+
+        <p>
+
+            Estimate how long it would take to read your text aloud.
+
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <i class="fa-solid fa-download"></i>
+
+        <h3>Copy & Download</h3>
+
+        <p>
+
+            Copy your text with one click or download it as a TXT file.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+        HOW IT WORKS
+========================= -->
+
+<section class="steps">
+
+    <h2>How It Works</h2>
+
+    <div class="step-grid">
+
+        <div class="step-card">
+
+            <span>1</span>
+
+            <h3>Enter Text</h3>
+
+            <p>
+
+                Type or paste any text into the editor.
+
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <span>2</span>
+
+            <h3>Live Analysis</h3>
+
+            <p>
+
+                ToolHub instantly calculates all statistics as you type.
+
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <span>3</span>
+
+            <h3>Use Your Results</h3>
+
+            <p>
+
+                Copy your content or download it for later use.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+        SEO ARTICLE
+========================= -->
+
+<section class="tool-article">
+    <div class="article-card">
+
+        <span class="article-badge">Word Counter Online Free</span>
+
+        <h2>What Is a Word Counter and Why Does It Matter?</h2>
+
+        <p>
+            A word counter is a digital tool that instantly calculates the number of words, characters, sentences, and paragraphs in any block of text. Whether you are drafting an academic essay, writing a blog post, or composing a professional email, knowing your word count is essential for staying within guidelines, meeting editorial standards, and communicating clearly. If you have ever wondered how many words in my essay or needed a word counter with character count built in, you already understand the practical value of this tool. ToolHub's word counter gives you a fast, accurate, and completely free way to analyze any piece of text without installing software or creating an account.
+        </p>
+
+        <p>
+            At its core, a word counter takes raw text input and parses it into meaningful statistics. It separates words by spaces and punctuation, counts individual letters and numbers, identifies sentence boundaries, and groups text into paragraphs. Advanced counters go further by estimating reading time and speaking time, two metrics that are invaluable for content creators, public speakers, and educators. ToolHub's online word counter no signup requirement means you can open your browser, paste your text, and get results in milliseconds. There is no registration, no download, and no hidden fee.
+        </p>
+
+        <h2>Why Use a Word Counter Online Free Tool?</h2>
+
+        <p>
+            The need for an accurate word count tool spans almost every form of written communication. Students face strict word limits on essays, research papers, and dissertations. Bloggers and SEO professionals must hit specific word targets to rank well in search engines. Journalists and copywriters need to fit their stories into defined column widths. Social media managers have character limits to respect on every platform. In each of these scenarios, a word count online free tool eliminates guesswork and saves time.
+        </p>
+
+        <p>
+            Manual counting is not only tedious but also unreliable. When you try to count words by eye, you inevitably make mistakes, especially with large documents. A single misclick can throw off your entire count, leading to rewrites, missed deadlines, or rejected submissions. ToolHub's character counter and word counter removes this risk by giving you precise, real-time statistics every time you type or paste text into the editor.
+        </p>
+
+        <p>
+            Beyond accuracy, using a free word counter online provides convenience. You do not need to open a heavyweight application like Microsoft Word or Google Docs just to check a count. You do not need to install browser extensions that may compromise your privacy. ToolHub runs entirely in your browser, which means your text never leaves your device. This is especially important for sensitive content like legal documents, business proposals, or personal writings that you may not want to upload to a third-party server.
+        </p>
+
+        <h2>How to Use the ToolHub Word Counter</h2>
+
+        <p>
+            Getting started with ToolHub's word counter takes less than a minute. Follow these simple steps:
+        </p>
+
+        <p>
+            <strong>Step 1: Open the Word Counter Page.</strong> Navigate to the ToolHub Word Counter tool in your web browser. The page loads instantly on any device, whether you are using a desktop computer, a tablet, or a smartphone.
+        </p>
+
+        <p>
+            <strong>Step 2: Paste or Type Your Text.</strong> Click inside the large text area and either type directly or paste your content using Ctrl+V on Windows or Cmd+V on macOS. You can paste entire documents, articles, or essays without any issues. There is no word limit, so even very long texts are handled with ease.
+        </p>
+
+        <p>
+            <strong>Step 3: View Your Results Instantly.</strong> As soon as your text appears in the editor, ToolHub calculates all statistics in real time. You will see the total word count, character count, character count without spaces, sentence count, paragraph count, estimated reading time, and estimated speaking time. All of these numbers update automatically as you add, remove, or edit your text.
+        </p>
+
+        <p>
+            <strong>Step 4: Copy or Download Your Text.</strong> If you need to move your text to another application, click the Copy button to copy everything to your clipboard. If you want to save a copy for later, click the Download TXT button to download your text as a plain text file. You can also click Clear to wipe the editor and start fresh.
+        </p>
+
+        <h2>Key Features of ToolHub's Word Counter</h2>
+
+        <p>
+            ToolHub's word counter is designed to be both powerful and simple. Here are the key features that make it stand out:
+        </p>
+
+        <p>
+            <strong>Real-Time Word and Character Count.</strong> The moment you enter text, the tool displays the total number of words and characters. This includes characters with and without spaces, giving you a complete picture of your text's length. Whether you need a quick character counter for a tweet or a detailed word count for a thesis, this feature has you covered.
+        </p>
+
+        <p>
+            <strong>Sentence and Paragraph Count.</strong> Knowing how many sentences and paragraphs your text contains helps you assess its structure and readability. A high sentence count relative to word count may indicate short, choppy sentences, while a low paragraph count might mean your text needs better organization.
+        </p>
+
+        <p>
+            <strong>Estimated Reading Time.</strong> ToolHub calculates an estimated reading time based on an average speed of 200 words per minute. This is useful for bloggers who want to tell readers how long an article will take to read, for educators planning lesson materials, and for anyone who wants to gauge the length of their content in practical terms.
+        </p>
+
+        <p>
+            <strong>Estimated Speaking Time.</strong> For speeches, presentations, and audio scripts, knowing how long it takes to speak your text aloud is critical. ToolHub estimates speaking time at approximately 130 words per minute, giving you a realistic preview of your delivery length.
+        </p>
+
+        <p>
+            <strong>Copy and Download Options.</strong> With one click, you can copy your text to the clipboard or download it as a TXT file. This makes it easy to transfer your content to emails, documents, or content management systems without retyping.
+        </p>
+
+        <p>
+            <strong>No Signup, No Install, Fully Free.</strong> ToolHub's online word counter no signup requirement means you can start counting immediately. There are no accounts to create, no software to install, and no limits on how many times you can use the tool.
+        </p>
+
+        <p>
+            <strong>Privacy-First Processing.</strong> All text analysis happens locally in your browser. Nothing is uploaded to a server, so your content stays completely private. This is a critical feature for anyone working with confidential or sensitive material.
+        </p>
+
+        <h2>Benefits of Using a Word Counter with Character Count</h2>
+
+        <p>
+            The benefits of using a dedicated word counter extend far beyond simply knowing how many words you have written. Here are some of the most impactful advantages:
+        </p>
+
+        <p>
+            <strong>Stay Within Word Limits.</strong> Academic institutions, publishing houses, and content platforms enforce strict word limits. Exceeding these limits can result in rejected submissions, wasted effort, and frustrated editors. A word counter helps you stay within the required range from the start, so you can focus on quality rather than worrying about length.
+        </p>
+
+        <p>
+            <strong>Improve Writing Discipline.</strong> When you can see your word count in real time, you develop a stronger sense of how much you are writing with each sentence. This awareness helps you write more concisely, eliminate filler words, and make every sentence count. Over time, this leads to tighter, more engaging writing.
+        </p>
+
+        <p>
+            <strong>Meet SEO Requirements.</strong> Search engine optimization often requires articles to fall within specific word count ranges. Long-form content tends to rank better, but going too far overboard can hurt readability. A word count tool lets you hit the sweet spot consistently, ensuring your content is optimized without being bloated.
+        </p>
+
+        <p>
+            <strong>Plan Presentations and Speeches.</strong> If you are preparing a speech or presentation, knowing your speaking time in advance prevents you from going over or under your allotted slot. You can adjust your script to fit a 5-minute, 10-minute, or 20-minute window with precision.
+        </p>
+
+        <p>
+            <strong>Track Progress on Writing Goals.</strong> Many writers set daily or weekly word count goals. A counter makes it easy to track your progress, stay motivated, and build a consistent writing habit. Whether you are working on a novel, a blog series, or a research paper, seeing your numbers grow is a powerful motivator.
+        </p>
+
+        <h2>Use Cases: Students, Writers, and SEO Professionals</h2>
+
+        <p>
+            <strong>Students and Academic Writers.</strong> Every student knows the anxiety of trying to hit a word count on an essay. Too few words and the paper feels incomplete; too many and you risk losing marks for going over the limit. ToolHub's word counter eliminates this stress by giving you instant feedback as you write. You can see exactly how many words you have left to add or how many you need to cut. This is especially helpful for dissertations, research papers, and college application essays where every word matters.
+        </p>
+
+        <p>
+            <strong>Bloggers and Content Writers.</strong> Bloggers need to balance thoroughness with readability. A 500-word blog post serves a different purpose than a 2,000-word deep dive. ToolHub helps writers hit their target word count while also monitoring sentence structure and paragraph density. The reading time feature is a bonus for bloggers who like to display estimated read times on their articles.
+        </p>
+
+        <p>
+            <strong>SEO Professionals and Marketers.</strong> Search engine optimization is heavily influenced by content length. Studies consistently show that longer, more comprehensive content tends to rank higher in search results. However, keyword stuffing and padding content with unnecessary words can hurt your rankings. A word count tool helps you write enough to be competitive without crossing into spam territory. SEO professionals also use character counters to craft meta titles and descriptions that fit within Google's displayed character limits.
+        </p>
+
+        <p>
+            <strong>Journalists and Copywriters.</strong> News articles and marketing copy often have strict length requirements. A headline might need to be under 70 characters; a press release might need to fall between 400 and 600 words. ToolHub's dual word and character counter makes it easy to meet these specifications without multiple rounds of editing.
+        </p>
+
+        <p>
+            <strong>Social Media Managers.</strong> Every social platform has its own character limits. Twitter allows 280 characters, Instagram captions have a 2,200-character cap, and LinkedIn posts have their own constraints. A character counter helps social media managers craft posts that maximize engagement without being cut off.
+        </p>
+
+        <p>
+            <strong>Educators and Teachers.</strong> Teachers who create assignments, quizzes, and lesson plans need to ensure their materials are appropriately sized for their students' attention spans and reading levels. A word counter helps educators gauge the complexity and length of their materials quickly.
+        </p>
+
+        <h2>Tips for Getting the Most Out of Your Word Counter</h2>
+
+        <p>
+            To maximize the value of ToolHub's word counter, keep these practical tips in mind:
+        </p>
+
+        <p>
+            <strong>Paste Drafts Before Finalizing.</strong> Before submitting any document, paste the final version into the counter to verify it meets length requirements. This quick check can save you from a rejected submission.
+        </p>
+
+        <p>
+            <strong>Use Character Count for Social Media.</strong> When writing social media posts, pay attention to the character count rather than the word count. Platform limits are based on characters, not words.
+        </p>
+
+        <p>
+            <strong>Monitor Reading Time for Audience Engagement.</strong> If your target audience prefers short reads, keep your estimated reading time under five minutes. For in-depth content, aim for 8 to 12 minutes. ToolHub makes this easy to track.
+        </p>
+
+        <p>
+            <strong>Edit with the Counter Visible.</strong> Keep the word count display visible while you edit. This helps you see the impact of every addition or deletion in real time, making the editing process more efficient.
+        </p>
+
+        <p>
+            <strong>Compare Multiple Drafts.</strong> If you are revising a document, paste each draft into the counter and note the differences. This helps you understand how your edits affect the overall length and structure.
+        </p>
+
+        <p>
+            <strong>Leverage the Clear Button.</strong> Use the Clear button to reset the counter between different pieces of text. This prevents old text from inflating your new count and keeps your workflow clean.
+        </p>
+
+        <h2>Frequently Asked Questions</h2>
+
+        <p>
+            <strong>Q1: How many words in my essay can ToolHub count?</strong>
+        </p>
+        <p>
+            ToolHub can count words in texts of any length, from a single sentence to a full-length novel. There is no upper limit, so you can paste even the longest essays and research papers without worry.
+        </p>
+
+        <p>
+            <strong>Q2: Is the word count online free tool really free?</strong>
+        </p>
+        <p>
+            Yes. ToolHub's word counter is completely free with unlimited usage. There are no premium tiers, no watermarks, and no hidden charges. You can use it as many times as you need.
+        </p>
+
+        <p>
+            <strong>Q3: Does the tool count characters with and without spaces?</strong>
+        </p>
+        <p>
+            Yes. ToolHub displays both the total character count (including spaces) and the character count without spaces. This is useful for meeting platform-specific character limits and understanding the true density of your text.
+        </p>
+
+        <p>
+            <strong>Q4: Is my text stored or uploaded when I use the word counter?</strong>
+        </p>
+        <p>
+            No. All processing happens directly in your browser. Your text is never uploaded to ToolHub's servers, so you can use the tool with complete confidence that your content remains private and secure.
+        </p>
+
+        <p>
+            <strong>Q5: Can I use the word counter with character count on mobile devices?</strong>
+        </p>
+        <p>
+            Absolutely. ToolHub's word counter is fully responsive and works on smartphones, tablets, and desktop computers. The interface adapts to any screen size, giving you a seamless experience no matter what device you use.
+        </p>
+
+        <p>
+            <strong>Q6: How accurate is the reading time estimate?</strong>
+        </p>
+        <p>
+            The reading time estimate is based on an average reading speed of 200 words per minute, which is a widely accepted standard for adult readers. Actual reading speeds vary by individual, but this estimate provides a reliable approximation for planning purposes.
+        </p>
+
+        <p>
+            <strong>Q7: Can I download my text after counting words?</strong>
+        </p>
+        <p>
+            Yes. ToolHub includes a Download TXT button that saves your text as a plain text file. You can also use the Copy button to copy your text to the clipboard for pasting into other applications.
+        </p>
+
+        <p>
+            <strong>Q8: What makes ToolHub's online word counter no signup different from other tools?</strong>
+        </p>
+        <p>
+            ToolHub stands out because it requires no account creation, processes all text locally in your browser for maximum privacy, and provides a comprehensive set of statistics including word count, character count, sentence count, paragraph count, reading time, and speaking time. It is fast, accurate, and completely free.
+        </p>
+
+    </div>
+            <div class="article-card">
+                <h2>Related Tools You Might Like</h2>
+                <p>Explore our other free online tools that complement Word Counter:</p>
+                <div class="related-tools-grid">
+                    <a href="/lorem-ipsum-generator"><i class="fa-solid fa-link"></i> Lorem Ipsum Generator</a>
+                    <a href="/password-generator"><i class="fa-solid fa-link"></i> Password Generator</a>
+                </div>
+            </div>
+</section>
+        <div class="share-bar">
+            <span>Share this tool:</span>
+            <a class="share-btn facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+            <a class="share-btn twitter" href="https://twitter.com/intent/tweet?url={{ request.url }}&text={{ self.title() }}" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a>
+            <a class="share-btn linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+            <a class="share-btn whatsapp" href="https://wa.me/?text={{ self.title() }}%20{{ request.url }}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+
+<!-- =========================
+        FAQ
+========================= -->
+
+<section class="steps">
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="step-grid">
+
+        <div class="step-card">
+
+            <h3>Is there a word limit?</h3>
+
+            <p>
+
+                No. ToolHub can handle both short notes and long articles.
+
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <h3>How is reading time calculated?</h3>
+
+            <p>
+
+                Reading time is estimated using an average reading speed of approximately 200 words per minute.
+
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <h3>How is speaking time calculated?</h3>
+
+            <p>
+
+                Speaking time is estimated using an average speaking speed of approximately 130 words per minute.
+
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <h3>Can I download my text?</h3>
+
+            <p>
+
+                Yes. You can download your text as a TXT file anytime.
+
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <h3>Is my text uploaded?</h3>
+
+            <p>
+
+                No. Everything is processed directly in your browser for maximum privacy.
+
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <h3>Is this tool free?</h3>
+
+            <p>
+
+                Yes. The Word Counter is completely free with unlimited usage.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <section class="seo-related" aria-labelledby="related-tools-title">
+        <h2 id="related-tools-title">Explore More Utility Tools</h2>
+        <p>Continue with related ToolHub tools for your next file task.</p>
+        <div class="seo-related-grid">
+            <a class="seo-related-card" href="/lorem-ipsum-generator"><strong>Lorem Ipsum Generator</strong><span>Generate placeholder text.</span></a>
+            <a class="seo-related-card" href="/password-strength-checker"><strong>Password Strength Checker</strong><span>Check password strength.</span></a>
+            <a class="seo-related-card" href="/qr-generator"><strong>QR Generator</strong><span>Create QR codes.</span></a>
+        </div>
+    </section>
+</section>
+
+<script src="{{ url_for('static', filename='js/word_counter.js') }}"></script>
+
+{% endblock %}

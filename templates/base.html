@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+
+    <title>{% block title %}ToolHub{% endblock %}</title>
+
+    {% block seo_description %}{% endblock %}
+
+    <link rel="canonical" href="{{ request.url.split('?')[0] }}">
+
+    <meta property="og:title" content="{% block og_title %}ToolHub{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Free online PDF, image and utility tools for everyday file tasks.{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url.split('?')[0] }}">
+    <meta property="og:site_name" content="ToolHub">
+    <meta property="og:image" content="{{ url_for('static', filename='images/toolhub-og.png', _external=True) }}">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}ToolHub{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Free online PDF, image and utility tools for everyday file tasks.{% endblock %}">
+
+    {% block structured_data %}{% endblock %}
+    {% block structured_data_extra %}{% endblock %}
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+          referrerpolicy="no-referrer"
+          crossorigin="anonymous">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/featured.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar_dropdown_FINAL.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/category.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile_nav_fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/hero.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cards.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tool_categories.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/why_choose.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stats.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tool-page.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tool-article.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/seo-phase2b.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/seo-phase3.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/share-buttons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about-contact.css') }}">
+    {% block extra_css %}{% endblock %}
+
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+</head>
+
+<body>
+
+    <header>
+        {% include "components/navbar.html" %}
+    </header>
+
+    <main>
+        {% block content %}
+
+        {% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='js/navbar.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+
+    {% include "components/footer.html" %}
+
+</body>
+
+</html>

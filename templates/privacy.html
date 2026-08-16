@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% block title %}Privacy Policy — ToolHub{% endblock %}
+
+{% block seo_description %}
+<meta name="description" content="Read ToolHub's privacy policy to learn how we handle your data, protect your files, and maintain your privacy while using our free online tools.">
+{% endblock %}
+
+{% block content %}
+<style>
+.legal-page{
+    min-height:70vh;
+    padding:78px 0 100px;
+    background:
+        radial-gradient(circle at 15% 5%,rgba(37,99,235,.12),transparent 30%),
+        radial-gradient(circle at 85% 20%,rgba(96,165,250,.08),transparent 28%),
+        #07111f;
+    color:#fff;
+}
+.legal-wrap{width:min(1000px,calc(100% - 32px));margin:auto}
+.legal-hero{text-align:center;max-width:820px;margin:0 auto 45px}
+.legal-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 15px;border-radius:999px;
+    background:rgba(37,99,235,.12);
+    border:1px solid rgba(96,165,250,.22);
+    color:#93c5fd;font-size:12px;font-weight:800;letter-spacing:.08em;
+}
+.legal-hero h1{
+    font-size:clamp(38px,5vw,60px);
+    line-height:1.08;margin:20px 0 14px;
+}
+.legal-hero h1 span{color:#3b82f6}
+.legal-hero p{color:#94a3b8;font-size:16px;line-height:1.8}
+.legal-content{
+    padding:34px;
+    border-radius:22px;
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.09);
+    box-shadow:0 18px 45px rgba(0,0,0,.16);
+}
+.legal-content h2{
+    margin:32px 0 10px;
+    color:#f8fafc;
+    font-size:23px;
+}
+.legal-content h2:first-child{margin-top:0}
+.legal-content h3{margin:22px 0 8px;color:#e2e8f0;font-size:17px}
+.legal-content p,.legal-content li{
+    color:#a7b4c7;
+    line-height:1.8;
+    font-size:15px;
+}
+.legal-content ul{padding-left:22px}
+.legal-content li{margin:7px 0}
+.legal-note{
+    margin:0 0 25px;
+    padding:14px 16px;
+    border-radius:12px;
+    background:rgba(37,99,235,.08);
+    border:1px solid rgba(96,165,250,.15);
+    color:#bfdbfe;
+    font-size:14px;
+    line-height:1.7;
+}
+.legal-updated{
+    display:inline-block;
+    margin-top:8px;
+    color:#64748b;
+    font-size:13px;
+}
+@media(max-width:600px){
+    .legal-page{padding:55px 0 75px}
+    .legal-wrap{width:calc(100% - 22px)}
+    .legal-content{padding:22px;border-radius:18px}
+    .legal-content h2{font-size:21px}
+    .legal-content p,.legal-content li{font-size:14px}
+}
+</style>
+
+<section class="legal-page">
+<div class="legal-wrap">
+
+<div class="legal-hero">
+    <span class="legal-badge">
+        <i class="fa-solid fa-shield-halved"></i>
+        PRIVACY POLICY
+    </span>
+
+    <h1>Your Privacy <span>Matters</span></h1>
+
+    <p>
+        This Privacy Policy explains how ToolHub may handle information
+        when you use our website and online tools.
+    </p>
+
+    <span class="legal-updated">Last updated: {% block privacy_date %}{{ privacy_date|default("June 2026") }}{% endblock %}</span>
+</div>
+
+<div class="legal-content">
+
+<div class="legal-note">
+    This policy is written for the current ToolHub website and is intended
+    to clearly explain our general privacy practices. It is not legal advice.
+    Update this policy if your data collection, analytics, advertising,
+    email services, or file-processing infrastructure changes.
+</div>
+
+<h2>1. Information We May Receive</h2>
+<p>
+    Depending on how you use ToolHub, we may receive information that you
+    voluntarily provide, such as information submitted through a contact
+    form or other communication with us.
+</p>
+<p>
+    ToolHub may also receive technical information associated with normal
+    website use, such as browser type, device information, approximate
+    usage information, pages visited, and similar information needed to
+    operate, maintain, secure, and improve the website.
+</p>
+
+<h2>2. Files You Upload</h2>
+<p>
+    Some ToolHub features require you to upload a file so that a requested
+    operation can be performed. The type of file and the processing method
+    depend on the particular tool.
+</p>
+<p>
+    You should not upload confidential, highly sensitive, or legally
+    protected information unless you are comfortable with the way that
+    particular ToolHub tool processes the file.
+</p>
+<p>
+    File handling, temporary storage, processing, and deletion can vary
+    between tools. We will document specific practices where they apply.
+</p>
+
+<h2>3. How Information May Be Used</h2>
+<p>Information may be used to:</p>
+<ul>
+    <li>provide and operate ToolHub tools;</li>
+    <li>respond to questions, feedback, or support requests;</li>
+    <li>maintain website security and prevent abuse;</li>
+    <li>diagnose errors and improve performance;</li>
+    <li>understand general website usage and improve the user experience; and</li>
+    <li>comply with applicable legal obligations.</li>
+</ul>
+
+<h2>4. Cookies and Similar Technologies</h2>
+<p>
+    ToolHub may use cookies or similar technologies that are necessary for
+    website functionality, security, preferences, analytics, or other
+    features.
+</p>
+<p>
+    If third-party analytics or advertising services are added to ToolHub,
+    those services may use their own cookies or similar technologies in
+    accordance with their respective policies.
+</p>
+
+<h2>5. Advertising and Google AdSense</h2>
+<p>
+    ToolHub may display advertising in the future, including advertising
+    provided by third-party advertising networks such as Google AdSense.
+</p>
+<p>
+    Where advertising services are enabled, advertising providers may use
+    cookies or similar technologies to provide, measure, and personalize
+    advertising as permitted by their policies and applicable law.
+</p>
+<p>
+    Any advertising-related disclosures and consent mechanisms required for
+    the visitors and regions served by ToolHub should be implemented before
+    advertising is enabled.
+</p>
+
+<h2>6. Third-Party Services</h2>
+<p>
+    ToolHub may use third-party services for hosting, analytics, security,
+    email delivery, advertising, file processing, or other website
+    functionality. Those providers may process information according to
+    their own privacy policies and contractual obligations.
+</p>
+<p>
+    We do not use this section to claim that a particular third-party
+    service is currently active. The actual list of providers should be
+    updated as services are added to the live website.
+</p>
+
+<h2>7. Data Security</h2>
+<p>
+    We take reasonable measures intended to protect information and the
+    website from unauthorized access, misuse, alteration, or disclosure.
+    However, no internet transmission or online service can be guaranteed
+    to be completely secure.
+</p>
+
+<h2>8. Data Retention</h2>
+<p>
+    Information is retained only for as long as reasonably necessary for
+    the purpose for which it was collected, to operate and secure the
+    service, resolve disputes, comply with legal obligations, or for other
+    legitimate purposes.
+</p>
+<p>
+    Retention periods for uploaded files can vary by tool and technical
+    implementation. Specific retention information should be provided when
+    a tool has a defined file-retention period.
+</p>
+
+<h2>9. Your Choices and Rights</h2>
+<p>
+    Depending on where you live, you may have rights concerning personal
+    information, which can include rights to access, correct, delete,
+    restrict, object to, or obtain a copy of certain information.
+</p>
+<p>
+    If you have a privacy-related request, contact ToolHub through the
+    Contact page and provide enough information for us to understand and
+    respond to your request.
+</p>
+
+<h2>10. Children's Privacy</h2>
+<p>
+    ToolHub is not intentionally designed to collect personal information
+    from children. If you believe that a child has provided personal
+    information to us, please contact us so that the situation can be
+    reviewed.
+</p>
+
+<h2>11. Changes to This Privacy Policy</h2>
+<p>
+    We may update this Privacy Policy when ToolHub's features, services,
+    technologies, or legal requirements change. The updated version will
+    be posted on this page with a revised date.
+</p>
+
+<h2>12. Contact Us</h2>
+<p>
+    If you have questions about this Privacy Policy or ToolHub's privacy
+    practices, please use our <a href="/contact" style="color:#60a5fa;">Contact page</a>.
+</p>
+
+</div>
+</div>
+</section>
+{% endblock %}
