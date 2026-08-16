@@ -1,0 +1,480 @@
+/* =========================================================
+            TOOLHUB — STATISTICS SECTION
+========================================================= */
+
+.stats-section {
+
+    position: relative;
+
+    padding: 105px 0;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(37, 99, 235, 0.10),
+            transparent 40%
+        ),
+        #07111f;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+            SECTION HEADER
+========================================================= */
+
+.stats-header {
+
+    max-width: 720px;
+
+    margin: 0 auto 55px;
+
+    text-align: center;
+
+}
+
+.stats-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 8px 16px;
+
+    margin-bottom: 18px;
+
+    border-radius: 999px;
+
+    color: #60a5fa;
+
+    background: rgba(37, 99, 235, 0.10);
+
+    border: 1px solid rgba(96, 165, 250, 0.17);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.2px;
+
+}
+
+.stats-badge i {
+
+    font-size: 12px;
+
+}
+
+.stats-header h2 {
+
+    margin: 0 0 15px;
+
+    color: #ffffff;
+
+    font-size: clamp(34px, 4vw, 48px);
+
+    line-height: 1.15;
+
+    font-weight: 800;
+
+    letter-spacing: -1px;
+
+}
+
+.stats-header h2 span {
+
+    color: #3b82f6;
+
+}
+
+.stats-header p {
+
+    max-width: 620px;
+
+    margin: 0 auto;
+
+    color: #94a3b8;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+
+}
+
+
+/* =========================================================
+            STATS GRID
+========================================================= */
+
+.stats-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 22px;
+
+}
+
+
+/* =========================================================
+            STAT CARD
+========================================================= */
+
+.stats-section .stat-card {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    min-width: 0;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.055),
+            rgba(255,255,255,0.018)
+        );
+
+    border: 1px solid rgba(255,255,255,0.075);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.16);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+
+}
+
+
+/* =========================================================
+            CARD GLOW
+========================================================= */
+
+.stats-section .stat-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 140px;
+
+    height: 140px;
+
+    top: -80px;
+
+    right: -60px;
+
+    border-radius: 50%;
+
+    background: rgba(37,99,235,0.16);
+
+    filter: blur(45px);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: opacity 0.35s ease;
+
+}
+
+.stats-section .stat-card:hover::before {
+
+    opacity: 1;
+
+}
+
+
+/* =========================================================
+            CARD HOVER
+========================================================= */
+
+.stats-section .stat-card:hover {
+
+    transform: translateY(-7px);
+
+    border-color:
+        rgba(59,130,246,0.32);
+
+    box-shadow:
+        0 22px 50px rgba(0,0,0,0.25),
+        0 0 25px rgba(37,99,235,0.06);
+
+}
+
+
+/* =========================================================
+            STAT ICON
+========================================================= */
+
+.stat-icon {
+
+    position: relative;
+
+    z-index: 1;
+
+    width: 58px;
+
+    height: 58px;
+
+    flex: 0 0 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 16px;
+
+    color: #ffffff;
+
+    font-size: 21px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.18);
+
+    transition:
+        transform 0.35s ease;
+
+}
+
+.stat-card:hover .stat-icon {
+
+    transform:
+        translateY(-3px)
+        rotate(-4deg);
+
+}
+
+
+/* =========================================================
+            ICON COLORS
+========================================================= */
+
+.stat-icon.blue {
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+}
+
+.stat-icon.purple {
+
+    background:
+        linear-gradient(
+            135deg,
+            #8b5cf6,
+            #6d28d9
+        );
+
+}
+
+.stat-icon.green {
+
+    background:
+        linear-gradient(
+            135deg,
+            #22c55e,
+            #15803d
+        );
+
+}
+
+.stat-icon.orange {
+
+    background:
+        linear-gradient(
+            135deg,
+            #f59e0b,
+            #d97706
+        );
+
+}
+
+
+/* =========================================================
+            STAT CONTENT
+========================================================= */
+
+.stat-content {
+
+    position: relative;
+
+    z-index: 1;
+
+    min-width: 0;
+
+}
+
+.stat-content h2 {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 34px;
+
+    line-height: 1.1;
+
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+
+}
+
+.stat-content p {
+
+    margin: 7px 0 0;
+
+    color: #94a3b8;
+
+    font-size: 13px;
+
+    line-height: 1.4;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================================
+            TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+
+    .stats-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+}
+
+
+/* =========================================================
+            MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .stats-section {
+
+        padding: 80px 0;
+
+    }
+
+    .stats-header {
+
+        margin-bottom: 40px;
+
+    }
+
+    .stats-header h2 {
+
+        font-size: 34px;
+
+    }
+
+    .stats-header p {
+
+        font-size: 14px;
+
+    }
+
+    .stats-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 16px;
+
+    }
+
+    .stats-section .stat-card {
+
+        padding: 22px;
+
+    }
+
+}
+
+
+/* =========================================================
+            SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+    .stats-section {
+
+        padding: 65px 0;
+
+    }
+
+    .stats-section .stat-card {
+
+        padding: 19px;
+
+    }
+
+    .stat-icon {
+
+        width: 52px;
+
+        height: 52px;
+
+        flex-basis: 52px;
+
+        border-radius: 14px;
+
+        font-size: 19px;
+
+    }
+
+    .stat-content h2 {
+
+        font-size: 30px;
+
+    }
+
+}
+
+
+/* =========================================================
+            ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .stats-section .stat-card,
+    .stat-icon {
+
+        transition: none;
+
+    }
+
+}

@@ -1,0 +1,164 @@
+
+/* =========================================================
+   TOOLHUB FINAL MOBILE DROPDOWN FIX
+   IMPORTANT: Put this file LAST in your CSS load order,
+   or paste its contents at the VERY END of style.css.
+========================================================= */
+
+/* Make the navbar sit above the page content */
+#navbar {
+    position: relative !important;
+    z-index: 999999 !important;
+}
+
+/* Desktop dropdown */
+#navbar .dropdown {
+    position: relative !important;
+}
+
+#navbar .dropdown > .mega-menu {
+    display: none !important;
+    z-index: 1000000 !important;
+}
+
+/* Desktop: show on hover */
+@media (min-width: 993px) {
+    #navbar .dropdown:hover > .mega-menu,
+    #navbar .dropdown.open > .mega-menu {
+        display: grid !important;
+        position: absolute !important;
+        top: calc(100% + 5px) !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 300px !important;
+        max-height: 70vh !important;
+        overflow-y: auto !important;
+        padding: 9px !important;
+        margin: 0 !important;
+        background: #0b1728 !important;
+        border: 1px solid rgba(255,255,255,.13) !important;
+        border-radius: 12px !important;
+        box-shadow: 0 20px 50px rgba(0,0,0,.50) !important;
+    }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+@media (max-width: 992px) {
+
+    /* The mobile navigation itself must be allowed to grow */
+    #navbar #navLinks.active {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        height: auto !important;
+        max-height: calc(100vh - 80px) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+    }
+
+    #navbar #navLinks > .dropdown {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    /*
+       CLOSED:
+       The submenu is completely hidden.
+    */
+    #navbar #navLinks > .dropdown > .mega-menu {
+        display: none !important;
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        max-height: none !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        transform: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: #0a1423 !important;
+        border: 0 !important;
+        border-radius: 8px !important;
+        box-shadow: none !important;
+    }
+
+    /*
+       OPEN:
+       This is the critical rule missing/being overridden.
+       When JavaScript adds .open, the submenu becomes visible.
+    */
+    #navbar #navLinks > .dropdown.open > .mega-menu,
+    #navbar #navLinks > .dropdown.open:hover > .mega-menu {
+        display: flex !important;
+        flex-direction: column !important;
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        max-height: none !important;
+        min-height: 1px !important;
+        overflow: visible !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+        padding: 5px 6px 8px !important;
+        margin: 0 !important;
+        background: #0a1423 !important;
+        border: 0 !important;
+        border-radius: 8px !important;
+        box-shadow: none !important;
+    }
+
+    /* Every submenu link is explicitly visible */
+    #navbar #navLinks > .dropdown.open > .mega-menu > a,
+    #navbar #navLinks > .dropdown.open:hover > .mega-menu > a {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        width: 100% !important;
+        min-height: 37px !important;
+        flex: 0 0 auto !important;
+        align-items: center !important;
+        padding: 8px 11px !important;
+        margin: 1px 0 !important;
+        color: #dbeafe !important;
+        background: transparent !important;
+        text-decoration: none !important;
+        font-size: 13px !important;
+        line-height: 1.3 !important;
+        border-radius: 7px !important;
+        z-index: 1000001 !important;
+    }
+
+    #navbar #navLinks > .dropdown.open > .mega-menu > a:hover {
+        color: #ffffff !important;
+        background: rgba(37,99,235,.18) !important;
+    }
+
+    /* Keep the clicked category highlighted */
+    #navbar #navLinks > .dropdown.open > .dropdown-trigger,
+    #navbar #navLinks > .dropdown.open > a {
+        color: #60a5fa !important;
+        background: rgba(37,99,235,.13) !important;
+    }
+
+    /* Rotate the arrow when open */
+    #navbar #navLinks > .dropdown.open > .dropdown-trigger i,
+    #navbar #navLinks > .dropdown.open > a i {
+        transform: rotate(180deg) !important;
+    }
+
+    /* Make the mobile menu appear above the hero image */
+    #navbar #navLinks,
+    #navbar #navLinks.active,
+    #navbar #navLinks > .dropdown,
+    #navbar #navLinks > .dropdown > .mega-menu {
+        z-index: 1000000 !important;
+    }
+}

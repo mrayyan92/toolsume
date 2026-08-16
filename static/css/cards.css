@@ -1,0 +1,776 @@
+/* =========================================================
+            TOOLHUB — FEATURED TOOLS
+========================================================= */
+
+.featured-tools {
+
+    position: relative;
+
+    padding: 110px 0;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(37, 99, 235, 0.08),
+            transparent 35%
+        ),
+        #07111f;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+                SECTION HEADER
+========================================================= */
+
+.featured-tools .section-header {
+
+    max-width: 760px;
+
+    margin: 0 auto 60px;
+
+    text-align: center;
+
+}
+
+.featured-tools .section-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 9px 18px;
+
+    margin-bottom: 20px;
+
+    border-radius: 999px;
+
+    color: #60a5fa;
+
+    background: rgba(37, 99, 235, 0.12);
+
+    border: 1px solid rgba(96, 165, 250, 0.18);
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+}
+
+.featured-tools .section-badge i {
+
+    font-size: 13px;
+
+}
+
+.featured-tools .section-header h2 {
+
+    margin: 0 0 18px;
+
+    color: #ffffff;
+
+    font-size: clamp(34px, 4vw, 52px);
+
+    line-height: 1.15;
+
+    font-weight: 800;
+
+}
+
+.featured-tools .section-header h2 span {
+
+    color: #3b82f6;
+
+}
+
+.featured-tools .section-header p {
+
+    max-width: 650px;
+
+    margin: 0 auto;
+
+    color: #94a3b8;
+
+    font-size: 17px;
+
+    line-height: 1.8;
+
+}
+
+
+/* =========================================================
+                FEATURED GRID
+========================================================= */
+
+.featured-tools .featured-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 24px;
+
+}
+
+
+/* =========================================================
+                FEATURED TOOL CARD
+========================================================= */
+
+.featured-tools .featured-tool-card {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+    min-height: 225px;
+
+    padding: 27px;
+
+    color: inherit;
+
+    text-decoration: none;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.065),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.18);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease,
+        background 0.35s ease;
+
+}
+
+
+/* =========================================================
+                CARD GLOW
+========================================================= */
+
+.featured-tools .featured-tool-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 200px;
+
+    height: 200px;
+
+    top: -110px;
+
+    right: -90px;
+
+    border-radius: 50%;
+
+    background: rgba(37, 99, 235, 0.18);
+
+    filter: blur(55px);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: opacity 0.4s ease;
+
+}
+
+.featured-tools .featured-tool-card:hover::before {
+
+    opacity: 1;
+
+}
+
+
+/* =========================================================
+                BOTTOM GLOW LINE
+========================================================= */
+
+.featured-tools .featured-tool-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 27px;
+
+    right: 27px;
+
+    bottom: 0;
+
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #2563eb,
+            transparent
+        );
+
+    transform: scaleX(0);
+
+    transform-origin: center;
+
+    transition: transform 0.4s ease;
+
+}
+
+.featured-tools .featured-tool-card:hover::after {
+
+    transform: scaleX(1);
+
+}
+
+
+/* =========================================================
+                    CARD HOVER
+========================================================= */
+
+.featured-tools .featured-tool-card:hover {
+
+    transform: translateY(-9px);
+
+    border-color: rgba(59, 130, 246, 0.40);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(37, 99, 235, 0.11),
+            rgba(255, 255, 255, 0.035)
+        );
+
+    box-shadow:
+        0 25px 65px rgba(0, 0, 0, 0.30),
+        0 0 35px rgba(37, 99, 235, 0.08);
+
+}
+
+
+/* =========================================================
+                    CARD ICON
+========================================================= */
+
+.featured-tools .tool-card-icon {
+
+    position: relative;
+
+    flex: 0 0 62px;
+
+    width: 62px;
+
+    height: 62px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 17px;
+
+    color: #ffffff;
+
+    font-size: 24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    box-shadow:
+        0 12px 30px rgba(37, 99, 235, 0.20);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+
+    z-index: 1;
+
+}
+
+.featured-tools .featured-tool-card:hover .tool-card-icon {
+
+    transform:
+        translateY(-4px)
+        rotate(-4deg)
+        scale(1.05);
+
+    box-shadow:
+        0 16px 35px rgba(37, 99, 235, 0.35);
+
+}
+
+
+/* =========================================================
+                ICON COLORS
+========================================================= */
+
+.featured-tools .pdf-icon {
+
+    background:
+        linear-gradient(
+            135deg,
+            #ef4444,
+            #b91c1c
+        );
+
+}
+
+.featured-tools .compress-icon {
+
+    background:
+        linear-gradient(
+            135deg,
+            #8b5cf6,
+            #6d28d9
+        );
+
+}
+
+.featured-tools .image-icon {
+
+    background:
+        linear-gradient(
+            135deg,
+            #06b6d4,
+            #0284c7
+        );
+
+}
+
+.featured-tools .remove-icon {
+
+    background:
+        linear-gradient(
+            135deg,
+            #f59e0b,
+            #d97706
+        );
+
+}
+
+.featured-tools .convert-icon {
+
+    background:
+        linear-gradient(
+            135deg,
+            #22c55e,
+            #15803d
+        );
+
+}
+
+.featured-tools .qr-icon {
+
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #4338ca
+        );
+
+}
+
+
+/* =========================================================
+                    CARD CONTENT
+========================================================= */
+
+.featured-tools .tool-card-content {
+
+    min-width: 0;
+
+    flex: 1;
+
+    position: relative;
+
+    z-index: 1;
+
+}
+
+.featured-tools .tool-card-top {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 10px;
+
+}
+
+.featured-tools .tool-card-top h3 {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 20px;
+
+    font-weight: 750;
+
+    line-height: 1.3;
+
+}
+
+.featured-tools .tool-card-content p {
+
+    margin: 0 0 22px;
+
+    color: #94a3b8;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+}
+
+
+/* =========================================================
+                    BADGE
+========================================================= */
+
+.featured-tools .tool-badge {
+
+    flex-shrink: 0;
+
+    padding: 5px 9px;
+
+    border-radius: 7px;
+
+    color: #93c5fd;
+
+    background: rgba(37, 99, 235, 0.13);
+
+    border: 1px solid rgba(96, 165, 250, 0.15);
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+}
+
+
+/* =========================================================
+                    CARD FOOTER
+========================================================= */
+
+.featured-tools .tool-card-footer {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-top: auto;
+
+}
+
+.featured-tools .tool-card-footer span {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+}
+
+.featured-tools .tool-card-footer span i {
+
+    color: #60a5fa;
+
+}
+
+.featured-tools .tool-card-footer > i {
+
+    color: #60a5fa;
+
+    font-size: 15px;
+
+    transition: transform 0.35s ease;
+
+}
+
+.featured-tools .featured-tool-card:hover
+.tool-card-footer > i {
+
+    transform: translateX(6px);
+
+}
+
+
+/* =========================================================
+                EXPLORE ALL BUTTON
+========================================================= */
+
+.featured-tools .featured-action {
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 55px;
+
+}
+
+.featured-tools .view-all-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    padding: 15px 26px;
+
+    border-radius: 14px;
+
+    color: #ffffff;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    transition:
+        background 0.35s ease,
+        border-color 0.35s ease,
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+
+}
+
+.featured-tools .view-all-btn i {
+
+    color: #60a5fa;
+
+    transition:
+        color 0.35s ease,
+        transform 0.35s ease;
+
+}
+
+.featured-tools .view-all-btn:hover {
+
+    background: #2563eb;
+
+    border-color: #2563eb;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 15px 35px rgba(37, 99, 235, 0.25);
+
+}
+
+.featured-tools .view-all-btn:hover i {
+
+    color: #ffffff;
+
+    transform: translateX(5px);
+
+}
+
+
+/* =========================================================
+                    TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .featured-tools .featured-grid {
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    }
+
+}
+
+
+/* =========================================================
+                    MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .featured-tools {
+
+        padding: 80px 0;
+
+    }
+
+    .featured-tools .section-header {
+
+        margin-bottom: 40px;
+
+    }
+
+    .featured-tools .section-header h2 {
+
+        font-size: 34px;
+
+    }
+
+    .featured-tools .section-header p {
+
+        font-size: 15px;
+
+    }
+
+    .featured-tools .featured-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+
+    }
+
+    .featured-tools .featured-tool-card {
+
+        min-height: auto;
+
+        padding: 22px;
+
+        gap: 16px;
+
+    }
+
+    .featured-tools .tool-card-icon {
+
+        flex: 0 0 54px;
+
+        width: 54px;
+
+        height: 54px;
+
+        border-radius: 14px;
+
+        font-size: 21px;
+
+    }
+
+    .featured-tools .tool-card-top h3 {
+
+        font-size: 18px;
+
+    }
+
+}
+
+
+/* =========================================================
+                SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .featured-tools {
+
+        padding: 65px 0;
+
+    }
+
+    .featured-tools .featured-tool-card {
+
+        padding: 19px;
+
+    }
+
+    .featured-tools .tool-card-top {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+    .featured-tools .tool-badge {
+
+        align-self: flex-start;
+
+    }
+
+}
+
+
+/* =========================================================
+                    ACCESSIBILITY
+========================================================= */
+
+.featured-tools .featured-tool-card:focus-visible,
+.featured-tools .view-all-btn:focus-visible {
+
+    outline: 3px solid rgba(96, 165, 250, 0.65);
+
+    outline-offset: 4px;
+
+}
+
+
+/* =========================================================
+                    REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .featured-tools .featured-tool-card,
+    .featured-tools .tool-card-icon,
+    .featured-tools .tool-card-footer > i,
+    .featured-tools .view-all-btn,
+    .featured-tools .view-all-btn i {
+
+        transition: none;
+
+    }
+
+}

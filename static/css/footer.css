@@ -1,0 +1,215 @@
+/* =========================================================
+                TOOLHUB — FOOTER
+========================================================= */
+
+.site-footer {
+    position: relative;
+    padding: 80px 0 25px;
+    background:
+        radial-gradient(circle at 80% 10%, rgba(37, 99, 235, 0.08), transparent 30%),
+        #050c16;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    overflow: hidden;
+}
+
+.site-footer .container {
+    width: min(1200px, calc(100% - 40px));
+    margin: 0 auto;
+}
+
+.footer-top {
+    display: grid;
+    grid-template-columns: 1.6fr repeat(4, 1fr);
+    gap: 45px;
+}
+
+/* BRAND */
+.footer-brand {
+    max-width: 340px;
+}
+
+.footer-logo-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    line-height: 0;
+}
+
+/* Uses the same full ToolHub logo as the navbar */
+.footer-logo-image {
+    display: block;
+    width: 285px;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.footer-brand > p {
+    margin: 20px 0 24px;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.8;
+    max-width: 330px;
+}
+
+/* SOCIAL LINKS */
+.footer-socials {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-socials a {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    color: #94a3b8;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease,
+                background 0.3s ease, border-color 0.3s ease;
+}
+
+.footer-socials a:hover {
+    color: #ffffff;
+    background: #2563eb;
+    border-color: #2563eb;
+    transform: translateY(-3px);
+}
+
+/* COLUMNS */
+.footer-column h3 {
+    margin: 4px 0 20px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 750;
+}
+
+.footer-column ul {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-column li {
+    margin: 0;
+    padding: 0;
+}
+
+.footer-column a {
+    color: #64748b;
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.footer-column a:hover {
+    color: #60a5fa;
+}
+
+/* DIVIDER */
+.footer-divider {
+    height: 1px;
+    margin: 60px 0 22px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.08),
+        transparent
+    );
+}
+
+/* BOTTOM */
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer-bottom p {
+    margin: 0;
+    color: #475569;
+    font-size: 12px;
+}
+
+.footer-made {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.footer-made i {
+    color: #ef4444;
+    font-size: 11px;
+}
+
+/* TABLET */
+@media (max-width: 1000px) {
+    .footer-top {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+        max-width: 500px;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 650px) {
+    .site-footer {
+        padding: 65px 0 22px;
+    }
+
+    .site-footer .container {
+        width: min(100% - 30px, 600px);
+    }
+
+    .footer-top {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 35px 25px;
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+    }
+
+    .footer-logo-image {
+        width: 270px;
+    }
+
+    .footer-divider {
+        margin-top: 45px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 420px) {
+    .footer-top {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .footer-brand {
+        grid-column: auto;
+    }
+
+    .footer-logo-image {
+        width: 250px;
+    }
+}

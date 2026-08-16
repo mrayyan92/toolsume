@@ -1,0 +1,2805 @@
+/* =====================================================
+                    TOOL PAGE
+===================================================== */
+
+.tool-page{
+
+    padding:80px 0;
+
+    min-height:100vh;
+
+    background:linear-gradient(180deg,#08111f 0%,#0f172a 100%);
+
+}
+
+.tool-container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:0 20px;
+
+}
+
+/* =====================================================
+                    TOOL HERO
+===================================================== */
+
+.tool-header{
+
+    text-align:center;
+
+    margin-bottom:60px;
+
+}
+
+.tool-header h1{
+
+    font-size:52px;
+
+    font-weight:800;
+
+    color:#ffffff;
+
+    line-height:1.2;
+
+    margin-bottom:18px;
+
+}
+
+.tool-header p{
+
+    max-width:760px;
+
+    margin:auto;
+
+    color:#94a3b8;
+
+    font-size:20px;
+
+    line-height:1.8;
+
+}
+
+/* =====================================================
+                    INFO BADGES
+===================================================== */
+
+.tool-badges{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+    margin-top:30px;
+
+}
+
+.tool-badge{
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    color:#e2e8f0;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.tool-badge:hover{
+
+    background:#2563eb;
+
+    color:#fff;
+
+    transform:translateY(-2px);
+
+}
+
+/* =====================================================
+                    MAIN CARD
+===================================================== */
+
+.tool-card{
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:28px;
+
+    backdrop-filter:blur(18px);
+
+    padding:40px;
+
+    overflow:hidden;
+
+    position:relative;
+
+    box-shadow:0 20px 60px rgba(0,0,0,.18);
+
+}
+
+.tool-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-120px;
+
+    right:-120px;
+
+    width:260px;
+
+    height:260px;
+
+    border-radius:50%;
+
+    background:radial-gradient(circle,#2563eb55 0%,transparent 70%);
+
+    pointer-events:none;
+
+}
+
+.tool-card:hover{
+
+    border-color:#3b82f6;
+
+    box-shadow:0 30px 80px rgba(37,99,235,.22);
+
+}
+
+/* =====================================================
+                    SECTION TITLE
+===================================================== */
+
+.section-title{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#ffffff;
+
+    margin-bottom:22px;
+
+}
+
+.section-subtitle{
+
+    color:#94a3b8;
+
+    font-size:16px;
+
+    line-height:1.8;
+
+    margin-bottom:30px;
+
+}
+
+/* =====================================================
+                    DIVIDER
+===================================================== */
+
+.tool-divider{
+
+    width:100%;
+
+    height:1px;
+
+    background:rgba(255,255,255,.08);
+
+    margin:35px 0;
+
+}
+
+/* =====================================================
+                    TOOL OPTIONS
+===================================================== */
+
+.tool-options{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+    gap:25px;
+
+    margin:40px 0;
+
+}
+
+.option-card{
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:20px;
+
+    padding:22px;
+
+    transition:.35s;
+
+}
+
+.option-card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:#3b82f6;
+
+    box-shadow:0 15px 40px rgba(37,99,235,.15);
+
+}
+
+.option-card label{
+
+    display:block;
+
+    color:#fff;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    margin-bottom:12px;
+
+}
+
+/* =====================================================
+                    INPUTS
+===================================================== */
+
+.tool-card input[type="text"],
+.tool-card input[type="number"],
+.tool-card input[type="email"],
+.tool-card input[type="password"],
+.tool-card select,
+.tool-card textarea{
+
+    width:100%;
+
+    padding:15px 18px;
+
+    border-radius:14px;
+
+    border:1px solid rgba(255,255,255,.10);
+
+    background:#111827;
+
+    color:#fff;
+
+    font-size:16px;
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+.tool-card textarea{
+
+    min-height:130px;
+
+    resize:vertical;
+
+}
+
+.tool-card input:focus,
+.tool-card select:focus,
+.tool-card textarea:focus{
+
+    border-color:#3b82f6;
+
+    box-shadow:0 0 0 3px rgba(59,130,246,.18);
+
+}
+
+/* =====================================================
+                    RANGE SLIDER
+===================================================== */
+
+input[type="range"]{
+
+    width:100%;
+
+    margin-top:12px;
+
+    accent-color:#2563eb;
+
+    cursor:pointer;
+
+}
+
+/* =====================================================
+                    CHECKBOX
+===================================================== */
+
+.checkbox-group{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-top:12px;
+
+}
+
+.checkbox-group input{
+
+    width:20px;
+
+    height:20px;
+
+    accent-color:#2563eb;
+
+}
+
+.checkbox-group label{
+
+    margin:0;
+
+    color:#cbd5e1;
+
+}
+
+/* =====================================================
+                    PRIMARY BUTTON
+===================================================== */
+
+.convert-btn,
+button[type="submit"]{
+
+    width:100%;
+
+    margin-top:35px;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+
+    color:#fff;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+}
+
+.convert-btn:hover,
+button[type="submit"]:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 20px 45px rgba(37,99,235,.30);
+
+}
+
+.convert-btn:disabled,
+button[type="submit"]:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+    box-shadow:none;
+
+}
+
+/* =====================================================
+                    SECONDARY BUTTON
+===================================================== */
+
+.secondary-btn{
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:14px 24px;
+
+    border-radius:14px;
+
+    border:1px solid rgba(255,255,255,.12);
+
+    background:rgba(255,255,255,.05);
+
+    color:#fff;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.secondary-btn:hover{
+
+    background:#2563eb;
+
+    border-color:#2563eb;
+
+}
+
+/* =====================================================
+                    HELP TEXT
+===================================================== */
+
+.helper-text{
+
+    margin-top:10px;
+
+    color:#94a3b8;
+
+    font-size:14px;
+
+    line-height:1.6;
+
+}
+
+/* =====================================================
+                    RESULT CARD
+===================================================== */
+
+.result-card{
+
+    margin-top:40px;
+
+    padding:30px;
+
+    border-radius:22px;
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    animation:fadeUp .5s ease;
+
+}
+
+.result-card h3{
+
+    color:#ffffff;
+
+    font-size:28px;
+
+    margin-bottom:15px;
+
+}
+
+.result-card p{
+
+    color:#cbd5e1;
+
+    line-height:1.8;
+
+}
+
+/* =====================================================
+                SUCCESS MESSAGE
+===================================================== */
+
+.success-message{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin:25px 0;
+
+    padding:18px 22px;
+
+    border-radius:16px;
+
+    background:rgba(34,197,94,.12);
+
+    border:1px solid rgba(34,197,94,.35);
+
+}
+
+.success-message i{
+
+    font-size:28px;
+
+    color:#22c55e;
+
+}
+
+.success-message span{
+
+    color:#dcfce7;
+
+    font-weight:600;
+
+}
+
+/* =====================================================
+                ERROR MESSAGE
+===================================================== */
+
+.error-message{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin:25px 0;
+
+    padding:18px 22px;
+
+    border-radius:16px;
+
+    background:rgba(239,68,68,.12);
+
+    border:1px solid rgba(239,68,68,.35);
+
+}
+
+.error-message i{
+
+    color:#ef4444;
+
+    font-size:28px;
+
+}
+
+.error-message span{
+
+    color:#fecaca;
+
+    font-weight:600;
+
+}
+
+/* =====================================================
+                DOWNLOAD CARD
+===================================================== */
+
+.download-card{
+
+    margin-top:30px;
+
+    padding:28px;
+
+    border-radius:20px;
+
+    background:linear-gradient(135deg,#111827,#1e293b);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    text-align:center;
+
+}
+
+.download-card h3{
+
+    color:#ffffff;
+
+    margin-bottom:15px;
+
+}
+
+.download-card p{
+
+    color:#94a3b8;
+
+    margin-bottom:25px;
+
+}
+
+/* =====================================================
+                DOWNLOAD BUTTON
+===================================================== */
+
+.download-btn{
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:16px 34px;
+
+    border-radius:16px;
+
+    background:linear-gradient(135deg,#16a34a,#22c55e);
+
+    color:#ffffff;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    text-decoration:none;
+
+    transition:.35s;
+
+}
+
+.download-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 20px 45px rgba(34,197,94,.30);
+
+}
+
+/* =====================================================
+                TOOL FEATURES
+===================================================== */
+
+.tool-features{
+
+    margin-top:60px;
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+    gap:25px;
+
+}
+
+.feature-box{
+
+    padding:28px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.35s;
+
+}
+
+.feature-box:hover{
+
+    transform:translateY(-5px);
+
+    border-color:#3b82f6;
+
+}
+
+.feature-box i{
+
+    font-size:42px;
+
+    color:#3b82f6;
+
+    margin-bottom:20px;
+
+}
+
+.feature-box h4{
+
+    color:#ffffff;
+
+    margin-bottom:12px;
+
+    font-size:20px;
+
+}
+
+.feature-box p{
+
+    color:#94a3b8;
+
+    line-height:1.7;
+
+}
+
+/* =====================================================
+                PROCESS INFO
+===================================================== */
+
+.process-info{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+
+    gap:20px;
+
+    margin-top:35px;
+
+}
+
+.info-box{
+
+    padding:22px;
+
+    border-radius:18px;
+
+    text-align:center;
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+.info-box h5{
+
+    color:#3b82f6;
+
+    font-size:30px;
+
+    margin-bottom:10px;
+
+}
+
+.info-box span{
+
+    color:#cbd5e1;
+
+    font-size:15px;
+
+}
+
+/* =====================================================
+                FADE ANIMATION
+===================================================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(25px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* =====================================================
+                    RESPONSIVE DESIGN
+===================================================== */
+
+@media (max-width:1200px){
+
+.tool-container{
+
+    max-width:1000px;
+
+}
+
+.tool-header h1{
+
+    font-size:46px;
+
+}
+
+}
+
+/* ===========================
+        TABLET
+=========================== */
+
+@media (max-width:992px){
+
+.tool-page{
+
+    padding:60px 0;
+
+}
+
+.tool-header{
+
+    margin-bottom:45px;
+
+}
+
+.tool-header h1{
+
+    font-size:40px;
+
+}
+
+.tool-header p{
+
+    font-size:18px;
+
+}
+
+.tool-card{
+
+    padding:30px;
+
+}
+
+.tool-options{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+.tool-features{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+.process-info{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+/* ===========================
+        MOBILE
+=========================== */
+
+@media (max-width:768px){
+
+.tool-page{
+
+    padding:40px 0;
+
+}
+
+.tool-container{
+
+    padding:0 15px;
+
+}
+
+.tool-header h1{
+
+    font-size:32px;
+
+}
+
+.tool-header p{
+
+    font-size:16px;
+
+    line-height:1.7;
+
+}
+
+.tool-badges{
+
+    gap:10px;
+
+}
+
+.tool-badge{
+
+    font-size:13px;
+
+    padding:8px 14px;
+
+}
+
+.tool-card{
+
+    padding:22px;
+
+    border-radius:22px;
+
+}
+
+.section-title{
+
+    font-size:24px;
+
+}
+
+.section-subtitle{
+
+    font-size:15px;
+
+}
+
+.tool-options{
+
+    grid-template-columns:1fr;
+
+}
+
+.process-info{
+
+    grid-template-columns:1fr;
+
+}
+
+.tool-features{
+
+    grid-template-columns:1fr;
+
+}
+
+.convert-btn,
+
+button[type="submit"]{
+
+    font-size:17px;
+
+    padding:16px;
+
+}
+
+.download-btn{
+
+    width:100%;
+
+}
+
+.result-card{
+
+    padding:22px;
+
+}
+
+.feature-box{
+
+    padding:22px;
+
+}
+
+.info-box{
+
+    padding:18px;
+
+}
+
+}
+
+/* ===========================
+        SMALL MOBILE
+=========================== */
+
+@media (max-width:480px){
+
+.tool-header h1{
+
+    font-size:28px;
+
+}
+
+.tool-header p{
+
+    font-size:15px;
+
+}
+
+.tool-card{
+
+    padding:18px;
+
+}
+
+.result-card{
+
+    padding:18px;
+
+}
+
+.feature-box{
+
+    padding:18px;
+
+}
+
+.download-btn{
+
+    font-size:16px;
+
+    padding:14px 18px;
+
+}
+
+.convert-btn,
+
+button[type="submit"]{
+
+    font-size:16px;
+
+}
+
+.option-card{
+
+    padding:18px;
+
+}
+
+}
+
+/* =====================================================
+                SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#08111f;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#2563eb;
+
+    border-radius:999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#3b82f6;
+
+}
+
+/* =====================================================
+                SELECTION
+===================================================== */
+
+::selection{
+
+    background:#2563eb;
+
+    color:#fff;
+
+}
+
+/* =====================================================
+                SMOOTH SCROLL
+===================================================== */
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+/* =====================================================
+                CARD HOVER
+===================================================== */
+
+.tool-card,
+
+.option-card,
+
+.feature-box,
+
+.info-box,
+
+.result-card{
+
+    transition:all .35s ease;
+
+}
+
+/* =====================================================
+                FADE EFFECT
+===================================================== */
+
+.tool-header,
+
+.tool-card,
+
+.result-card,
+
+.feature-box{
+
+    animation:fadeUp .6s ease;
+
+}
+
+/* =====================================================
+        PREMIUM UPLOAD BOX
+===================================================== */
+
+.upload-box{
+
+    max-width:900px;
+
+    margin:50px auto;
+
+}
+
+.drop-zone{
+
+    border:3px dashed #3b82f6;
+
+    border-radius:28px;
+
+    background:linear-gradient(180deg,#111827,#1e293b);
+
+    transition:.35s;
+
+}
+
+.drop-zone:hover{
+
+    border-color:#60a5fa;
+
+    transform:translateY(-5px);
+
+    box-shadow:0 20px 60px rgba(59,130,246,.25);
+
+}
+
+.upload-area{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    padding:70px 40px;
+
+}
+
+.upload-icon{
+
+    width:110px;
+
+    height:110px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#2563eb,#60a5fa);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-bottom:30px;
+
+    box-shadow:0 15px 40px rgba(37,99,235,.35);
+
+}
+
+.upload-icon i{
+
+    color:white;
+
+    font-size:52px;
+
+}
+
+.upload-area h2{
+
+    color:#fff;
+
+    font-size:38px;
+
+    margin-bottom:12px;
+
+}
+
+.upload-area p{
+
+    color:#94a3b8;
+
+    font-size:18px;
+
+    margin-bottom:28px;
+
+}
+
+.choose-btn{
+
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+
+    color:#fff;
+
+    border:none;
+
+    padding:18px 36px;
+
+    border-radius:14px;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.choose-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 15px 35px rgba(37,99,235,.35);
+
+}
+
+.file-card{
+
+    margin-top:35px;
+
+    width:100%;
+
+    max-width:700px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:#0f172a;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:18px;
+
+    padding:20px;
+
+}
+
+.file-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.success-icon{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:50%;
+
+    background:#22c55e;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:26px;
+
+}
+
+.ready-tag{
+
+    display:inline-block;
+
+    margin-top:8px;
+
+    background:#22c55e22;
+
+    color:#22c55e;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+}
+
+.remove-btn{
+
+    width:46px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#ef4444;
+
+    color:white;
+
+    cursor:pointer;
+
+}
+
+@media(max-width:768px){
+
+.upload-area{
+
+padding:40px 20px;
+
+}
+
+.upload-area h2{
+
+font-size:28px;
+
+}
+
+.upload-icon{
+
+width:80px;
+
+height:80px;
+
+}
+
+.upload-icon i{
+
+font-size:38px;
+
+}
+
+.choose-btn{
+
+width:100%;
+
+}
+
+.file-card{
+
+flex-direction:column;
+
+gap:20px;
+
+text-align:center;
+
+}
+
+}
+
+.upload-box{
+
+    max-width:900px;
+
+    margin:40px auto;
+
+}
+
+.drop-zone{
+
+    border:3px dashed #3b82f6;
+
+    border-radius:28px;
+
+    background:linear-gradient(180deg,#111827,#1e293b);
+
+    padding:40px;
+
+    transition:.35s;
+
+}
+
+.drop-zone:hover{
+
+    border-color:#60a5fa;
+
+    box-shadow:0 20px 60px rgba(37,99,235,.25);
+
+}
+
+.upload-area{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+}
+
+.upload-icon{
+
+    width:100px;
+
+    height:100px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#2563eb,#60a5fa);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.upload-icon i{
+
+    font-size:46px;
+
+    color:#fff;
+
+}
+
+.upload-area h2{
+
+    color:#fff;
+
+    font-size:36px;
+
+    margin:15px 0 10px;
+
+}
+
+.upload-area p{
+
+    color:#94a3b8;
+
+    font-size:18px;
+
+}
+
+.choose-btn{
+
+    margin:25px 0 15px;
+
+    padding:16px 34px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+
+    color:#fff;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.choose-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 15px 40px rgba(37,99,235,.35);
+
+}
+
+.supported-files{
+
+    margin-top:10px;
+
+    color:#94a3b8;
+
+    font-size:15px;
+
+}
+
+/* ======================================
+        FEATURES SECTION
+====================================== */
+
+.features{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+    gap:30px;
+
+    margin:80px auto;
+
+}
+
+.feature-card{
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:20px;
+
+    padding:35px 30px;
+
+    text-align:center;
+
+    transition:.35s;
+
+}
+
+.feature-card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#3b82f6;
+
+    box-shadow:0 20px 50px rgba(37,99,235,.25);
+
+}
+
+.feature-card i{
+
+    font-size:42px;
+
+    color:#3b82f6;
+
+    margin-bottom:20px;
+
+}
+
+.feature-card h3{
+
+    color:white;
+
+    font-size:24px;
+
+    margin-bottom:15px;
+
+}
+
+.feature-card p{
+
+    color:#94a3b8;
+
+    line-height:1.8;
+
+}
+
+/* ======================================
+          HOW IT WORKS
+====================================== */
+
+.steps{
+
+    margin:100px auto;
+
+}
+
+.steps h2{
+
+    text-align:center;
+
+    font-size:42px;
+
+    color:white;
+
+    margin-bottom:50px;
+
+}
+
+.step-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+    gap:30px;
+
+}
+
+.step-card{
+
+    position:relative;
+
+    background:#131d31;
+
+    border-radius:20px;
+
+    padding:35px;
+
+    text-align:center;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.35s;
+
+}
+
+.step-card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#3b82f6;
+
+}
+
+.step-card span{
+
+    width:60px;
+
+    height:60px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin:auto;
+
+    margin-bottom:25px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+
+    color:white;
+
+    font-size:26px;
+
+    font-weight:700;
+
+}
+
+.step-card h3{
+
+    color:white;
+
+    font-size:24px;
+
+    margin-bottom:15px;
+
+}
+
+.step-card p{
+
+    color:#94a3b8;
+
+    line-height:1.8;
+
+}
+
+/* =====================================
+        WORD COUNTER TEXT AREA
+===================================== */
+
+#textInput{
+
+    width:100%;
+
+    max-width:1000px;
+
+    min-height:450px;
+
+    padding:25px;
+
+    font-size:24px;
+
+    font-family:'Segoe UI', sans-serif;
+
+    line-height:1.8;
+
+    color:#111827;
+
+    background:#ffffff;
+
+    border:2px solid #d1d5db;
+
+    border-radius:20px;
+
+    resize:vertical;
+
+    outline:none;
+
+    transition:.3s;
+
+    box-sizing:border-box;
+
+}
+
+#textInput:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 20px rgba(37,99,235,.25);
+
+}
+
+/* Make the card wider */
+
+.result-card{
+
+    max-width:1050px;
+
+    margin:0 auto 40px;
+
+    padding:25px;
+
+    border-radius:24px;
+
+}
+
+/* Better spacing */
+
+.tool-container{
+
+    max-width:1100px;
+
+    margin:0 auto;
+
+}
+
+/* ======================================
+        LOREM IPSUM OUTPUT
+====================================== */
+
+#outputText{
+
+    width:100%;
+
+    min-height:420px;
+
+    padding:25px;
+
+    font-size:22px;
+
+    font-family:'Segoe UI', sans-serif;
+
+    line-height:1.8;
+
+    color:#111827;
+
+    background:#ffffff;
+
+    border:2px solid #d1d5db;
+
+    border-radius:18px;
+
+    resize:vertical;
+
+    outline:none;
+
+    box-sizing:border-box;
+
+}
+
+#outputText:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 20px rgba(37,99,235,.25);
+
+}
+
+/* ===========================
+      LABELS
+=========================== */
+
+.option-group label{
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:#ffffff;
+
+    margin-bottom:12px;
+
+    display:block;
+
+}
+
+/* ===========================
+      DROPDOWN
+=========================== */
+
+.option-group select{
+
+    width:100%;
+
+    height:60px;
+
+    padding:0 18px;
+
+    font-size:22px;
+
+    font-weight:600;
+
+    border-radius:14px;
+
+}
+
+/* ===========================
+      INPUT BOX
+=========================== */
+
+.option-group input{
+
+    width:100%;
+
+    height:60px;
+
+    padding:0 18px;
+
+    font-size:22px;
+
+    font-weight:600;
+
+    border-radius:14px;
+
+}
+/* ===================================
+        LOREM IPSUM OUTPUT
+=================================== */
+
+#output{
+
+    width:100%;
+
+    height:550px;
+
+    padding:25px;
+
+    font-size:24px;
+
+    line-height:1.8;
+
+    font-family:'Segoe UI', sans-serif;
+
+    color:#111827;
+
+    background:#ffffff;
+
+    border:2px solid #d1d5db;
+
+    border-radius:18px;
+
+    resize:vertical;
+
+    outline:none;
+
+    box-sizing:border-box;
+
+}
+
+#output:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 20px rgba(37,99,235,.25);
+
+}
+
+/* ============================
+        PAGE RANGE
+============================ */
+
+.option-group label{
+
+    font-size:30px;
+
+    font-weight:700;
+
+    color:#ffffff;
+
+    margin-bottom:15px;
+
+    display:block;
+
+}
+
+/* ============================
+        INPUT BOX
+============================ */
+
+.option-group input{
+
+    width:100%;
+
+    height:70px;
+
+    padding:0 22px;
+
+    font-size:24px;
+
+    font-weight:600;
+
+    color:#ffffff;
+
+    background:#111827;
+
+    border:2px solid #334155;
+
+    border-radius:16px;
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+.option-group input:focus{
+
+    border-color:#3b82f6;
+
+    box-shadow:0 0 18px rgba(37,99,235,.25);
+
+}
+
+/* ===========================
+        PAGE RANGE
+=========================== */
+
+.page-range-title{
+
+    display:block;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    color:#ffffff;
+
+    margin-bottom:15px;
+
+}
+
+.page-range-input{
+
+    width:100%;
+
+    height:70px;
+
+    margin-top:10px;
+
+    padding:0 22px;
+
+    font-size:24px;
+
+    font-weight:600;
+
+    color:#ffffff;
+
+    background:#111827;
+
+    border:2px solid #334155;
+
+    border-radius:16px;
+
+    outline:none;
+
+    transition:.3s;
+
+    box-sizing:border-box;
+
+}
+
+.page-range-input::placeholder{
+
+    color:#94a3b8;
+
+}
+
+.page-range-input:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 20px rgba(37,99,235,.25);
+
+}
+
+/* ===========================
+      ROTATION ANGLE
+=========================== */
+
+.rotation-title{
+
+    display:block;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    color:#ffffff;
+
+    margin-bottom:15px;
+
+}
+
+.rotation-select{
+
+    width:100%;
+
+    height:72px;
+
+    padding:0 22px;
+
+    font-size:24px;
+
+    font-weight:600;
+
+    color:#ffffff;
+
+    background:#111827;
+
+    border:2px solid #334155;
+
+    border-radius:16px;
+
+    outline:none;
+
+    transition:.3s;
+
+    cursor:pointer;
+
+}
+
+.rotation-select:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 20px rgba(37,99,235,.25);
+
+}
+
+/* ===========================
+        PASSWORD
+=========================== */
+
+.password-title{
+
+    display:block;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    color:#ffffff;
+
+    margin-bottom:15px;
+
+}
+
+.password-input{
+
+    width:100%;
+
+    height:70px;
+
+    padding:0 22px;
+
+    font-size:24px;
+
+    font-weight:600;
+
+    color:#ffffff;
+
+    background:#111827;
+
+    border:2px solid #334155;
+
+    border-radius:16px;
+
+    outline:none;
+
+    transition:.3s;
+
+    box-sizing:border-box;
+
+}
+
+.password-input::placeholder{
+
+    font-size:22px;
+
+    color:#94a3b8;
+
+}
+
+.password-input:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 20px rgba(37,99,235,.25);
+
+}
+
+/* ===========================
+        UNLOCK PDF PASSWORD
+=========================== */
+
+.password-title{
+
+    display:block;
+
+    font-size:32px;
+
+    font-weight:700;
+
+    color:#ffffff;
+
+    margin-bottom:16px;
+
+}
+
+.password-input{
+
+    width:100%;
+
+    height:75px;
+
+    padding:0 24px;
+
+    font-size:24px;
+
+    font-weight:600;
+
+    color:#ffffff;
+
+    background:#111827;
+
+    border:2px solid #334155;
+
+    border-radius:16px;
+
+    outline:none;
+
+    transition:.3s;
+
+    box-sizing:border-box;
+
+}
+
+.password-input::placeholder{
+
+    font-size:22px;
+
+    color:#94a3b8;
+
+}
+
+.password-input:focus{
+
+    border-color:#3b82f6;
+
+    box-shadow:0 0 20px rgba(59,130,246,.25);
+
+}
+
+/* ==================================
+        WATERMARK INPUT
+================================== */
+
+.tool-label{
+
+    display:block;
+
+    font-size:32px;
+
+    font-weight:700;
+
+    color:#ffffff;
+
+    margin-bottom:16px;
+
+}
+
+.tool-input{
+
+    width:100%;
+
+    height:75px;
+
+    padding:0 24px;
+
+    font-size:24px;
+
+    font-weight:600;
+
+    color:#ffffff;
+
+    background:#111827;
+
+    border:2px solid #334155;
+
+    border-radius:16px;
+
+    outline:none;
+
+    transition:.3s;
+
+    box-sizing:border-box;
+
+}
+
+.tool-input::placeholder{
+
+    font-size:22px;
+
+    color:#94a3b8;
+
+}
+
+.tool-input:focus{
+
+    border-color:#3b82f6;
+
+    box-shadow:0 0 20px rgba(59,130,246,.25);
+
+}
+
+/* ==================================
+        COMMON TOOL INPUTS
+================================== */
+
+.tool-label{
+
+    display:block;
+
+    font-size:32px;
+
+    font-weight:700;
+
+    color:#ffffff;
+
+    margin-bottom:16px;
+
+}
+
+.tool-input{
+
+    width:100%;
+
+    height:75px;
+
+    padding:0 24px;
+
+    font-size:24px;
+
+    font-weight:600;
+
+    color:#ffffff;
+
+    background:#111827;
+
+    border:2px solid #334155;
+
+    border-radius:16px;
+
+    outline:none;
+
+    transition:.3s;
+
+    box-sizing:border-box;
+
+}
+
+.tool-input::placeholder{
+
+    font-size:22px;
+
+    color:#94a3b8;
+
+}
+
+.tool-input:focus{
+
+    border-color:#3b82f6;
+
+    box-shadow:0 0 20px rgba(59,130,246,.25);
+
+}
+
+/* ==================================
+        COMMON LABEL
+================================== */
+
+.tool-label{
+
+    display:block;
+
+    font-size:32px;
+
+    font-weight:700;
+
+    color:#ffffff;
+
+    margin-bottom:16px;
+
+}
+
+/* ==================================
+        COMMON INPUT
+================================== */
+
+.tool-input{
+
+    width:100%;
+
+    height:75px;
+
+    padding:0 24px;
+
+    font-size:24px;
+
+    font-weight:600;
+
+    color:#ffffff;
+
+    background:#111827;
+
+    border:2px solid #334155;
+
+    border-radius:16px;
+
+    outline:none;
+
+    transition:.3s;
+
+    box-sizing:border-box;
+
+}
+
+.tool-input::placeholder{
+
+    font-size:22px;
+
+    color:#94a3b8;
+
+}
+
+.tool-input:focus{
+
+    border-color:#3b82f6;
+
+    box-shadow:0 0 20px rgba(59,130,246,.25);
+
+}
+
+/* ==================================
+        COMMON SELECT
+================================== */
+
+.tool-select{
+
+    width:100%;
+
+    height:75px;
+
+    padding:0 24px;
+
+    font-size:24px;
+
+    font-weight:600;
+
+    color:#ffffff;
+
+    background:#111827;
+
+    border:2px solid #334155;
+
+    border-radius:16px;
+
+    outline:none;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.tool-select:focus{
+
+    border-color:#3b82f6;
+
+    box-shadow:0 0 20px rgba(59,130,246,.25);
+
+}
+
+/* ===========================
+        COMMON LABEL
+=========================== */
+
+.tool-label{
+
+    display:block;
+
+    font-size:32px;
+
+    font-weight:700;
+
+    color:#ffffff;
+
+    margin-bottom:16px;
+
+}
+
+/* ===========================
+        COMMON INPUT
+=========================== */
+
+.tool-input{
+
+    width:100%;
+
+    height:75px;
+
+    padding:0 24px;
+
+    font-size:24px;
+
+    font-weight:600;
+
+    color:#ffffff;
+
+    background:#111827;
+
+    border:2px solid #334155;
+
+    border-radius:16px;
+
+    outline:none;
+
+    transition:.3s;
+
+    box-sizing:border-box;
+
+}
+
+.tool-input::placeholder{
+
+    font-size:22px;
+
+    color:#94a3b8;
+
+}
+
+.tool-input:focus{
+
+    border-color:#3b82f6;
+
+    box-shadow:0 0 20px rgba(59,130,246,.25);
+
+}
+
+/* ===========================
+        CHECKBOX
+=========================== */
+
+.checkbox-label{
+
+    font-size:28px;
+
+    font-weight:600;
+
+    color:#ffffff;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.checkbox-label input{
+
+    width:22px;
+
+    height:22px;
+
+}
+/* =====================================================
+        TOOLHUB — COMPACT UPLOAD AREA OVERRIDE
+        Applied consistently to tool pages
+===================================================== */
+
+.tool-page .upload-box{
+    max-width:760px;
+    margin:34px auto;
+}
+
+.tool-page .drop-zone{
+    border-width:2px;
+    border-radius:20px;
+    padding:0;
+}
+
+.tool-page .upload-area{
+    padding:44px 28px;
+    min-height:250px;
+}
+
+.tool-page .upload-icon{
+    width:78px;
+    height:78px;
+    margin-bottom:18px;
+}
+
+.tool-page .upload-icon i{
+    font-size:36px;
+}
+
+.tool-page .upload-area h2{
+    font-size:29px;
+    margin:8px 0 10px;
+}
+
+.tool-page .upload-area h3{
+    font-size:26px;
+    color:#fff;
+    margin:8px 0 10px;
+}
+
+.tool-page .upload-area p{
+    font-size:15px;
+    margin-bottom:18px;
+}
+
+.tool-page .choose-btn,
+.tool-page .browse-btn,
+.tool-page .secondary-btn{
+    padding:13px 25px;
+    border-radius:12px;
+    font-size:15px;
+}
+
+.tool-page .supported-files,
+.tool-page .supported-types{
+    font-size:12px;
+    margin-top:10px;
+    margin-bottom:0;
+}
+
+/* OCR uses .upload-area directly rather than .drop-zone */
+.tool-page > .tool-container .upload-area{
+    max-width:760px;
+    margin:34px auto;
+    min-height:250px;
+    padding:44px 28px;
+    border:2px dashed #3b82f6;
+    border-radius:20px;
+    background:linear-gradient(180deg,#111827,#1e293b);
+    transition:.35s;
+    cursor:pointer;
+    box-sizing:border-box;
+}
+
+.tool-page > .tool-container .upload-area:hover{
+    border-color:#60a5fa;
+    box-shadow:0 18px 50px rgba(59,130,246,.18);
+    transform:translateY(-3px);
+}
+
+.tool-page > .tool-container .upload-area .upload-icon{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:linear-gradient(135deg,#2563eb,#60a5fa);
+    color:#fff;
+    font-size:36px;
+    box-shadow:0 12px 30px rgba(37,99,235,.28);
+}
+
+@media(max-width:768px){
+    .tool-page .upload-box{
+        max-width:100%;
+        margin:28px auto;
+    }
+
+    .tool-page .upload-area,
+    .tool-page > .tool-container .upload-area{
+        min-height:220px;
+        padding:35px 20px;
+    }
+
+    .tool-page .upload-icon,
+    .tool-page > .tool-container .upload-area .upload-icon{
+        width:68px;
+        height:68px;
+        margin-bottom:15px;
+    }
+
+    .tool-page .upload-icon i{
+        font-size:31px;
+    }
+
+    .tool-page .upload-area h2{
+        font-size:25px;
+    }
+
+    .tool-page .upload-area h3{
+        font-size:23px;
+    }
+}
+
+@media(max-width:480px){
+    .tool-page .upload-area,
+    .tool-page > .tool-container .upload-area{
+        min-height:200px;
+        padding:30px 16px;
+    }
+
+    .tool-page .upload-area h2{
+        font-size:22px;
+    }
+
+    .tool-page .upload-area h3{
+        font-size:21px;
+    }
+}
+
+/* =====================================================
+   TOOLHUB — EXTRA COMPACT UPLOAD SIZE (100% DESKTOP)
+===================================================== */
+
+.tool-page .upload-box{
+    max-width:620px;
+    margin:25px auto;
+}
+
+.tool-page .drop-zone{
+    border-width:2px;
+    border-radius:18px;
+}
+
+.tool-page .upload-area{
+    min-height:190px;
+    padding:28px 22px;
+}
+
+.tool-page .upload-icon{
+    width:62px;
+    height:62px;
+    margin-bottom:14px;
+}
+
+.tool-page .upload-icon i{
+    font-size:30px;
+}
+
+.tool-page .upload-area h2{
+    font-size:25px;
+    margin:6px 0 8px;
+}
+
+.tool-page .upload-area h3{
+    font-size:23px;
+    margin:6px 0 8px;
+}
+
+.tool-page .upload-area p{
+    font-size:14px;
+    margin-bottom:14px;
+}
+
+.tool-page .choose-btn,
+.tool-page .browse-btn,
+.tool-page .secondary-btn{
+    padding:11px 22px;
+    border-radius:10px;
+    font-size:14px;
+}
+
+.tool-page .supported-files,
+.tool-page .supported-types{
+    font-size:11px;
+    margin-top:7px;
+}
+
+.tool-page > .tool-container .upload-area{
+    max-width:620px;
+    min-height:190px;
+    margin:25px auto;
+    padding:28px 22px;
+    border-radius:18px;
+}
+
+.tool-page > .tool-container .upload-area .upload-icon{
+    width:62px;
+    height:62px;
+    font-size:30px;
+    margin-bottom:14px;
+}
+
+@media(max-width:768px){
+    .tool-page .upload-box{
+        max-width:calc(100% - 30px);
+        margin:22px auto;
+    }
+
+    .tool-page .upload-area,
+    .tool-page > .tool-container .upload-area{
+        min-height:180px;
+        padding:25px 16px;
+    }
+}
+
+@media(max-width:480px){
+    .tool-page .upload-area,
+    .tool-page > .tool-container .upload-area{
+        min-height:165px;
+        padding:22px 14px;
+    }
+
+    .tool-page .upload-icon,
+    .tool-page > .tool-container .upload-area .upload-icon{
+        width:56px;
+        height:56px;
+        margin-bottom:11px;
+    }
+
+    .tool-page .upload-icon i{
+        font-size:27px;
+    }
+
+    .tool-page .upload-area h2{
+        font-size:21px;
+    }
+
+    .tool-page .upload-area h3{
+        font-size:20px;
+    }
+
+    .tool-page .upload-area p{
+        font-size:13px;
+    }
+}

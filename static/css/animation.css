@@ -1,0 +1,161 @@
+/* ===========================
+        FLOATING ANIMATION
+=========================== */
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-15px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}
+
+/* ===========================
+      FADE UP ANIMATION
+=========================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ===========================
+      GLOW ANIMATION
+=========================== */
+
+@keyframes glow{
+
+    0%{
+
+        box-shadow:0 0 0 rgba(96,165,250,.2);
+
+    }
+
+    50%{
+
+        box-shadow:0 0 40px rgba(96,165,250,.45);
+
+    }
+
+    100%{
+
+        box-shadow:0 0 0 rgba(96,165,250,.2);
+
+    }
+
+}
+
+/* ===========================
+      HERO ELEMENTS
+=========================== */
+
+.hero-left{
+
+    animation:fadeUp .8s ease;
+
+}
+
+.hero-right{
+
+    animation:fadeUp 1.2s ease;
+
+}
+
+.main-document{
+
+    animation:glow 4s infinite;
+
+}
+
+.floating-card{
+
+    animation:float 5s ease-in-out infinite;
+
+}
+
+.pdf-card{
+
+    animation-delay:0s;
+
+}
+
+.word-card{
+
+    animation-delay:1s;
+
+}
+
+.image-card{
+
+    animation-delay:2s;
+
+}
+
+.zip-card{
+
+    animation-delay:3s;
+
+}
+
+/* ===========================
+        CARD EFFECTS
+=========================== */
+
+.tool-card{
+
+    transition:.35s;
+
+}
+
+.tool-card:hover{
+
+    transform:translateY(-10px);
+
+}
+
+.why-card{
+
+    transition:.35s;
+
+}
+
+.why-card:hover{
+
+    transform:translateY(-12px);
+
+}
+
+.stat-card{
+
+    transition:.35s;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-12px);
+
+}

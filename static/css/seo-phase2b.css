@@ -1,0 +1,39 @@
+/* =========================================================
+   TOOLHUB SEO PHASE 2B
+   Breadcrumbs + internal-link sections
+========================================================= */
+.seo-breadcrumbs {
+    width: min(1180px, calc(100% - 40px));
+    margin: 18px auto 0;
+    padding: 10px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #94a3b8;
+    text-align: center;
+}
+.seo-breadcrumbs a { color:#60a5fa; text-decoration:none; }
+.seo-breadcrumbs a:hover { text-decoration:underline; }
+.seo-breadcrumbs .separator { margin:0 8px; color:#64748b; }
+.seo-related {
+    margin: 64px auto 10px;
+    padding: 34px;
+    max-width: 1180px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 22px;
+    background: rgba(255,255,255,.035);
+}
+.seo-related h2 { margin:0 0 8px; color:#fff; font-size:28px; }
+.seo-related > p { margin:0 0 24px; color:#94a3b8; }
+.seo-related-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.seo-related-card {
+    display:block; padding:18px; border-radius:16px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(15,23,42,.65); color:#fff; text-decoration:none;
+    transition:transform .2s ease,border-color .2s ease,background .2s ease;
+}
+.seo-related-card:hover { transform:translateY(-3px); border-color:rgba(96,165,250,.45); background:rgba(30,41,59,.85); }
+.seo-related-card strong { display:block; margin-bottom:6px; }
+.seo-related-card span { color:#94a3b8; font-size:14px; }
+@media (max-width: 800px) { .seo-related-grid { grid-template-columns:1fr; } .seo-related { padding:24px; margin-top:44px; } .seo-breadcrumbs { width:calc(100% - 28px); } }
+
+.seo-home-links{padding:28px 0;text-align:center}.seo-home-links h2{margin-bottom:8px}.seo-home-links p{color:#94a3b8}.seo-home-links a{color:#60a5fa;text-decoration:none}.seo-home-links a:hover{text-decoration:underline}

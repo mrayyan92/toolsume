@@ -1,0 +1,9 @@
+.share-bar{display:flex;align-items:center;gap:10px;margin-top:24px;padding:16px 0;border-top:1px solid rgba(255,255,255,.06)}
+.share-bar span{font-size:13px;color:#94a3b8;font-weight:500}
+.share-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;color:#fff;transition:all .25s}
+.share-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.share-btn.facebook{background:#1877f2}
+.share-btn.twitter{background:#000}
+.share-btn.linkedin{background:#0a66c2}
+.share-btn.whatsapp{background:#25d366}
+@media(max-width:480px){.share-bar{flex-wrap:wrap}.share-btn{padding:6px 10px;font-size:12px}}

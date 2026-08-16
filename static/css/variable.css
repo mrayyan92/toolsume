@@ -1,0 +1,23 @@
+:root{
+
+--bg:#08111F;
+
+--card:#111B31;
+
+--card2:#17233F;
+
+--primary:#4F46E5;
+
+--secondary:#06B6D4;
+
+--text:#F8FAFC;
+
+--muted:#94A3B8;
+
+--border:rgba(255,255,255,.08);
+
+--radius:20px;
+
+--shadow:0 20px 60px rgba(0,0,0,.35);
+
+}

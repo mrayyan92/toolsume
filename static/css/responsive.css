@@ -1,0 +1,111 @@
+/* ===============================
+TABLETS
+==================================*/
+
+@media (max-width:1024px){
+
+.container{
+    width:95%;
+}
+
+.tool-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.hero h1{
+    font-size:42px;
+}
+
+}
+
+
+/* ===============================
+MOBILE
+==================================*/
+
+@media (max-width:768px){
+
+.container{
+    width:95%;
+}
+
+.tool-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:18px;
+
+}
+
+.tool-card{
+
+    width:100%;
+
+}
+
+.hero{
+
+    text-align:center;
+
+}
+
+.hero h1{
+
+    font-size:34px;
+
+}
+
+.hero p{
+
+    font-size:18px;
+
+}
+
+.section-header{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:10px;
+
+}
+
+}
+
+
+/* ===============================
+SMALL MOBILE
+==================================*/
+
+@media (max-width:500px){
+
+.tool-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.hero h1{
+
+    font-size:28px;
+
+}
+
+.hero p{
+
+    font-size:16px;
+
+}
+
+.tool-card{
+
+    padding:25px;
+
+}
+
+}

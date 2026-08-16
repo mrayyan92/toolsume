@@ -1,0 +1,130 @@
+/* =========================================================
+   TOOLHUB — SEO ARTICLE / GUIDE SECTION
+   ========================================================= */
+
+.tool-article{
+    width:min(1000px,calc(100% - 32px));
+    margin:70px auto 90px;
+    color:#cbd5e1;
+}
+
+.tool-article .article-card{
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(148,163,184,.12);
+    border-radius:24px;
+    padding:38px;
+    box-shadow:0 22px 55px rgba(0,0,0,.16);
+}
+
+.tool-article .article-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 13px;
+    border-radius:999px;
+    color:#93c5fd;
+    background:rgba(59,130,246,.10);
+    border:1px solid rgba(96,165,250,.16);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    margin-bottom:16px;
+}
+
+.tool-article h2{
+    color:#f8fafc;
+    font-size:30px;
+    line-height:1.2;
+    margin:0 0 16px;
+}
+
+.tool-article h3{
+    color:#f8fafc;
+    font-size:21px;
+    margin:30px 0 10px;
+}
+
+.tool-article p,
+.tool-article li{
+    color:#aab7c9;
+    font-size:15px;
+    line-height:1.85;
+}
+
+.tool-article p{
+    margin:0 0 15px;
+}
+
+.tool-article ul,
+.tool-article ol{
+    padding-left:24px;
+    margin:10px 0 20px;
+}
+
+.tool-article li{
+    margin:7px 0;
+}
+
+.tool-article .article-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+    margin:24px 0 8px;
+}
+
+.tool-article .article-mini{
+    padding:22px;
+    border-radius:18px;
+    background:rgba(15,23,42,.55);
+    border:1px solid rgba(148,163,184,.10);
+}
+
+.tool-article .article-mini h3{
+    margin:0 0 8px;
+    font-size:18px;
+}
+
+.tool-article .article-mini p{
+    margin:0;
+    font-size:14px;
+}
+
+.tool-article .faq-item{
+    padding:18px 0;
+    border-top:1px solid rgba(148,163,184,.10);
+}
+
+.tool-article .faq-item:first-child{
+    border-top:0;
+}
+
+.tool-article .faq-item h3{
+    margin:0 0 7px;
+    font-size:17px;
+}
+
+.tool-article .faq-item p{
+    margin:0;
+    font-size:14px;
+}
+
+@media(max-width:700px){
+    .tool-article{
+        width:calc(100% - 22px);
+        margin:48px auto 65px;
+    }
+
+    .tool-article .article-card{
+        padding:23px;
+        border-radius:19px;
+    }
+
+    .tool-article h2{
+        font-size:25px;
+    }
+
+    .tool-article .article-grid{
+        grid-template-columns:1fr;
+    }
+}

@@ -1,0 +1,144 @@
+/* =========================================================
+   TOOLHUB — MOBILE NAVIGATION FIX
+========================================================= */
+
+@media (max-width: 992px) {
+
+    #navbar {
+        position: relative;
+        z-index: 99999;
+    }
+
+    #navbar .hamburger {
+        display: flex;
+        width: 42px;
+        height: 42px;
+        padding: 0;
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 11px;
+        background: rgba(255,255,255,.06);
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        position: relative;
+        z-index: 100002;
+    }
+
+    #navbar .hamburger span {
+        display: block;
+        width: 18px;
+        height: 2px;
+        background: #fff;
+        border-radius: 5px;
+        transition: .25s ease;
+    }
+
+    #navbar .hamburger.active span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    #navbar .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    #navbar .hamburger.active span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    #navbar #navLinks {
+        display: none;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-height: calc(100vh - 90px);
+        overflow-y: auto;
+        margin: 0;
+        padding: 12px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        background: #07111f;
+        border: 1px solid rgba(255,255,255,.10);
+        border-radius: 15px;
+        box-shadow: 0 20px 50px rgba(0,0,0,.45);
+        box-sizing: border-box;
+        z-index: 100001;
+    }
+
+    #navbar #navLinks.active {
+        display: flex !important;
+    }
+
+    #navbar #navLinks > li {
+        width: 100%;
+    }
+
+    #navbar #navLinks > li > a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 46px;
+        padding: 12px 14px;
+        color: #e5e7eb;
+        border-radius: 10px;
+        text-decoration: none;
+        box-sizing: border-box;
+    }
+
+    #navbar #navLinks .mega-menu {
+        display: none;
+        position: static;
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+        padding: 5px 8px 8px;
+        background: rgba(255,255,255,.035);
+        border: 0;
+        box-shadow: none;
+    }
+
+    #navbar #navLinks .dropdown.open > .mega-menu {
+        display: block !important;
+    }
+
+    #navbar #navLinks .mega-menu a {
+        display: flex;
+        align-items: center;
+        min-height: 40px;
+        padding: 9px 12px;
+        color: #cbd5e1;
+        font-size: 13px;
+        text-decoration: none;
+        border-radius: 8px;
+    }
+
+    #navbar .github-btn {
+        display: none;
+    }
+
+    #navbar.mobile-open .github-btn {
+        display: flex;
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        top: calc(100% + 8px);
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+        z-index: 100002;
+    }
+
+    #navbar.mobile-open #navLinks {
+        padding-bottom: 58px;
+    }
+}
+
+@media (min-width: 993px) {
+    #navbar .hamburger {
+        display: none;
+    }
+}

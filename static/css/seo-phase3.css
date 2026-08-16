@@ -1,0 +1,32 @@
+
+/* SEO Phase 3 — breadcrumbs */
+.seo-breadcrumb {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto 18px;
+    padding: 10px 0;
+    font-size: 13px;
+    color: #94a3b8;
+    text-align: center;
+}
+.seo-breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.seo-breadcrumb a {
+    color: #60a5fa;
+    text-decoration: none;
+}
+.seo-breadcrumb a:hover {
+    text-decoration: underline;
+}
+.seo-breadcrumb .separator {
+    color: #64748b;
+}
+.seo-breadcrumb .current {
+    color: #cbd5e1;
+}
