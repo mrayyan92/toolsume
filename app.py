@@ -221,7 +221,7 @@ Disallow: /merge-pdf-file
 Disallow: /uploads/
 Disallow: /outputs/
 
-Sitemap: {}/sitemap.xml""".format(request.url_root.rstrip('/'))
+Sitemap: https://toolsume.com/sitemap.xml"""
     return Response(robots_content, mimetype='text/plain')
 
 
@@ -229,10 +229,10 @@ Sitemap: {}/sitemap.xml""".format(request.url_root.rstrip('/'))
 
 @app.route("/sitemap.xml")
 def sitemap():
-    base = request.url_root.rstrip('/')
+    base = "https://toolsume.com"
     pages = [
         ("", "1.0", "daily"),
-        ("pdf-tools", "0.8", "weekly"),
+        ("pdf-tools/", "0.8", "weekly"),
         ("image-tools", "0.8", "weekly"),
         ("utility-tools", "0.8", "weekly"),
         ("about", "0.6", "monthly"),
@@ -826,7 +826,7 @@ def image_watermark_file():
     try:
         image = Image.open(input_path).convert("RGBA")
 
-        watermark_text = request.form.get("watermark", "ToolHub")
+        watermark_text = request.form.get("watermark", "ToolSume")
 
         position = request.form.get("position", "bottom-right")
 
@@ -2779,7 +2779,7 @@ def contact():
 # TOOL CATEGORY PAGES
 # ===========================
 
-@app.route("/pdf-tools")
+@app.route("/pdf-tools/")
 def pdf_tools():
 
     return render_template(
