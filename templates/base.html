@@ -7,22 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0f172a">
 
-    <title>{% block title %}ToolHub{% endblock %}</title>
+    <title>{% block title %}ToolSume{% endblock %}</title>
 
     {% block seo_description %}{% endblock %}
 
-    <link rel="canonical" href="{{ request.url.split('?')[0] }}">
+    <link rel="canonical" href="https://toolsume.com{{ request.path }}">
 
-    <meta property="og:title" content="{% block og_title %}ToolHub{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}ToolSume{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Free online PDF, image and utility tools for everyday file tasks.{% endblock %}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.url.split('?')[0] }}">
-    <meta property="og:site_name" content="ToolHub">
+    <meta property="og:site_name" content="ToolSume">
     <meta property="og:image" content="{{ url_for('static', filename='images/toolhub-og.png', _external=True) }}">
     <meta property="og:locale" content="en_US">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{% block twitter_title %}ToolHub{% endblock %}">
+    <meta name="twitter:title" content="{% block twitter_title %}ToolSume{% endblock %}">
     <meta name="twitter:description" content="{% block twitter_description %}Free online PDF, image and utility tools for everyday file tasks.{% endblock %}">
 
     {% block structured_data %}{% endblock %}
