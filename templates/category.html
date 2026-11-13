@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 
 {% block title %}
-{% if category == "pdf" %}PDF Tools Online — Free PDF Tools | ToolHub
-{% elif category == "image" %}Image Tools Online — Free Image Tools | ToolHub
-{% else %}Utility Tools Online — Free Online Utilities | ToolHub
+{% if category == "pdf" %}PDF Tools Online — Free PDF Tools | ToolSume
+{% elif category == "image" %}Image Tools Online — Free Image Tools | ToolSume
+{% else %}Utility Tools Online — Free Online Utilities | ToolSume
 {% endif %}
 {% endblock %}
 
 {% block seo_description %}
 {% if category == "pdf" %}
-<meta name="description" content="Use free PDF tools online to convert, merge, split, compress, rotate, protect and edit PDF files with ToolHub.">
+<meta name="description" content="Use free PDF tools online to convert, merge, split, compress, rotate, protect and edit PDF files with ToolSume.">
 {% elif category == "image" %}
-<meta name="description" content="Use free image tools online to compress, resize, crop, rotate, convert and edit JPG, PNG and WebP images with ToolHub.">
+<meta name="description" content="Use free image tools online to compress, resize, crop, rotate, convert and edit JPG, PNG and WebP images with ToolSume.">
 {% else %}
-<meta name="description" content="Use free online utility tools from ToolHub for QR codes, passwords, UUIDs, Lorem Ipsum and word counting.">
+<meta name="description" content="Use free online utility tools from ToolSume for QR codes, passwords, UUIDs, Lorem Ipsum and word counting.">
 {% endif %}
 {% endblock %}
 
@@ -28,7 +28,7 @@
       "@type": "ListItem",
       "position": 1,
       "name": "Home",
-      "item": "{{ request.url_root.rstrip('/') }}/"
+      "item": "https://toolsume.com/"
     },
     {
       "@type": "ListItem",
@@ -60,7 +60,7 @@
 
             <div class="category-badge">
                 <i class="fa-solid {{ icon }}"></i>
-                TOOLHUB
+                TOOLSUME
             </div>
 
             <h1>{{ title }}</h1>
