@@ -225,6 +225,19 @@ Sitemap: https://toolsume.com/sitemap.xml"""
     return Response(robots_content, mimetype='text/plain')
 
 
+# ================= ADS.TXT =================
+
+@app.route("/ads.txt")
+def ads_txt():
+    ads_file = os.path.join(BASE_DIR, "ads.txt")
+    if os.path.exists(ads_file):
+        with open(ads_file, "r", encoding="utf-8") as f:
+            content = f.read()
+    else:
+        content = "# ToolSume Authorized Digital Sellers (ads.txt)\n# Google AdSense publisher ID line will be placed here:\n# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0\n"
+    return Response(content, mimetype="text/plain")
+
+
 # ================= SITEMAP =================
 
 @app.route("/sitemap.xml")
@@ -2759,10 +2772,13 @@ def contact():
 
         logger.info("Contact form submission from %s <%s>", name, email)
 
-        return jsonify({
-            "success": True,
-            "message": "Thanks! Your message has been received."
-        })
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest" or request.is_json:
+            return jsonify({
+                "success": True,
+                "message": "Thanks! Your message has been received."
+            })
+
+        return render_template("contact.html", success="Thanks! Your message has been received. We will get back to you shortly.")
 
     return render_template("contact.html")
 

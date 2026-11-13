@@ -85,6 +85,42 @@
 
     {% include "components/footer.html" %}
 
+
+    <!-- Cookie Consent Banner for AdSense / GDPR Compliance -->
+    <div id="cookie-consent-banner" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);max-width:680px;width:calc(100% - 32px);background:rgba(15,23,42,0.96);border:1px solid rgba(96,165,250,0.3);border-radius:16px;padding:16px 20px;box-shadow:0 20px 40px rgba(0,0,0,0.5);z-index:99999;backdrop-filter:blur(10px);color:#e2e8f0;font-size:14px;line-height:1.5;">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;">
+            <div style="flex:1;min-width:260px;">
+                <p style="margin:0;">
+                    We use cookies and partner with third-party vendors such as Google to improve functionality and display relevant advertisements. Learn more in our <a href="/privacy" style="color:#60a5fa;text-decoration:underline;">Privacy Policy</a>.
+                </p>
+            </div>
+            <div style="display:flex;gap:8px;flex-shrink:0;">
+                <button id="cookie-accept-btn" style="background:#2563eb;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;">Accept</button>
+                <button id="cookie-decline-btn" style="background:rgba(255,255,255,0.08);color:#94a3b8;border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer;">Decline</button>
+            </div>
+        </div>
+    </div>
+    <script>
+    (function(){
+        try {
+            if(!localStorage.getItem('toolsume_cookie_consent')) {
+                var banner = document.getElementById('cookie-consent-banner');
+                if(banner) banner.style.display = 'block';
+            }
+            var acc = document.getElementById('cookie-accept-btn');
+            if(acc) acc.addEventListener('click', function(){
+                localStorage.setItem('toolsume_cookie_consent', 'accepted');
+                document.getElementById('cookie-consent-banner').style.display = 'none';
+            });
+            var dec = document.getElementById('cookie-decline-btn');
+            if(dec) dec.addEventListener('click', function(){
+                localStorage.setItem('toolsume_cookie_consent', 'declined');
+                document.getElementById('cookie-consent-banner').style.display = 'none';
+            });
+        } catch(e){}
+    })();
+    </script>
 </body>
+
 
 </html>

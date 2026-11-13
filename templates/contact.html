@@ -1,23 +1,74 @@
 {% extends "base.html" %}
-{% block title %}Contact ToolSume — Questions, Feedback & Support{% endblock %}
-{% block seo_description %}<meta name="description" content="Contact ToolSume with questions, feedback, tool suggestions, bug reports, business inquiries or privacy-related questions.">{% endblock %}
+{% block title %}Contact ToolSume — Questions, Feedback & Support
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var form = document.querySelector(".toolsume-contact-form");
+    if (!form) return;
+    form.addEventListener("submit", function(e) {
+        var btn = form.querySelector(".contact-submit");
+        var origText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+        
+        // Let normal POST proceed or fallback gracefully
+    });
+});
+</script>
+{% endblock %}
+{% block seo_description %}<meta name="description" content="Contact ToolSume with questions, feedback, tool suggestions, bug reports, business inquiries or privacy-related questions.">
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var form = document.querySelector(".toolsume-contact-form");
+    if (!form) return;
+    form.addEventListener("submit", function(e) {
+        var btn = form.querySelector(".contact-submit");
+        var origText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+        
+        // Let normal POST proceed or fallback gracefully
+    });
+});
+</script>
+{% endblock %}
 {% block content %}
 <section class="info-page contact-page"><div class="info-page-container">
 <div class="info-hero"><span class="info-badge"><i class="fa-solid fa-envelope"></i> CONTACT TOOLSUME</span>
 <h1>We'd Love to <span>Hear From You</span></h1>
 <p>Have a question, found a problem, or have an idea for a new tool? Send us a message and let us know how we can improve ToolSume.</p></div>
 <div class="contact-layout">
-<div class="contact-info"><div class="contact-panel"><div class="info-card-icon"><i class="fa-solid fa-comments"></i></div><h2>How can we help?</h2><p>You can contact us about ToolSume features, problems with a tool, suggestions for new tools, general feedback, business inquiries or privacy questions.</p></div>
+<div class="contact-info"><div class="contact-panel"><div class="info-card-icon"><i class="fa-solid fa-comments"></i></div><h2>How can we help?</h2><p>You can contact us about ToolSume features, problems with a tool, suggestions for new tools, general feedback, business inquiries or privacy questions.</p>
+<div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1);">
+<p style="margin:0 0 6px;color:#cbd5e1;font-weight:700;"><i class="fa-solid fa-envelope" style="color:#60a5fa;margin-right:8px;"></i> Direct Email Support:</p>
+<p style="margin:0 0 8px;"><a href="mailto:support@toolsume.com" style="color:#60a5fa;font-weight:600;text-decoration:underline;font-size:16px;">support@toolsume.com</a></p>
+<p style="margin:0;font-size:13px;color:#94a3b8;">Average response time: 24–48 hours</p>
+</div></div>
 <div class="contact-reasons">
 <div class="contact-reason"><i class="fa-solid fa-bug"></i><div><h3>Report a Problem</h3><p>Tell us if a ToolSume feature is not working as expected.</p></div></div>
 <div class="contact-reason"><i class="fa-solid fa-lightbulb"></i><div><h3>Suggest a Tool</h3><p>Have an idea for a useful tool? We'd like to hear it.</p></div></div>
 <div class="contact-reason"><i class="fa-solid fa-message"></i><div><h3>General Feedback</h3><p>Share your experience and ideas for improving ToolSume.</p></div></div>
 <div class="contact-reason"><i class="fa-solid fa-briefcase"></i><div><h3>Business Inquiries</h3><p>Contact us about partnerships or other business matters.</p></div></div></div></div>
-<div class="contact-form-card"><h2>Send us a message</h2>{% if success %}<div class="contact-success" role="status"><i class="fa-solid fa-circle-check"></i>{{ success }}</div>{% endif %}<p class="form-intro">Fill in the form below and we'll receive your message.</p>
+<div class="contact-form-card"><h2>Send us a message</h2>{% if error %}<div class="contact-error" style="display:flex;gap:9px;margin:0 0 20px;padding:12px 14px;border:1px solid rgba(239,68,68,.3);border-radius:12px;background:rgba(239,68,68,.1);color:#fca5a5;" role="alert"><i class="fa-solid fa-circle-exclamation"></i>{{ error }}</div>{% endif %}
+{% if success %}<div class="contact-success" role="status"><i class="fa-solid fa-circle-check"></i>{{ success }}</div>{% endif %}<p class="form-intro">Fill in the form below and we'll receive your message.</p>
 <form action="/contact" method="POST" class="toolsume-contact-form">
 <div class="contact-form-row"><div class="form-field"><label for="contact-name">Name</label><input type="text" id="contact-name" name="name" placeholder="Your name" autocomplete="name" required></div><div class="form-field"><label for="contact-email">Email</label><input type="email" id="contact-email" name="email" placeholder="you@example.com" autocomplete="email" required></div></div>
 <div class="form-field"><label for="contact-subject">Subject</label><input type="text" id="contact-subject" name="subject" placeholder="How can we help?" required></div>
 <div class="form-field"><label for="contact-message">Message</label><textarea id="contact-message" name="message" rows="7" placeholder="Write your message here..." required></textarea></div>
 <button type="submit" class="contact-submit">Send Message <i class="fa-solid fa-paper-plane"></i></button>
 </form></div></div></div></section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var form = document.querySelector(".toolsume-contact-form");
+    if (!form) return;
+    form.addEventListener("submit", function(e) {
+        var btn = form.querySelector(".contact-submit");
+        var origText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+        
+        // Let normal POST proceed or fallback gracefully
+    });
+});
+</script>
 {% endblock %}
