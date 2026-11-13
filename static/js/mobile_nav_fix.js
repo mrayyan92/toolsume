@@ -1,5 +1,5 @@
 /* =========================================================
-   TOOLHUB — MOBILE NAVIGATION FIX
+   TOOLSUME — MOBILE NAVIGATION FIX
    Replace/append this to your static/js/script.js if needed.
 ========================================================= */
 

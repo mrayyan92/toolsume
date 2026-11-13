@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}ToolHub — Free Online PDF, Image & Utility Tools{% endblock %}
+{% block title %}ToolSume — Free Online PDF, Image & Utility Tools{% endblock %}
 
 {% block seo_description %}
-<meta name="description" content="Use ToolHub's free online PDF, image and utility tools to convert, compress, edit and manage files quickly and securely.">
+<meta name="description" content="Use ToolSume's free online PDF, image and utility tools to convert, compress, edit and manage files quickly and securely.">
 {% endblock %}
 
 {% block structured_data %}
@@ -11,12 +11,12 @@
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "ToolHub",
-  "url": "{{ request.url_root.rstrip('/') }}/",
+  "name": "ToolSume",
+  "url": "https://toolsume.com/",
   "description": "Free online PDF, image and utility tools for everyday file tasks.",
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "{{ request.url_root.rstrip('/') }}/?q={search_term_string}",
+    "target": "https://toolsume.com/?q={search_term_string}",
     "query-input": "required name=search_term_string"
   }
 }

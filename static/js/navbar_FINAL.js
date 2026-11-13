@@ -1,6 +1,6 @@
 
 /* =========================================================
-   TOOLHUB FINAL NAVBAR DROPDOWN JS
+   TOOLSUME FINAL NAVBAR DROPDOWN JS
    Replace ONLY the old navbar/dropdown JavaScript with this.
    Keep the rest of script.js unchanged.
 ========================================================= */

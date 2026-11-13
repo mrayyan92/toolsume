@@ -32,4 +32,4 @@ Disallow: /merge-pdf-file
 Disallow: /uploads/
 Disallow: /outputs/
 
-Sitemap: https://www.toolhub.com/sitemap.xml
+Sitemap: https://www.toolsume.com/sitemap.xml

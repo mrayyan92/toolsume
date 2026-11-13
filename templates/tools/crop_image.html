@@ -1,11 +1,11 @@
-ï»¿{% extends "base.html" %}
+{% extends "base.html" %}
 
-{% block title %}Crop Image Online - Free Image Cropping Tool | ToolHub{% endblock %}
-{% block og_title %}Crop Image Online - Free Image Cropping Tool | ToolHub{% endblock %}
-{% block twitter_title %}Crop Image Online - Free Image Cropping Tool | ToolHub{% endblock %}
+{% block title %}Crop Image Online - Free Image Cropping Tool | ToolSume{% endblock %}
+{% block og_title %}Crop Image Online - Free Image Cropping Tool | ToolSume{% endblock %}
+{% block twitter_title %}Crop Image Online - Free Image Cropping Tool | ToolSume{% endblock %}
 
 {% block seo_description %}
-    <meta name="description" content="Crop images online for free. Remove unwanted areas, adjust dimensions, and create perfect compositions instantly with ToolHub.">
+    <meta name="description" content="Crop images online for free. Remove unwanted areas, adjust dimensions, and create perfect compositions instantly with ToolSume.">
 {% endblock %}
 
 
@@ -21,13 +21,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "{{ request.url_root.rstrip('/') }}/"
+          "item": "https://toolsume.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Image Tools",
-          "item": "{{ request.url_root.rstrip('/') }}/image-tools"
+          "item": "https://toolsume.com/image-tools/"
         },
         {
           "@type": "ListItem",
@@ -38,10 +38,10 @@
     },
     {
       "@type": "SoftwareApplication",
-      "name": "Crop Image â€” ToolHub",
+      "name": "Crop Image — ToolSume",
       "applicationCategory": "UtilityApplication",
       "operatingSystem": "Web",
-      "url": "{{ request.url_root.rstrip('/') }}{{ request.path }}",
+      "url": "https://toolsume.com{{ request.path }}",
       "description": "{{ self.seo_description()|meta_content }}",
       "offers": {
         "@type": "Offer",
@@ -67,7 +67,7 @@
     },
     {
       "@type": "Question",
-      "name": "Can I crop an image to a 1:1 ratio using ToolHub?",
+      "name": "Can I crop an image to a 1:1 ratio using ToolSume?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Absolutely. To crop an image to a 1:1 ratio, simply enter the same value for both the crop width and crop height fields. For example, setting both to 500 produces a perfect 500x500 pixel square."
@@ -86,7 +86,7 @@
       "name": "Is it possible to crop a PNG image with transparency?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. ToolHub supports PNG images, including those with transparent backgrounds. The cropping process preserves the transparency channel."
+        "text": "Yes. ToolSume supports PNG images, including those with transparent backgrounds. The cropping process preserves the transparency channel."
       }
     },
     {
@@ -106,8 +106,8 @@
 
 <section class="tool-page">
     <nav class="seo-breadcrumbs" aria-label="Breadcrumb">
-        <a href="/">Home</a><span class="separator">â€º</span>
-        <a href="/image-tools">Image Tools</a><span class="separator">â€º</span>
+        <a href="/">Home</a><span class="separator">›</span>
+        <a href="/image-tools">Image Tools</a><span class="separator">›</span>
         <span>Crop Image</span>
     </nav>
 
@@ -375,7 +375,7 @@
 
             <p>
 
-                Please wait while ToolHub crops your image.
+                Please wait while ToolSume crops your image.
 
             </p>
 
@@ -427,7 +427,7 @@
             <h3>Fast Processing</h3>
 
             <p>
-                ToolHub crops your images within seconds using optimized image processing.
+                ToolSume crops your images within seconds using optimized image processing.
             </p>
 
         </div>
@@ -515,7 +515,7 @@
             </p>
 
             <p>
-                At its core, cropping does not alter the pixels inside the selected region. It only trims the outer areas. This means the resolution and quality of the cropped portion remain identical to the source. That is precisely why millions of people rely on an image cropper every single day â€” it is a non-destructive way to refocus a visual without compromising on clarity. Online tools like the ToolHub Crop Image tool make this process accessible to everyone, regardless of technical skill, by providing a straightforward browser-based interface where you upload a photo, specify the crop dimensions, and download the result in seconds.
+                At its core, cropping does not alter the pixels inside the selected region. It only trims the outer areas. This means the resolution and quality of the cropped portion remain identical to the source. That is precisely why millions of people rely on an image cropper every single day — it is a non-destructive way to refocus a visual without compromising on clarity. Online tools like the ToolSume Crop Image tool make this process accessible to everyone, regardless of technical skill, by providing a straightforward browser-based interface where you upload a photo, specify the crop dimensions, and download the result in seconds.
             </p>
 
             <h2>Why Should You Crop Your Images?</h2>
@@ -529,7 +529,7 @@
             </p>
 
             <p>
-                <strong>Meeting Platform Requirements.</strong> Every social media platform, marketplace, and website has specific image dimension requirements. Instagram, for instance, favors square (1:1) or 4:5 vertical crops for feed posts. LinkedIn profile photos need a 1:1 ratio at a minimum resolution of 400Ã—400 pixels. E-commerce platforms like Amazon require product images on a pure white background with specific aspect ratios. Cropping your images to these exact specifications ensures they look professional and display correctly without awkward cropping or letterboxing applied by the platform itself.
+                <strong>Meeting Platform Requirements.</strong> Every social media platform, marketplace, and website has specific image dimension requirements. Instagram, for instance, favors square (1:1) or 4:5 vertical crops for feed posts. LinkedIn profile photos need a 1:1 ratio at a minimum resolution of 400×400 pixels. E-commerce platforms like Amazon require product images on a pure white background with specific aspect ratios. Cropping your images to these exact specifications ensures they look professional and display correctly without awkward cropping or letterboxing applied by the platform itself.
             </p>
 
             <p>
@@ -537,7 +537,7 @@
             </p>
 
             <p>
-                <strong>Changing Aspect Ratio.</strong> The original aspect ratio of a photograph does not always suit the intended use. A wide landscape photo may need to be converted to a vertical format for a mobile banner. A rectangular screenshot may need to become a square thumbnail for a blog post. Cropping to a specific size â€” like 1:1, 4:3, 16:9, or any custom ratio â€” gives you complete control over the final shape of your image.
+                <strong>Changing Aspect Ratio.</strong> The original aspect ratio of a photograph does not always suit the intended use. A wide landscape photo may need to be converted to a vertical format for a mobile banner. A rectangular screenshot may need to become a square thumbnail for a blog post. Cropping to a specific size — like 1:1, 4:3, 16:9, or any custom ratio — gives you complete control over the final shape of your image.
             </p>
 
             <p>
@@ -545,21 +545,21 @@
             </p>
 
             <p>
-                <strong>Preparing for Print.</strong> Print projects require images at specific dimensions and aspect ratios. A photo that looks great on screen may need to be cropped to fit a standard print size like 4Ã—6, 5Ã—7, or 8Ã—10 inches. Cropping ensures your printed product looks exactly as intended without unexpected margins or cut-off edges.
+                <strong>Preparing for Print.</strong> Print projects require images at specific dimensions and aspect ratios. A photo that looks great on screen may need to be cropped to fit a standard print size like 4×6, 5×7, or 8×10 inches. Cropping ensures your printed product looks exactly as intended without unexpected margins or cut-off edges.
             </p>
 
             <h2>How to Crop an Image Step by Step</h2>
 
             <p>
-                Learning how to crop an image online free with custom size settings is straightforward when you use a tool designed for simplicity. Here is a detailed walkthrough of the process using the ToolHub Crop Image tool.
+                Learning how to crop an image online free with custom size settings is straightforward when you use a tool designed for simplicity. Here is a detailed walkthrough of the process using the ToolSume Crop Image tool.
             </p>
 
             <p>
-                <strong>Step 1: Upload Your Image.</strong> Navigate to the Crop Image tool page on ToolHub. You will see a drag-and-drop area where you can either drag your image file directly from your computer or click the "Choose Image" button to browse your file system. The tool supports JPG, JPEG, PNG, and WebP formats, so you have flexibility in the types of images you can process. Once your image is uploaded, you will see a confirmation card showing the file name, size, and a "Ready to crop" status indicator.
+                <strong>Step 1: Upload Your Image.</strong> Navigate to the Crop Image tool page on ToolSume. You will see a drag-and-drop area where you can either drag your image file directly from your computer or click the "Choose Image" button to browse your file system. The tool supports JPG, JPEG, PNG, and WebP formats, so you have flexibility in the types of images you can process. Once your image is uploaded, you will see a confirmation card showing the file name, size, and a "Ready to crop" status indicator.
             </p>
 
             <p>
-                <strong>Step 2: Determine Your Crop Coordinates.</strong> This is where precision matters. You need to enter four values: X position, Y position, crop width, and crop height. The X and Y values represent the top-left corner of your crop area, measured in pixels from the top-left corner of the original image. For example, if you set X to 100 and Y to 50, your crop region will start 100 pixels from the left edge and 50 pixels from the top edge. The width and height values define how large the cropped area will be. If you want to crop an image to a specific size â€” say 800Ã—600 pixels â€” you would enter 800 for width and 600 for height.
+                <strong>Step 2: Determine Your Crop Coordinates.</strong> This is where precision matters. You need to enter four values: X position, Y position, crop width, and crop height. The X and Y values represent the top-left corner of your crop area, measured in pixels from the top-left corner of the original image. For example, if you set X to 100 and Y to 50, your crop region will start 100 pixels from the left edge and 50 pixels from the top edge. The width and height values define how large the cropped area will be. If you want to crop an image to a specific size — say 800×600 pixels — you would enter 800 for width and 600 for height.
             </p>
 
             <p>
@@ -567,17 +567,17 @@
             </p>
 
             <p>
-                <strong>Step 4: Download Your Cropped Image.</strong> After processing completes â€” which typically takes just a few seconds â€” you will be presented with a download link. Click it to save your newly cropped image to your device. The downloaded file retains the original quality of the source image within the cropped region, so there is no loss of sharpness or detail.
+                <strong>Step 4: Download Your Cropped Image.</strong> After processing completes — which typically takes just a few seconds — you will be presented with a download link. Click it to save your newly cropped image to your device. The downloaded file retains the original quality of the source image within the cropped region, so there is no loss of sharpness or detail.
             </p>
 
-            <h2>Key Features of the ToolHub Crop Image Tool</h2>
+            <h2>Key Features of the ToolSume Crop Image Tool</h2>
 
             <p>
-                The ToolHub Crop Image tool is designed to deliver a seamless cropping experience with several standout features that set it apart from other online image croppers.
+                The ToolSume Crop Image tool is designed to deliver a seamless cropping experience with several standout features that set it apart from other online image croppers.
             </p>
 
             <p>
-                <strong>Precision Pixel Control.</strong> Unlike drag-and-drop croppers that only give you approximate positioning, ToolHub lets you enter exact pixel values for X position, Y position, width, and height. This level of precision is critical when you need to crop an image to a specific size for print, web, or platform-specific requirements. There is no guessing or eyeballing â€” you get exactly the region you specified.
+                <strong>Precision Pixel Control.</strong> Unlike drag-and-drop croppers that only give you approximate positioning, ToolSume lets you enter exact pixel values for X position, Y position, width, and height. This level of precision is critical when you need to crop an image to a specific size for print, web, or platform-specific requirements. There is no guessing or eyeballing — you get exactly the region you specified.
             </p>
 
             <p>
@@ -585,19 +585,19 @@
             </p>
 
             <p>
-                <strong>No Quality Loss.</strong> Cropping with ToolHub preserves the original quality of your image. The pixels within the crop region are not recompressed, resampled, or altered in any way. What you see in the original at those coordinates is exactly what you get in the cropped output.
+                <strong>No Quality Loss.</strong> Cropping with ToolSume preserves the original quality of your image. The pixels within the crop region are not recompressed, resampled, or altered in any way. What you see in the original at those coordinates is exactly what you get in the cropped output.
             </p>
 
             <p>
-                <strong>Browser-Based Convenience.</strong> There is nothing to download or install. The entire cropping process happens in your web browser and on ToolHub's servers. You can access the tool from any device with a modern web browser â€” desktop, laptop, tablet, or smartphone â€” making it one of the most convenient ways to crop photo files on the go.
+                <strong>Browser-Based Convenience.</strong> There is nothing to download or install. The entire cropping process happens in your web browser and on ToolSume's servers. You can access the tool from any device with a modern web browser — desktop, laptop, tablet, or smartphone — making it one of the most convenient ways to crop photo files on the go.
             </p>
 
             <p>
-                <strong>Secure Processing.</strong> Privacy is a top priority. Your uploaded images are processed securely and automatically deleted from ToolHub's servers after processing is complete. No one else can access your files, and they are not stored longer than necessary.
+                <strong>Secure Processing.</strong> Privacy is a top priority. Your uploaded images are processed securely and automatically deleted from ToolSume's servers after processing is complete. No one else can access your files, and they are not stored longer than necessary.
             </p>
 
             <p>
-                <strong>Free to Use.</strong> There are no hidden fees, no subscription required, and no watermarks added to your cropped images. ToolHub Crop Image is completely free, making it accessible to students, hobbyists, professionals, and anyone else who needs a quick, reliable cropping solution.
+                <strong>Free to Use.</strong> There are no hidden fees, no subscription required, and no watermarks added to your cropped images. ToolSume Crop Image is completely free, making it accessible to students, hobbyists, professionals, and anyone else who needs a quick, reliable cropping solution.
             </p>
 
             <p>
@@ -611,7 +611,7 @@
             <h2>Benefits of Using an Online Image Cropper</h2>
 
             <p>
-                Using an online image cropper like ToolHub offers several advantages over desktop software and other alternatives.
+                Using an online image cropper like ToolSume offers several advantages over desktop software and other alternatives.
             </p>
 
             <p>
@@ -627,7 +627,7 @@
             </p>
 
             <p>
-                <strong>Instant Access.</strong> When you need to crop a photo quickly â€” perhaps to meet a deadline or respond to a request â€” an online tool provides instant access. There is no installation wait time, no license activation, and no software boot-up delay. You go from need to result in seconds.
+                <strong>Instant Access.</strong> When you need to crop a photo quickly — perhaps to meet a deadline or respond to a request — an online tool provides instant access. There is no installation wait time, no license activation, and no software boot-up delay. You go from need to result in seconds.
             </p>
 
             <p>
@@ -641,7 +641,7 @@
             <h2>Common Use Cases for Image Cropping</h2>
 
             <p>
-                Image cropping is not just a general-purpose editing task â€” it plays a critical role in many specific workflows and industries. Here are some of the most common scenarios where an image cropper is indispensable.
+                Image cropping is not just a general-purpose editing task — it plays a critical role in many specific workflows and industries. Here are some of the most common scenarios where an image cropper is indispensable.
             </p>
 
             <p>
@@ -649,7 +649,7 @@
             </p>
 
             <p>
-                <strong>E-Commerce Product Photography.</strong> Online retailers must present product images that meet strict platform guidelines. Amazon, eBay, Shopify, and Etsy all have specific requirements for product image dimensions and aspect ratios. Cropping product photos to the correct size â€” often 1:1 square â€” ensures a consistent, professional storefront.
+                <strong>E-Commerce Product Photography.</strong> Online retailers must present product images that meet strict platform guidelines. Amazon, eBay, Shopify, and Etsy all have specific requirements for product image dimensions and aspect ratios. Cropping product photos to the correct size — often 1:1 square — ensures a consistent, professional storefront.
             </p>
 
             <p>
@@ -683,7 +683,7 @@
             </p>
 
             <p>
-                <strong>Use the Rule of Thirds.</strong> The rule of thirds is a composition guideline that divides the image into a 3Ã—3 grid. Placing your subject at the intersection points of this grid creates a more balanced and visually appealing composition. When cropping, try to position your main subject along these lines or intersections rather than dead center.
+                <strong>Use the Rule of Thirds.</strong> The rule of thirds is a composition guideline that divides the image into a 3×3 grid. Placing your subject at the intersection points of this grid creates a more balanced and visually appealing composition. When cropping, try to position your main subject along these lines or intersections rather than dead center.
             </p>
 
             <p>
@@ -691,7 +691,7 @@
             </p>
 
             <p>
-                <strong>Maintain Aspect Ratio When Needed.</strong> In some cases, you may want to preserve the original aspect ratio while reducing the overall size. ToolHub's precise pixel input makes this straightforward â€” simply calculate the new dimensions using the original ratio. For a 1:1 crop, ensure your width and height values are identical.
+                <strong>Maintain Aspect Ratio When Needed.</strong> In some cases, you may want to preserve the original aspect ratio while reducing the overall size. ToolSume's precise pixel input makes this straightforward — simply calculate the new dimensions using the original ratio. For a 1:1 crop, ensure your width and height values are identical.
             </p>
 
             <p>
@@ -713,15 +713,15 @@
             </p>
 
             <p>
-                Cropping removes portions of an image to change its composition or aspect ratio without altering the scale of the remaining content. Resizing changes the overall dimensions of the entire image, scaling all pixels up or down. You might crop to remove unwanted areas and then resize to meet specific dimension requirements. ToolHub handles cropping with pixel-level precision, ensuring your output matches your specifications exactly.
+                Cropping removes portions of an image to change its composition or aspect ratio without altering the scale of the remaining content. Resizing changes the overall dimensions of the entire image, scaling all pixels up or down. You might crop to remove unwanted areas and then resize to meet specific dimension requirements. ToolSume handles cropping with pixel-level precision, ensuring your output matches your specifications exactly.
             </p>
 
             <p>
-                <strong>Can I crop an image to a 1:1 ratio using ToolHub?</strong>
+                <strong>Can I crop an image to a 1:1 ratio using ToolSume?</strong>
             </p>
 
             <p>
-                Absolutely. To crop an image to a 1:1 ratio, simply enter the same value for both the crop width and crop height fields. For example, setting both width and height to 500 will produce a perfect 500Ã—500 pixel square image. This is ideal for Instagram posts, profile pictures, and product thumbnails that require a square format.
+                Absolutely. To crop an image to a 1:1 ratio, simply enter the same value for both the crop width and crop height fields. For example, setting both width and height to 500 will produce a perfect 500×500 pixel square image. This is ideal for Instagram posts, profile pictures, and product thumbnails that require a square format.
             </p>
 
             <p>
@@ -729,7 +729,7 @@
             </p>
 
             <p>
-                Enter the exact pixel values for the width and height you need in the corresponding fields. If you need an 800Ã—600 image, enter 800 for width and 600 for height. The X and Y fields let you control where the crop region starts, so you can position it precisely over the part of the image you want to keep. This makes it simple to crop an image to a specific size without any guesswork.
+                Enter the exact pixel values for the width and height you need in the corresponding fields. If you need an 800×600 image, enter 800 for width and 600 for height. The X and Y fields let you control where the crop region starts, so you can position it precisely over the part of the image you want to keep. This makes it simple to crop an image to a specific size without any guesswork.
             </p>
 
             <p>
@@ -737,7 +737,7 @@
             </p>
 
             <p>
-                Yes. ToolHub supports PNG images, including those with transparent backgrounds. The cropping process preserves the transparency channel, so your cropped output will retain the same transparency properties as the original image. This is useful for creating cropped icons, logos, and other graphical assets that rely on transparency.
+                Yes. ToolSume supports PNG images, including those with transparent backgrounds. The cropping process preserves the transparency channel, so your cropped output will retain the same transparency properties as the original image. This is useful for creating cropped icons, logos, and other graphical assets that rely on transparency.
             </p>
 
             <p>
@@ -745,7 +745,7 @@
             </p>
 
             <p>
-                ToolHub supports both standard and high-resolution images. For the best experience, keep your file size reasonable â€” typically under 25 MB. Very large files may take slightly longer to process, but the tool is optimized to handle modern camera resolutions and high-quality image files efficiently.
+                ToolSume supports both standard and high-resolution images. For the best experience, keep your file size reasonable — typically under 25 MB. Very large files may take slightly longer to process, but the tool is optimized to handle modern camera resolutions and high-quality image files efficiently.
             </p>
 
             <p>
@@ -761,7 +761,7 @@
             </p>
 
             <p>
-                Currently, the ToolHub Crop Image tool processes one image at a time. However, because the tool is so fast â€” completing most crops in seconds â€” processing multiple images in sequence is quick and straightforward. Simply repeat the upload, set dimensions, and download workflow for each image you need to crop.
+                Currently, the ToolSume Crop Image tool processes one image at a time. However, because the tool is so fast — completing most crops in seconds — processing multiple images in sequence is quick and straightforward. Simply repeat the upload, set dimensions, and download workflow for each image you need to crop.
             </p>
 
             <p>
@@ -769,7 +769,7 @@
             </p>
 
             <p>
-                No account, registration, or login is required. The ToolHub Crop Image tool is completely open and accessible to anyone. Simply visit the page, upload your image, enter your crop values, and download the result. It is designed to be as friction-free as possible so you can get your work done without unnecessary barriers.
+                No account, registration, or login is required. The ToolSume Crop Image tool is completely open and accessible to anyone. Simply visit the page, upload your image, enter your crop values, and download the result. It is designed to be as friction-free as possible so you can get your work done without unnecessary barriers.
             </p>
 
         </div>
@@ -809,7 +809,7 @@
                 <h3>Is Crop Image free?</h3>
 
                 <p>
-                    Yes. ToolHub lets you crop images completely free with no hidden fees.
+                    Yes. ToolSume lets you crop images completely free with no hidden fees.
                 </p>
 
             </div>
@@ -839,7 +839,7 @@
                 <h3>Can I crop large images?</h3>
 
                 <p>
-                    Yes. ToolHub supports both small and high-resolution images.
+                    Yes. ToolSume supports both small and high-resolution images.
                 </p>
 
             </div>
@@ -859,7 +859,7 @@
                 <h3>Does it work on mobile devices?</h3>
 
                 <p>
-                    Yes. ToolHub is fully compatible with desktop, tablet and mobile devices.
+                    Yes. ToolSume is fully compatible with desktop, tablet and mobile devices.
                 </p>
 
             </div>
@@ -871,7 +871,7 @@
 
     <section class="seo-related" aria-labelledby="related-tools-title">
         <h2 id="related-tools-title">Explore More Image Tools</h2>
-        <p>Continue with related ToolHub tools for your next file task.</p>
+        <p>Continue with related ToolSume tools for your next file task.</p>
         <div class="seo-related-grid">
             <a class="seo-related-card" href="/resize-image"><strong>Resize Image</strong><span>Change image dimensions.</span></a>
             <a class="seo-related-card" href="/rotate-image"><strong>Rotate Image</strong><span>Rotate images online.</span></a>

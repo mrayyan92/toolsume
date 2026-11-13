@@ -1,8 +1,8 @@
-/* TOOLHUB FINAL MOBILE NAVBAR */
+/* TOOLSUME FINAL MOBILE NAVBAR */
 (function () {
     "use strict";
 
-    function initToolHubNavbar() {
+    function initToolSumeNavbar() {
         const navbar = document.getElementById("navbar");
         const hamburger = document.getElementById("hamburger");
         const navLinks = document.getElementById("navLinks");
@@ -116,8 +116,8 @@
     }
 
     if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initToolHubNavbar);
+        document.addEventListener("DOMContentLoaded", initToolSumeNavbar);
     } else {
-        initToolHubNavbar();
+        initToolSumeNavbar();
     }
 })();

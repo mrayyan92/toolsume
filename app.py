@@ -62,13 +62,13 @@ app.config["MAX_CONTENT_LENGTH"] = 100 * 1024 * 1024  # 100 MB max upload
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 
 # Return generic error messages to clients in production (no path leakage).
-DEBUG_ERRORS = os.environ.get("TOOLHUB_DEBUG_ERRORS", "").lower() in ("1", "true", "yes")
+DEBUG_ERRORS = os.environ.get("TOOLSUME_DEBUG_ERRORS", "").lower() in ("1", "true", "yes")
 
 # Guard against decompression-bomb images (default Pillow limit is ~89M px).
 Image.MAX_IMAGE_PIXELS = 80_000_000
 
 # How long a generated file stays downloadable before the janitor removes it.
-OUTPUT_RETENTION_SECONDS = int(os.environ.get("TOOLHUB_RETENTION_SECONDS", 1800))
+OUTPUT_RETENTION_SECONDS = int(os.environ.get("TOOLSUME_RETENTION_SECONDS", 1800))
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
@@ -233,8 +233,8 @@ def sitemap():
     pages = [
         ("", "1.0", "daily"),
         ("pdf-tools/", "0.8", "weekly"),
-        ("image-tools", "0.8", "weekly"),
-        ("utility-tools", "0.8", "weekly"),
+        ("image-tools/", "0.8", "weekly"),
+        ("utility-tools/", "0.8", "weekly"),
         ("about", "0.6", "monthly"),
         ("contact", "0.6", "monthly"),
         ("privacy", "0.4", "monthly"),
@@ -2790,7 +2790,7 @@ def pdf_tools():
     )
 
 
-@app.route("/image-tools")
+@app.route("/image-tools/")
 def image_tools():
 
     return render_template(
@@ -2801,7 +2801,7 @@ def image_tools():
     )
 
 
-@app.route("/utility-tools")
+@app.route("/utility-tools/")
 def utility_tools():
 
     return render_template(
@@ -2830,6 +2830,6 @@ threading.Thread(target=_janitor, daemon=True).start()
 
 if __name__ == "__main__":
     # debug=True exposes the Werkzeug console (remote code execution).
-    # Set TOOLHUB_DEBUG=1 locally if you really want the reloader.
-    debug = os.environ.get("TOOLHUB_DEBUG", "").lower() in ("1", "true", "yes")
+    # Set TOOLSUME_DEBUG=1 locally if you really want the reloader.
+    debug = os.environ.get("TOOLSUME_DEBUG", "").lower() in ("1", "true", "yes")
     app.run(debug=debug)
