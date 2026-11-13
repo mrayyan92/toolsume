@@ -2,7 +2,7 @@
 
 A modern online file conversion toolkit built with **Python Flask**.
 
-ToolHub allows users to convert, merge, compress and manage PDF, Image and Office files with a clean and responsive interface.
+ToolSume allows users to convert, merge, compress and manage PDF, Image and Office files with a clean and responsive interface.
 
 ---
 
@@ -46,7 +46,7 @@ ToolHub allows users to convert, merge, compress and manage PDF, Image and Offic
 ## 📂 Project Structure
 
 ```
-ToolHub/
+ToolSume/
 │
 ├── app.py
 ├── static/
@@ -70,13 +70,13 @@ ToolHub/
 Clone the repository
 
 ```bash
-git clone https://github.com/mrayyan92/Toolhub-.git
+git clone https://github.com/mrayyan92/Toolsume-.git
 ```
 
 Move into the project
 
 ```bash
-cd Toolhub-
+cd Toolsume-
 ```
 
 Create a virtual environment
