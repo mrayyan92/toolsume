@@ -1,0 +1,21 @@
+{
+  "name": "ToolSume \u2014 Free Online PDF & Image Tools",
+  "short_name": "ToolSume",
+  "description": "Fast, private, and free online file converter, PDF manager, and image optimization tools.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/static/images/toolsume-full-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/images/toolsume-full-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

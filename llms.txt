@@ -1,0 +1,20 @@
+# ToolSume
+> Free, private, and secure online productivity toolkit for PDF, image, and text operations.
+
+## Core Capabilities
+- PDF Tools: Compress PDF to custom sizes (100KB, 200KB), Merge PDF files, Split PDF, PDF to Word converter, Word to PDF, Extract pages, Delete pages, Watermark PDF, Protect and Unlock PDF.
+- Image Tools: Compress JPG/PNG/WebP, Resize images, Crop images, Rotate and Flip images, Convert between JPG, PNG, and WebP, OCR Image to Text extractor.
+- Utility Tools: QR Code generator & scanner, Strong Password generator & strength checker, UUID generator, Word counter, Lorem Ipsum generator.
+
+## Privacy & Security Guarantee
+- All document and image processing is conducted over encrypted TLS connections.
+- Uploaded files are automatically deleted after processing.
+- No files are stored permanently or shared with third parties.
+
+## Official URLs
+- Website: https://toolsume.com/
+- PDF Tools Hub: https://toolsume.com/pdf-tools/
+- Image Tools Hub: https://toolsume.com/image-tools/
+- Utility Tools Hub: https://toolsume.com/utility-tools/
+- Sitemap: https://toolsume.com/sitemap.xml
+- Support: support@toolsume.com

@@ -245,6 +245,30 @@ def indexnow_key():
     return Response("e7b9a54f1c3d4298810234aefc89d210", mimetype="text/plain")
 
 
+# ================= MANIFEST & LLMS =================
+
+@app.route("/manifest.json")
+def manifest_json():
+    manifest_file = os.path.join(BASE_DIR, "static", "manifest.json")
+    if os.path.exists(manifest_file):
+        with open(manifest_file, "r", encoding="utf-8") as f:
+            content = f.read()
+    else:
+        content = "{}"
+    return Response(content, mimetype="application/json")
+
+
+@app.route("/llms.txt")
+def llms_txt():
+    llms_file = os.path.join(BASE_DIR, "llms.txt")
+    if os.path.exists(llms_file):
+        with open(llms_file, "r", encoding="utf-8") as f:
+            content = f.read()
+    else:
+        content = "ToolSume Free Online Productivity Tools: https://toolsume.com"
+    return Response(content, mimetype="text/plain; charset=utf-8")
+
+
 # ================= SITEMAP =================
 
 @app.route("/sitemap.xml")
