@@ -7,9 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0f172a">
 
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+
     <title>{% block title %}ToolSume{% endblock %}</title>
 
     {% block seo_description %}{% endblock %}
+
+        <!-- Global Brand Entity Schema for Google Knowledge Graph -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ToolSume",
+      "alternateName": ["ToolSume Online Tools", "ToolSume.com"],
+      "url": "https://toolsume.com",
+      "logo": "https://toolsume.com/static/images/toolsume-full-logo.png",
+      "description": "ToolSume is a free online platform providing secure PDF conversion, image compression, editing, and productivity utilities.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "support@toolsume.com",
+        "contactType": "customer support",
+        "availableLanguage": "English"
+      }
+    }
+    </script>
 
     <link rel="canonical" href="https://toolsume.com{{ request.path }}">
 

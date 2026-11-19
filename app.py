@@ -238,6 +238,13 @@ def ads_txt():
     return Response(content, mimetype="text/plain")
 
 
+# ================= INDEXNOW =================
+
+@app.route("/e7b9a54f1c3d4298810234aefc89d210.txt")
+def indexnow_key():
+    return Response("e7b9a54f1c3d4298810234aefc89d210", mimetype="text/plain")
+
+
 # ================= SITEMAP =================
 
 @app.route("/sitemap.xml")
